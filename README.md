@@ -8,12 +8,15 @@ Esta patología aparece debido a unos niveles excesivamente altos de azúcar en 
 
 ##### Diagnóstico de la retinopatía diabética
 El método general de diagnóstico consiste en la obtención de una imagen del fondo de ojo empleando un retinógrafo tras una dilatación previa de la pupila [3]. Posteriormente el oftalmólogo realiza un análisis de la imagen obtenida, buscando en ella signos representativos de la patología (neovascularización, microaneurismas o exudados entre otros). La imagen mostrada a continuación, obtenida de [iStock/Anna Koroleva](https://www.istockphoto.com/es/vector/retinopat%C3%ADa-diab%C3%A9tica-anatom%C3%ADa-detallada-informaci%C3%B3n-educativa-m%C3%A9dica-diagrama-de-gm1251233509-365089595), ilustra estos signos:
-IMAGEN DE RETINOPATÍA DIABÉTICA
+
+![image](https://user-images.githubusercontent.com/80346399/203657066-f6caab9f-b031-4af6-952e-ae7e2003c3d7.png)
+
 Sin embargo, los equipos necesarios son costosos y no siempre están disponibles, lo que provoca una ralentización del proceso de diagnóstico en un problema donde la detección temprana es fundamental [4]. Es por ello que surge la necesidad de desarrollar este modelo que permita realizar un primer diagnóstico, que sirva como criba y que pueda ser realizado sin más material que un dispositivo móvil.
 ##### Redes Neuronales Convolucionales (CNN) 
 Las redes neuronales convolucionales (Convolutional Neural Networks) son una tipología de redes neuronales artificiales que toman su nombre de la operación matemática lineal entre matrices denominada convolución, y que son muy empleadas en problemas de Deep Learning aplicado a imágenes [5]. 
 Se trata pues de modelos computacionales formados por un conjunto de elementos, denominados neuronas, que optimizan su rendimiento de manera automática mediante aprendizaje. A partir del conjunto de píxeles que conforman una imagen _M x M_, las CNNs generan una matriz de pesos de dimensiones _N x N_ que se va aplicando sobre las regiones de la imagen y permite ir extrayendo los elementos más característicos de esta. El valor de los pesos de esa matriz va modificándose y actualizándose según el grado de acierto de las predicciones de la red, permitiendo así ese aprendizaje mencionado anteriormente. Estos modelos neuronales están compuestos por múltiples capas, siguiendo generalmente la siguiente estructura: capa convolucional, capa de pooling y capa totalmente conectada (_fully-conected_) [6]. En la imagen a continuación ([O’Shea and Nash. 2020](https://arxiv.org/pdf/1511.08458.pdf)) se representa este esquema:
-IMAGEN CAPAS CNN
+
+![image](https://user-images.githubusercontent.com/80346399/203657332-6cec8cf2-ffce-4b3c-b712-7695731b5d18.png)
 
 ### Metodología de trabajo
 Para el desarrollo del proyecto se ha optado por la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), que consiste en un conjunto de pasos y procedimientos diseñados para guiar el trabajo en minería de datos [7]. 
@@ -26,7 +29,8 @@ Esta metodología consta de 6 fases sobre las que se trabaja de manera contínua
 6. Despliegue (_Deployment_)
 
 Relacionándose entre sí como se puede observar en la siguiente imagen ([Niaksu. 2015](https://www.bjmc.lu.lv/fileadmin/user_upload/lu_portal/projekti/bjmc/Contents/3_2_2_Niaksu.pdf)):
-IMAGEN ETAPAS CRISPDM
+
+![image](https://user-images.githubusercontent.com/80346399/203657472-2bd27e1b-3689-452b-a8a0-46f51fa1beca.png)
 
 ### Licencia
 El proyecto se encuentra protegido con una licencia Creative Commons Zero v1.0 Universal.
