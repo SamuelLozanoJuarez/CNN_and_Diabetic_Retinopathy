@@ -37,11 +37,18 @@ El proyecto se encuentra protegido con una licencia Creative Commons Zero v1.0 U
 
 ## Referencias
 [1] Tenorio G, Ramírez-Sánchez V. Retinopatía diabética; conceptos actuales. _Med J Hosp Gen Mexico_.2010.73(3):193-201.
+
 [2]	Retinopatía diabética. Mayoclinic.org. 2018. Disponible en: https://www.mayoclinic.org/es-es/diseases-conditions/diabetic-retinopathy/symptoms-causes/syc-20371611
+
 [3] Diabetic retinopathy. Nih.gov. Available from: https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/diabetic-retinopathy
+
 [4] Safi H, Safi S, Hafezi-Moghadam A, Ahmadieh H. Early detection of diabetic retinopathy. _Surv Ophthalmol_. 2018;63(5):601–8. Available from: http://dx.doi.org/10.1016/j.survophthal.2018.04.003
+
 [5] S. Albawi, T. A. Mohammed. S. Al-Zawi. Understanding of a convolutional neural network. 2017 _International Conference on Engineering and Technology (ICET)_, 2017, p. 1-6.
+
 [6] Ghosh A, Sufian A, Sultana F, Chakrabarti A, De D. Fundamental concepts of convolutional neural network. _Intelligent Systems Reference Library_. Cham: Springer International Publishing; 2020. p. 519–67.
+
 [7] IBM documentation. Ibm.com. 2021. Available from: https://www.ibm.com/docs/en/spss-modeler/saas?topic=dm-crisp-help-overview
+
 [8] Niaksu O. CRISP Data Mining Methodology Extension for
 Medical Domain. _Baltic J. Modern Computing_.2015.3(2):92-109
