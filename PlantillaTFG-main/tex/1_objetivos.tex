@@ -2,25 +2,31 @@
 
 El principal objetivo del proyecto es construir un modelo de red neuronal convolucional capaz de predecir el grado de retinopatía diabética de un paciente a partir de una imagen de su fondo de ojo.
 
-Se buscará llevar a cabo la construcción íntegra de la red, partiendo desde cero y sin hacer uso de \textit{transfer learning}.
+Se buscará llevar a cabo la construcción íntegra de la red, partiendo desde cero y sin hacer uso de \textit{transfer learning}, que sea capaz de realizar las predicciones a partir de una imagen tomada con un dispositivo móvil.
 
 \section{Objetivos de software}
 \begin{itemize}[itemsep=0.25em]
     \item Desarrollar una arquitectura de red neuronal convolucional capaz de predecir el grado de retinopatía diabética a partir de una imagen de fondo de ojo.
     \item Construir la arquitectura sin emplear \textit{transfer learning}.
     \item La red neuronal deberá ser capaz de realizar diagnósticos a partir de imágenes tomadas con retinógrafos así como con dispositivos móviles (tanto Android como iOS).
+    \item Buscar nuevos \textit{datasets} con imágenes de fondo de ojo etiquetadas, que proporcionen un material más extenso para el entrenamiento de la red.
+    \item Desarrollar el código necesario que permita preprocesar las imágenes de dispositivos móviles (Android e iOS) para optimizar el rendimiento del modelo.
 \end{itemize}
 
 \section{Objetivos técnicos}
 \begin{itemize}[itemsep=0.25em]
     \item Evaluar el rendimiento de la red neuronal en el diagnóstico con imágenes de dispositivos móviles empleando las métricas \textit{Quadratic Weighted Kappa}, \textit{Balanced Accuracy}, Valor-F o \textit{F-score} y el área bajo la curva ROC.
+    \item Probar distintas arquitecturas y combinaciones en la construcción del modelo de red neuronal, y comparar el rendimiento de las diferentes construcciones. 
     \item Alcanzar un valor en las métricas mencionadas superior al obtenido por el clínico sobre el mismo conjunto de imágenes de dispositivos móviles. Se tomará como \textit{gold standard} el diagnóstico clínico sobre las imágenes tomadas con retinógrafos.
 \end{itemize}
 
 \section{Objetivos de aprendizaje}
 \begin{itemize}[itemsep=0.25em]
+    \item Entender el funcionamiento básico de las redes neuronales convolucionales, así como de las capas habituales en su arquitectura.
+    \item Entender las causas y procesos que provocan la retinopatía diabética, así como sus principales signos y los fundamentos de su diagnóstico.
     \item Desarrollar el proyecto dentro del \textit{framework} PyTorch, empleando el lenguaje de programación Python.
     \item Emplear GitHub para crear un repositorio en el que almacenar el código y los resultados que se vayan generando a lo largo del proyecto.
+    \item Emplear el editor de LaTeX online \textit{Overleaf} para la creación de la memoria del proyecto.
     \item Conocer el modelo de de trabajo en minería de datos CRISP-DM, y seguir su metodología en el desarrollo del proyecto.
     \item Entrenar la red neuronal en el Centro de Supercomputación de Castilla y León (SCAYLE), lo que implica el uso de la aplicación PuTTY, el manejo de comandos básicos en Linux y SLURM, y el uso de la aplicación WinSCP.
 \end{itemize}
