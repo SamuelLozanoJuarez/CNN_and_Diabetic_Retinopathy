@@ -21,17 +21,19 @@ Por último se estudiará la viabilidad legal del proyecto, desde el punto de vi
 
 Desde el planteamiento inicial del proyecto se apostó por seguir la metodología denominada \textit{CRISP-DM}, siglas que aluden a los términos \textit{CRoss Industry Standard Process for Data Mining} \cite{crispdm:schorer}. 
 
-\textit{CRISP-DM} es una estrategia aplicable a múltiples ámbitos de la industria, pero especialmente empleada en la minería de datos \cite{crispdm:azevedo}, que consiste en 6 fases o etapas iterativas que abarcan desde la comprensión del ámbito en que se va a trabajar (o comprensión del negocio si se traduce directamente del inglés \textit{Business Understanding}), hasta el despliegue de los resultados \cite{crispdm:schorer,crispdm:niaksu}.
+\textit{CRISP-DM} es una estrategia aplicable a múltiples ámbitos de la industria, pero especialmente empleada en la minería de datos \cite{crispdm:azevedo}, que consiste en 6 fases o etapas iterativas que abarcan desde la comprensión del ámbito en que se va a trabajar (o comprensión del negocio si se traduce directamente del inglés \textit{Business Understanding}), hasta el despliegue de los resultados \cite{crispdm:niaksu,crispdm:schorer}.
 
-Las 6 fases que constituyen el modelo son las siguientes:
+Las 6 fases que constituyen el modelo son las siguientes \cite{crispdm:niaksu,crispdm:schorer}:
 \begin{enumerate}[itemsep=0.1em]
-    \item \textbf{Comprensión del ámbito o negocio (\textit{Business understanding})}.
-    \item \textbf{Comprensión de los datos (\textit{Data understanding})}
-    \item \textbf{Preparación de los datos (\textit{Data preparation})}
-    \item \textbf{Modelado (\textit{Modeling})}
-    \item \textbf{Evaluación (\textit{Evaluation})}
-    \item \textbf{Despliegue (\textit{Deployment})}
+    \item \textbf{Comprensión del ámbito o negocio (\textit{Business understanding})}. Abarca el establecimiento y comprensión de los objetivos del proyecto y la definición de los criterios de éxito (\textit{p. ej.} las métricas de evaluación que se emplearán). En esta etapa se incluye también la explicación del tipo de minería de datos que se desea realizar y la creación del plan de trabajo.
+    \item \textbf{Comprensión de los datos (\textit{Data understanding})}. Incluye la recopilación de datos de distintas fuentes, su exploración y descripción, lo que implica el estudio de los atributos de estos datos. En este paso también se suelen realizar suposiciones sobre qué datos del conjunto total serán útiles para el proyecto.
+    \item \textbf{Preparación de los datos (\textit{Data preparation})}. En esta fase se deben determinar los criterios de inclusión y exclusión de los datos, sumado a la posterior limpieza de los datos, eliminando aquellos que no cumplan los requisitos necesarios. También implica la modificación de los datos para mejorar su calidad o eliminar ruido.
+    \item \textbf{Modelado (\textit{Modeling})}. Básicamente consiste en seleccionar qué técnica de modelado se desea emplear (en nuestro caso consistiría en configurar la arquitectura de la red neuronal), y explicar por qué se ha decidido seleccionar ese modelo. También se incluye la optimización de los parámetros del modelo.
+    \item \textbf{Evaluación (\textit{Evaluation})}. Una vez construido el modelo, este debe ser probado, generando métricas que permitan determinar su rendimiento. Entre las métricas que emplearemos en el proyecto se pueden encontrar \textit{Quadratic Weighted Kappa}, \textit{Balanced Accuracy}, \textit{F-score} y el área bajo la curva ROC. Los resultados de esta evaluación deberán compararse con los objetivos definidos, interpretando los resultados y determinando si el modelo cumple dichos objetivos.
+    \item \textbf{Despliegue o implementación (\textit{Deployment})}. El contenido de esta última etapa depende del proyecto. Generalmente suele consistir en la presentación de los resultados de manera organizada mediante un informe, como en nuestro caso. Sin embargo, si a lo largo del proyecto se ha desarrollado un componente software, en esta fase de despliegue también puede llevarse a cabo la distribución del componente en el mercado.
 \end{enumerate}
+
+
 
 Combina ciertos aspectos propios de las metodologías ágiles y otros más característicos de las denominadas estrategias \textit{waterfall}
 
