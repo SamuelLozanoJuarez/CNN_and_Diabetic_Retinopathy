@@ -4,7 +4,7 @@ INFORMACIÓN DEL FICHERO
 #########################################################################################################################
 
 Autor: Samuel Lozano Juárez
-Fecha: 30/01/2022
+Fecha: 30/01/2023
 Institución: UBU | Grado en Ingeniería de la Salud
 
 Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
