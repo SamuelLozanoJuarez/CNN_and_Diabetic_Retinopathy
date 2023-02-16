@@ -321,15 +321,15 @@ fotos_samsung = os.listdir('Raw Data\FOTOS Samsung')
 for i in fotos_OCT:
     if i[-4:] == '.jpg':
         if i in img_retin_1:
-            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Processed Data\\OCT\\G1\\' + i)
+            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Classified Data\\Images\\OCT\\G1\\' + i)
         elif i in img_retin_2:
-            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Processed Data\\OCT\\G2\\' + i)
+            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Classified Data\\Images\\OCT\\G2\\' + i)
         elif i in img_retin_3:
-            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Processed Data\\OCT\\G3\\' + i)
+            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Classified Data\\Images\\OCT\\G3\\' + i)
         elif i in img_retin_4:
-            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Processed Data\\OCT\\G4\\' + i)
+            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Classified Data\\Images\\OCT\\G4\\' + i)
         elif i in img_retin_5:
-            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Processed Data\\OCT\\G5\\' + i)
+            shutil.move('Raw Data\\FOTOS OCT\\' + i, 'Classified Data\\Images\\OCT\\G5\\' + i)
         else:
             os.remove('Raw Data\\FOTOS OCT\\' + i)
 
@@ -337,15 +337,15 @@ for i in fotos_OCT:
 for i in fotos_iphone:
     if i[-4:] == '.PNG':
         if i in img_iphone_1:
-            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Processed Data\\iPhone\\G1\\' + i)
+            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Classified Data\\Images\\iPhone\\G1\\' + i)
         elif i in img_iphone_2:
-            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Processed Data\\iPhone\\G2\\' + i)
+            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Classified Data\\Images\\iPhone\\G2\\' + i)
         elif i in img_iphone_3:
-            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Processed Data\\iPhone\\G3\\' + i)
+            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Classified Data\\Images\\iPhone\\G3\\' + i)
         elif i in img_iphone_4:
-            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Processed Data\\iPhone\\G4\\' + i)
+            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Classified Data\\Images\\iPhone\\G4\\' + i)
         elif i in img_iphone_5:
-            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Processed Data\\iPhone\\G5\\' + i)
+            shutil.move('Raw Data\\FOTOS iPhone\\' + i, 'Classified Data\\Images\\iPhone\\G5\\' + i)
         else:
             os.remove('Raw Data\\FOTOS iPhone\\' + i)
 
@@ -353,15 +353,15 @@ for i in fotos_iphone:
 for i in fotos_samsung:
     if i[-4:] == '.png':
         if i in img_samsung_1:
-            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Processed Data\\Samsung\\G1\\' + i)
+            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Classified Data\\Images\\Samsung\\G1\\' + i)
         elif i in img_samsung_2:
-            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Processed Data\\Samsung\\G2\\' + i)
+            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Classified Data\\Images\\Samsung\\G2\\' + i)
         elif i in img_samsung_3:
-            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Processed Data\\Samsung\\G3\\' + i)
+            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Classified Data\\Images\\Samsung\\G3\\' + i)
         elif i in img_samsung_4:
-            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Processed Data\\Samsung\\G4\\' + i)
+            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Classified Data\\Images\\Samsung\\G4\\' + i)
         elif i in img_samsung_5:
-            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Processed Data\\Samsung\\G5\\' + i)
+            shutil.move('Raw Data\FOTOS Samsung\\' + i, 'Classified Data\\Images\\Samsung\\G5\\' + i)
         else:
             os.remove('Raw Data\FOTOS Samsung\\' + i)
 
