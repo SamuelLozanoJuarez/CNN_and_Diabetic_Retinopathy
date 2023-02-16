@@ -5,9 +5,11 @@ INFORMACIÓN DEL FICHERO
 Autor: Samuel Lozano Juárez
 Fecha: 13/02/2023
 Institución: UBU | Grado en Ingeniería de la Salud
+
 Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
 El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
 Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
+
 A continuación se incluye el código necesario para la organización de las imágenes obtenidas del repositorio Kaggle. Las imágenes crudas, sin clasificar,
 pueden descargarse en el siguiente enlace: https://www.kaggle.com/competitions/diabetic-retinopathy-detection/data .
 En esa misma dirección se encuentra un fichero .csv que contiene la etiqueta de cada imagen. Ese fichero y esa etiqueta son los empleados en este código para la 
