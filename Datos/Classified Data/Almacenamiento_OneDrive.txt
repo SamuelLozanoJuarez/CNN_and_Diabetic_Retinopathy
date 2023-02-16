@@ -1,0 +1,23 @@
+#######################################################################################################################
+INFORMACIÓN DEL FICHERO
+#########################################################################################################################
+
+Autor: Samuel Lozano Juárez
+Fecha: 16/02/2023
+Institución: UBU | Grado en Ingeniería de la Salud
+
+Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
+El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
+Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
+
+Debido a la gran cantidad de imágenes obtenidas de Kaggle, su almacenamiento en memoria implica demasiado coste (cerca de 35GB).
+Es por ello que he decidido guardarlas en OneDrive, para que se encuentren accesibles sin ocupar ese espacio en memoria.
+A continuación se incluye el enlace a la carpeta de OneDrive con las imágenes.
+
+Esta carpeta recrea la estructura del directorio local 'Classified Data', y todas las imágenes que se encuentran en ella están clasificadas
+según su fuente de origen y su grado.
+
+
+Enlace a OneDrive:
+
+https://universidaddeburgos-my.sharepoint.com/:f:/g/personal/slj1001_alu_ubu_es/EoaebgNufDxBrdzF0sRH25sBJQ5Voi9O2bm50WvYBXkdqg?e=sM1nK8

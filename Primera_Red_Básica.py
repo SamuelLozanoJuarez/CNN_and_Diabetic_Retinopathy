@@ -56,13 +56,13 @@ transform = transforms.Compose(
      transforms.Resize((escala, escala))]) #redimensionamos las imágenes
 
 #a continuación cargamos el conjunto de imágenes de train (OCT) y los dos de test (iPhone y Samsung)
-OCT = ImageFolder(root = 'Datos/Processed Data/OCT', transform = transform)
+OCT = ImageFolder(root = 'Datos/Classified Data/Images/OCT', transform = transform)
 print(f'Tamaño del conjunto de datos de train: {len(OCT)}')
 
-Samsung = ImageFolder(root = 'Datos/Processed Data/Samsung', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
-iPhone = ImageFolder(root = 'Datos/Processed Data/iPhone', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas
