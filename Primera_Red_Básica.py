@@ -184,6 +184,7 @@ class CNN(nn.Module):
         #por último definimos la función que permite obtener el número de características de los tensores
         size = x.size()[1:] #seleccionamos todas las dimensiones expcepto la primera (que son los batches)
         num_features = 1
+        #va iterando y calcula el número de características de los datos (x)
         for s in size:
             num_features*=s
         return num_features
@@ -262,12 +263,12 @@ m = nn.Softmax(dim=1)
 with torch.no_grad():
     #recorremos el conjunto de imágenes de test de iPhone
     for data in test_i_loader:
-        images, labels = data
+        images, labels = data #cargamos las imágenes y las etiquetas del dataloader
         outputs = cnn(images) #obtenemos las predicciones
         predictions.append(m(outputs).numpy()) #las convertimos a probabilidad mediante Softmax 
         _, predicted = torch.max(outputs.data,1) #y obtenemos las etiquetas o labels predichas a partir de la probabilidad
-        y_pred_iphone.append(predicted.numpy())
-        y_true_iphone.append(labels.numpy())
+        y_pred_iphone.append(predicted.numpy()) #añadimos la predicción a la lista de predicciones
+        y_true_iphone.append(labels.numpy()) #y añadimos la etiqueta real a la lista de etiquetas reales
 #convertimos los datos a formato np.array de una única dimensión        
 y_true_iphone = np.concatenate(y_true_iphone)
 y_pred_iphone = np.concatenate(y_pred_iphone)
@@ -278,9 +279,12 @@ predictions = np.concatenate(predictions)
 matrix_iphone = confusion_matrix(y_true_iphone, y_pred_iphone)
 #usamos el paquete seaborn para mostrar de manera más visual la matriz de confusión
 plot = sns.heatmap(matrix_iphone, annot = True, cmap = 'Reds', cbar = False)
+#establecemos título
 plot.set_title('Matriz de confusión - iPhone\n')
+#título de cada eje
 plot.set_xlabel('\nGrado Iphone')
 plot.set_ylabel('Grado real\n')
+#y el significado de cada fila y columna de la matriz
 plot.xaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
 plot.yaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
 print(plot)
@@ -313,13 +317,13 @@ m = nn.Softmax(dim=1)
 with torch.no_grad():
     #recorremos el conjunto de imágenes de test de Samsung en este caso 
     for data in test_S_loader:
-        images, labels = data
-        outputs = cnn(images)
-        predictions.append(m(outputs).numpy())
-        _, predicted = torch.max(outputs.data,1)
-        y_pred_samsung.append(predicted.numpy())
-        y_true_samsung.append(labels.numpy())
-        
+        images, labels = data #cargamos las imágenes y las etiquetas del dataloader
+        outputs = cnn(images) #obtenemos las predicciones
+        predictions.append(m(outputs).numpy()) #las convertimos a probabilidad mediante Softmax 
+        _, predicted = torch.max(outputs.data,1) #y obtenemos las etiquetas o labels predichas a partir de la probabilidad
+        y_pred_samsung.append(predicted.numpy()) #añadimos la predicción a la lista de predicciones
+        y_true_samsung.append(labels.numpy()) #y añadimos la etiqueta real a la lista de etiquetas reales
+#convertimos los datos a formato np.array de una única dimensión 
 y_true_samsung = np.concatenate(y_true_samsung)
 y_pred_samsung = np.concatenate(y_pred_samsung)
 predictions = np.concatenate(predictions)
@@ -327,25 +331,29 @@ predictions = np.concatenate(predictions)
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 matrix_samsung = confusion_matrix(y_true_samsung, y_pred_samsung)
 plot = sns.heatmap(matrix_samsung, annot = True, cmap = 'Reds', cbar = False)
+#establecemos título
 plot.set_title('Matriz de confusión - Samsung\n')
+#título de cada eje
 plot.set_xlabel('\nGrado Samsung')
 plot.set_ylabel('Grado real\n')
+#y el significado de cada fila y columna de la matriz
 plot.xaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
 plot.yaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
 print(plot)
 
+#calculamos el valor de accuracy
 accuracy_samsung = accuracy_score(y_true = y_true_samsung, y_pred = y_pred_samsung)
 print(f'El valor de accuracy del modelo con imágenes de samsung es: {accuracy_samsung}')
-
+#el balanced accuracy
 bal_acc_samsung = balanced_accuracy_score(y_true = y_true_samsung, y_pred = y_pred_samsung)
 print(f'El valor de balanced accuracy del modelo con imágenes de samsung es: {bal_acc_samsung}')
-
+#el F-score
 f_score_samsung = f1_score(y_true = y_true_samsung, y_pred = y_pred_samsung,average = 'weighted')
 print(f'El valor de F-score del modelo con imágenes de samsung es: {f_score_samsung}')
-
+#calculamos el valor de quadratic weighted kappa
 kappa_samsung = cohen_kappa_score(y1 = y_true_samsung, y2 = y_pred_samsung)
 print(f'El valor de Kappa del modelo con imágenes de samsung es: {kappa_samsung}')
-
+#y por último calculamos el valor de AUC bajo la curva ROC
 auc_samsung = roc_auc_score(y_true = y_true_samsung, y_score = predictions, multi_class = 'ovr')
 print(f'El valor de AUC del modelo con imágenes de samsung es: {auc_samsung}')
 
