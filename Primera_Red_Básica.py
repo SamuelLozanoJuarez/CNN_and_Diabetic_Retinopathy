@@ -140,7 +140,7 @@ class CNN(nn.Module):
         #una primera capa convolucional
         self.conv1 = nn.Conv2d(
             in_channels = 3, #3 canales de entrada porque las imágenes son a color
-            out_channels = 6, #se trata del número de salidas de la capa. Puede tratarse de un valor arbitrario
+            out_channels = 6, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
             kernel_size = 5, #suele tratarse de un número impar
             stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
             padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -148,7 +148,7 @@ class CNN(nn.Module):
         #una segunda capa convolucional
         self.conv2 = nn.Conv2d(
             in_channels = 6, #6 canales de entrada porque es el número de salidas de la capa anterior
-            out_channels = 16, #se trata del número de salidas de la capa. Puede tratarse de un valor arbitrario
+            out_channels = 16, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
             kernel_size = 5, #suele tratarse de un número impar
             stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
             padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
