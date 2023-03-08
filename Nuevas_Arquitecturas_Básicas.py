@@ -264,7 +264,6 @@ loss_graph = []
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
     correct = 0
-    total = 0
     #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -280,7 +279,6 @@ for epoch in range(epocas):
         optimizer.step()
         #actualizamos el número de predicciones correctas
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
         correct += (predicted == labels).sum().item()
     
     #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
@@ -501,7 +499,6 @@ loss_graph = []
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
     correct = 0
-    total = 0
     #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -517,7 +514,6 @@ for epoch in range(epocas):
         optimizer.step()
         #actualizamos el número de predicciones correctas
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
         correct += (predicted == labels).sum().item()
     
     #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
@@ -818,7 +814,6 @@ loss_graph = []
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
     correct = 0
-    total = 0
     #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -834,7 +829,6 @@ for epoch in range(epocas):
         optimizer.step()
         #actualizamos el número de predicciones correctas
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
         correct += (predicted == labels).sum().item()
     
     #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
@@ -1131,7 +1125,6 @@ loss_graph = []
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
     correct = 0
-    total = 0
     #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -1147,7 +1140,6 @@ for epoch in range(epocas):
         optimizer.step()
         #actualizamos el número de predicciones correctas
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
         correct += (predicted == labels).sum().item()
     
     #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
