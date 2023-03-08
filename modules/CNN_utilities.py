@@ -68,4 +68,33 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
 
 def representa(valores,metrica,red):
     '''
+    Genera y muestra una gráfica en la que se representa la evolución de una determinada métrica de entrenamiento de una red (Accuracy o Loss) a lo largo de las épocas.
     
+    Parámetros
+    ------------------------------------------------------------------------
+    valores: lista que contiene los valores de la métrica a representar. Estos valores deben oscilar entre 0 y 1.
+    metrica: String que indica qué métrica es la que se desea representar
+    red: String que indica el nombre de la red de cuyo entrenamiento se han obtenido los valores de la métrica. Se incluye en el título de la gráfica para poder identificarla.
+    
+    Return
+    ------------------------------------------------------------------------
+    La función no devuelve ningún valor
+    '''
+    #primero creamos la figura que se va a representar y asignamos dimensiones
+    plt.figure(figsize = (10,7))
+    #incluimos un título en el que se muestre la red y la métrica que se va a representar
+    plt.title(red + ' - Evolución del ' + metrica)
+    #asignamos título a los ejes:
+    #en el eje X se representarán las épocas
+    plt.xlabel('Nº Época')
+    #en el eje Y los valores de la métrica
+    plt.ylabel(metrica)
+    #si la métrica es Accuracy la representamos de color azul, si es loss de color naranja
+    if metrica == 'Accuracy':
+        color = 'blue'
+    elif metrica == 'Loss':
+        color == 'orange
+    #por último representamos estos valores
+    plt.plot(range(1,len(valores)+1),valores, color = color linewidth = 3)
+    #y mostramos la figura
+    plt.show()
