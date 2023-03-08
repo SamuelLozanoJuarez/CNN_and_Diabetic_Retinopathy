@@ -39,27 +39,33 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     for epoch in range(epocas):
         #establecemos el número de predicciones correctas inicial a 0
         correct = 0
-        #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
+        #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader pasada como parámetro
         for i, data in enumerate(train_loader):
+            #obtenemos las imágenes y etiquetas del lote por separado
             inputs, labels = data
             #establecemos a 0 los parámetros del modelo
             optimizer.zero_grad()
-            #generamos las predicciones de los inputs
+            #generamos las predicciones a partir de los inputs
             outputs = red(inputs)
             #calculamos el loss, la desviación de las predicciones con respecto a las etiquetas
             loss = criterion(outputs, labels)
             #propagamos hacia atrás el valor loss
             loss.backward()
-            #y modificamos los pesos en función del loss y la función optimizer
+            #y modificamos los parámetros y pesos en función del loss y la función optimizer
             optimizer.step()
             #actualizamos el número de predicciones correctas
             _, predicted = torch.max(outputs.data, 1)
             correct += (predicted == labels).sum().item()
 
         #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
-        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(OCT)} - Loss: {loss.data.item()}')
+        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {loss.data.item()}')
         #añadimos los valores a la lista correspondiente
         loss_graph.append(loss.data.item())
-        acc_graph.append(correct/len(OCT))
-
+        acc_graph.append(correct/len(train_loader.dataset))
+        
+    #devolvemos los valores de loss y accuracy almacenados
     return acc_graph, loss_graph
+
+def representa(valores,metrica,red):
+    '''
+    
