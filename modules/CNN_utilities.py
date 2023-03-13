@@ -98,3 +98,15 @@ def representa(valores,metrica,red):
     plt.plot(range(1,len(valores)+1),valores, color = color linewidth = 3)
     #y mostramos la figura
     plt.show()
+    
+    
+def test(red,loader,conjunto_test):
+    '''
+    Realiza el test de la red usando el conjunto de imágenes deseado (iPhone o Samsung) y calcula las métricas básicas (matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC).
+    
+    Parámetros
+    ------------------------------------------------------------------------
+    red: 
+    loader: 
+    conjunto_test: 
+    '''
