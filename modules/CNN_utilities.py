@@ -66,14 +66,14 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     #devolvemos los valores de loss y accuracy almacenados
     return acc_graph, loss_graph
 
-def representa(valores,metrica,red):
+def representa_train(valores,metrica,red):
     '''
     Genera y muestra una gráfica en la que se representa la evolución de una determinada métrica de entrenamiento de una red (Accuracy o Loss) a lo largo de las épocas.
     
     Parámetros
     ------------------------------------------------------------------------
     valores: lista que contiene los valores de la métrica a representar. Estos valores deben oscilar entre 0 y 1.
-    metrica: String que indica qué métrica es la que se desea representar
+    metrica: String que indica qué métrica es la que se desea representar. Puede tomar dos valores: Accuracy o Loss.
     red: String que indica el nombre de la red de cuyo entrenamiento se han obtenido los valores de la métrica. Se incluye en el título de la gráfica para poder identificarla.
     
     Return
@@ -100,13 +100,42 @@ def representa(valores,metrica,red):
     plt.show()
     
     
-def test(red,loader,conjunto_test):
+def tester(red,loader):
     '''
-    Realiza el test de la red usando el conjunto de imágenes deseado (iPhone o Samsung) y calcula las métricas básicas (matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC).
+    Realiza el test de la red usando el conjunto de imágenes deseado (iPhone o Samsung) y devuelve las etiquetas reales y predichas para el cálculo de las métricas básicas (matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC).
     
     Parámetros
     ------------------------------------------------------------------------
-    red: 
-    loader: 
-    conjunto_test: 
+    red: instancia del modelo de CNN que se desea probar.
+    loader: función de tipo DataLoader() que irá generando los lotes de imágenes con sus respectivas etiquetas usados en el testeo de la red.
+    
+    Return
+    ------------------------------------------------------------------------
+    y_true: array unidimensional de numpy que contiene al lista de etiquetas reales obtenidas de la función DataLoader para cada imagen.
+    y_pred: array unidimensional de numpy que contiene al lista de etiquetas predichas por el modelo para cada imagen.
+    predictions: array de numpy que contiene la probabilidad de pertenencia a cada clase para cada imagen proporcionada por la red. Se emplea en el posterior cálculo de AUC.
     '''
+    #creamos las 2 listas para almacenar las etiquetas reales y las etiquetas predichas
+    y_true = []
+    y_pred = []
+    #creamos una para almacenar también la salida del modelo transformada a probabilidad, para posteriormente poder calcular AUC
+    predictions = []
+    #y definimos una función para convertir la salida a forma de probabilidad (usando la función Softmax)
+    #el parámetro dim=1 indica que la conversión se debe hacer en el eje de las filas (la suma de las probabilidad en una fila debe sumar 1)
+    m = nn.Softmax(dim=1)
+    #es importante activar torch.no_grad() para que la red no entrene al pasarle el conjunto de test, no varíen los pesos
+    with torch.no_grad():
+        #recorremos el conjunto de imágenes de test de iPhone
+        for data in loader:
+            images, labels = data #cargamos las imágenes y las etiquetas del dataloader
+            outputs = red(images) #obtenemos las predicciones
+            predictions.append(m(outputs).numpy()) #las convertimos a probabilidad mediante Softmax 
+            _, predicted = torch.max(outputs.data,1) #y obtenemos las etiquetas o labels predichas a partir de la probabilidad
+            y_pred.append(predicted.numpy()) #añadimos la predicción a la lista de predicciones
+            y_true.append(labels.numpy()) #y añadimos la etiqueta real a la lista de etiquetas reales
+    #convertimos los datos a formato np.array de una única dimensión        
+    y_true = np.concatenate(y_true)
+    y_pred = np.concatenate(y_pred)
+    predictions = np.concatenate(predictions)
+    
+    return y_true,y_pred,predictions
