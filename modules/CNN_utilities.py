@@ -139,3 +139,57 @@ def tester(red,loader):
     predictions = np.concatenate(predictions)
     
     return y_true,y_pred,predictions
+
+def representa_test(y_true, y_pred, predictions, test):
+    '''
+    Calcula los valores de las siguientes métricas: matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC, y las muestra por pantalla.
+    
+    Parámetros
+    ------------------------------------------------------------------------
+    y_true: array unidimensional de numpy que contiene al lista de etiquetas reales.
+    y_pred: array unidimensional de numpy que contiene al lista de etiquetas predichas.
+    predictions: array de numpy que contiene la probabilidad de pertenencia a cada clase para cada imagen. Se emplea para el cálculo de AUC.
+    test: String que indica cuál ha sido el conjunto de imágenes empleado para el test. Típicamente puede tomar 2 valores: iPhone o Samsung.
+    
+    Return
+    ------------------------------------------------------------------------
+    metricas: estructura de tipo lista que contiene las métricas calculadas en el siguiente orden: matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC.
+    '''
+    #en este caso vamos a realizar una importación de las dependencias necesarias, ya que puede que no estén importadas en el script
+    import sklearn
+    from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
+    import seaborn as sns
+    
+    #primero obtenemos la matriz de confusión
+    matrix = confusion_matrix(y_true, y_pred)
+    #usamos el paquete seaborn para mostrar de manera más visual la matriz de confusión
+    plot = sns.heatmap(matrix, annot = True, cmap = 'Reds', cbar = False)
+    #establecemos título
+    plot.set_title('Matriz de confusión - '+ test +'\n')
+    #título de cada eje
+    plot.set_xlabel('\nGrado ' + test)
+    plot.set_ylabel('Grado real\n')
+    #y el significado de cada fila y columna de la matriz
+    plot.xaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
+    plot.yaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
+    print(plot)
+
+    #calculamos el valor de accuracy
+    accuracy = accuracy_score(y_true = y_true, y_pred = y_pred)
+    print(f'El valor de accuracy del modelo con imágenes de {test} es: {accuracy}')
+    #el balanced accuracy
+    bal_acc = balanced_accuracy_score(y_true = y_true, y_pred = y_pred)
+    print(f'El valor de balanced accuracy del modelo con imágenes de {test} es: {bal_acc}')
+    #el F-score
+    f_score = f1_score(y_true = y_true, y_pred = y_pred,average = 'weighted')
+    print(f'El valor de F-score del modelo con imágenes de {test} es: {f_score}')
+    #calculamos el valor de quadratic weighted kappa
+    kappa = cohen_kappa_score(y1 = y_true, y2 = y_pred)
+    print(f'El valor de Kappa del modelo con imágenes de {test} es: {kappa}')
+    #y por último calculamos el valor de AUC bajo la curva ROC, importante indicar que se trata de un problema "ovr" (One vs Rest)
+    auc = roc_auc_score(y_true = y_true, y_score = predictions, multi_class = 'ovr')
+    print(f'El valor de AUC del modelo con imágenes de {test} es: {auc}')
+    
+    #finalmente creamos la lista de métricas y la devolvemos
+    metricas = [matrix, accuracy, bal_acc, f_score, kappa, auc]
+    return metricas
