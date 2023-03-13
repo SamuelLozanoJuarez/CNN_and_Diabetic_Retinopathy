@@ -32,6 +32,8 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     ------------------------------------------------------------------------
     Devuelve 2 elementos: una lista que contiene los valores de accuracy a lo largo de las épocas (acc_graph) y una lista que devuelve los valores del loss a lo largo de las épocas (loss_graph).
     '''
+    #primero importamos las dependencias necesarias para el funcionamiento de la función
+    import torch as torch
     #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para devolverlos
     acc_graph = []
     loss_graph = []
@@ -93,9 +95,9 @@ def representa_train(valores,metrica,red):
     if metrica == 'Accuracy':
         color = 'blue'
     elif metrica == 'Loss':
-        color == 'orange
+        color == 'orange'
     #por último representamos estos valores
-    plt.plot(range(1,len(valores)+1),valores, color = color linewidth = 3)
+    plt.plot(range(1,len(valores)+1),valores, color = color, linewidth = 3)
     #y mostramos la figura
     plt.show()
     
