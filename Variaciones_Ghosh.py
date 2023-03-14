@@ -431,6 +431,12 @@ segunda = Segunda_var()
 #mostramos su estructura
 print(segunda)
 
+#definimos como loss la función de tipo cross entropy 
+criterion = nn.CrossEntropyLoss() 
+
+#en este caso el optimizador será la función Adam (ampliamente utilizada)
+optimizer = torch.optim.Adam(params = segunda.parameters()) #dejamos el valor de learning-rate por defecto (0.001)
+
 #entrenamos la red haciendo uso de la función 'entrena()' importada
 #recogemos los resultados en 2 variables que posteriormente nos permitirán representar la evolución de accuracy y loss
 acc,loss = entrena(segunda,epocas,train_loader,optimizer,criterion)
@@ -610,6 +616,12 @@ tercera = Tercera_var()
 #mostramos su estructura
 print(tercera)
 
+#definimos como loss la función de tipo cross entropy 
+criterion = nn.CrossEntropyLoss() 
+
+#en este caso el optimizador será la función Adam (ampliamente utilizada)
+optimizer = torch.optim.Adam(params = tercera.parameters()) #dejamos el valor de learning-rate por defecto (0.001)
+
 #entrenamos la red haciendo uso de la función 'entrena()' importada
 #recogemos los resultados en 2 variables que posteriormente nos permitirán representar la evolución de accuracy y loss
 acc,loss = entrena(tercera,epocas,train_loader,optimizer,criterion)
@@ -752,6 +764,12 @@ class Cuarta_var(nn.Module):
 cuarta = Cuarta_var()
 #mostramos su estructura
 print(cuarta)
+
+#definimos como loss la función de tipo cross entropy 
+criterion = nn.CrossEntropyLoss() 
+
+#en este caso el optimizador será la función Adam (ampliamente utilizada)
+optimizer = torch.optim.Adam(params = cuarta.parameters()) #dejamos el valor de learning-rate por defecto (0.001)
 
 #entrenamos la red haciendo uso de la función 'entrena()' importada
 #recogemos los resultados en 2 variables que posteriormente nos permitirán representar la evolución de accuracy y loss
@@ -896,6 +914,12 @@ quinta = Quinta_var()
 #mostramos su estructura
 print(quinta)
 
+#definimos como loss la función de tipo cross entropy 
+criterion = nn.CrossEntropyLoss() 
+
+#en este caso el optimizador será la función Adam (ampliamente utilizada)
+optimizer = torch.optim.Adam(params = quinta.parameters()) #dejamos el valor de learning-rate por defecto (0.001)
+
 #entrenamos la red haciendo uso de la función 'entrena()' importada
 #recogemos los resultados en 2 variables que posteriormente nos permitirán representar la evolución de accuracy y loss
 acc,loss = entrena(quinta,epocas,train_loader,optimizer,criterion)
@@ -1038,6 +1062,12 @@ class Sexta_var(nn.Module):
 sexta = Sexta_var()
 #mostramos su estructura
 print(sexta)
+
+#definimos como loss la función de tipo cross entropy 
+criterion = nn.CrossEntropyLoss() 
+
+#en este caso el optimizador será la función Adam (ampliamente utilizada)
+optimizer = torch.optim.Adam(params = sexta.parameters()) #dejamos el valor de learning-rate por defecto (0.001)
 
 #entrenamos la red haciendo uso de la función 'entrena()' importada
 #recogemos los resultados en 2 variables que posteriormente nos permitirán representar la evolución de accuracy y loss
