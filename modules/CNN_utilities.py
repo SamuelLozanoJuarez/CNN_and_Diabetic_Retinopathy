@@ -142,7 +142,7 @@ def tester(red,loader):
     
     return y_true,y_pred,predictions
 
-def representa_test(y_true, y_pred, predictions, test):
+def representa_test(y_true, y_pred, predictions, test, red):
     '''
     Calcula los valores de las siguientes métricas: matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC, y las muestra por pantalla.
     
@@ -152,6 +152,7 @@ def representa_test(y_true, y_pred, predictions, test):
     y_pred: array unidimensional de numpy que contiene al lista de etiquetas predichas.
     predictions: array de numpy que contiene la probabilidad de pertenencia a cada clase para cada imagen. Se emplea para el cálculo de AUC.
     test: String que indica cuál ha sido el conjunto de imágenes empleado para el test. Típicamente puede tomar 2 valores: iPhone o Samsung.
+    red: String que identifica el nombre de la red empleada en el testeo.
     
     Return
     ------------------------------------------------------------------------
@@ -161,6 +162,9 @@ def representa_test(y_true, y_pred, predictions, test):
     import sklearn
     from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
     import seaborn as sns
+    
+    #indicamos la red empleada en la prueba y obtención de métricas
+    print(f'Métricas obtenidas con el modelo {red}\n')
     
     #primero obtenemos la matriz de confusión
     matrix = confusion_matrix(y_true, y_pred)
