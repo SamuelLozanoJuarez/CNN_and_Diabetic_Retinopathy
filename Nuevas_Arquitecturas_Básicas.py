@@ -176,7 +176,7 @@ class Ghosh(nn.Module):
         self.activation = nn.PReLU()
         
         #la capa de MaxPool
-        self.pool = nn.MaxPool2d(
+            self.pool = nn.MaxPool2d(
             kernel_size = 2, #establecemos el tamaño del kernel a 2*2
             stride = 2 #cantidad píxeles que se desplaza el filtro sobre la imagen
         )

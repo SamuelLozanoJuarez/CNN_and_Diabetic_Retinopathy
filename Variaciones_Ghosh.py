@@ -706,7 +706,7 @@ class Cuarta_var(nn.Module):
         
         #la primera capa de neuronas a la que aplicaremos Dropout como técnica de regularización
         self.fc1 = nn.Linear(
-            in_features = 1152, #número de características de entrada
+            in_features = 128*9, #número de características de entrada
             out_features = 1024 #número de neuronas de salida
         )
         
