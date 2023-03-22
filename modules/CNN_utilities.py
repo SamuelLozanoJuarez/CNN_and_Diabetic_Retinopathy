@@ -199,3 +199,39 @@ def representa_test(y_true, y_pred, predictions, test, red):
     #finalmente creamos la lista de métricas y la devolvemos
     metricas = [matrix, accuracy, bal_acc, f_score, kappa, auc]
     return metricas
+
+def obtiene_metricas(y_true, y_pred, predictions):
+    '''
+    Calcula los valores de las siguientes métricas: matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC.
+    
+    Parámetros
+    ------------------------------------------------------------------------
+    y_true: array unidimensional de numpy que contiene al lista de etiquetas reales.
+    y_pred: array unidimensional de numpy que contiene al lista de etiquetas predichas.
+    predictions: array de numpy que contiene la probabilidad de pertenencia a cada clase para cada imagen. Se emplea para el cálculo de AUC.
+    
+    Return
+    ------------------------------------------------------------------------
+    metricas: estructura de tipo lista que contiene las métricas calculadas en el siguiente orden: matriz de confusión, accuracy, balanced accuracy, F-score, Quadratic Weighted Kappa y AUC.
+    '''
+    #en este caso vamos a realizar una importación de las dependencias necesarias, ya que puede que no estén importadas en el script
+    import sklearn
+    from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
+    import seaborn as sns
+    
+    #primero obtenemos la matriz de confusión
+    matrix = confusion_matrix(y_true, y_pred)
+    #calculamos el valor de accuracy
+    accuracy = accuracy_score(y_true = y_true, y_pred = y_pred)
+    #el balanced accuracy
+    bal_acc = balanced_accuracy_score(y_true = y_true, y_pred = y_pred)
+    #el F-score
+    f_score = f1_score(y_true = y_true, y_pred = y_pred,average = 'weighted')
+    #calculamos el valor de quadratic weighted kappa
+    kappa = cohen_kappa_score(y1 = y_true, y2 = y_pred)
+    #y por último calculamos el valor de AUC bajo la curva ROC, importante indicar que se trata de un problema "ovr" (One vs Rest)
+    auc = roc_auc_score(y_true = y_true, y_score = predictions, multi_class = 'ovr')
+    
+    #finalmente creamos la lista de métricas y la devolvemos
+    metricas = [matrix, accuracy, bal_acc, f_score, kappa, auc]
+    return metricas
