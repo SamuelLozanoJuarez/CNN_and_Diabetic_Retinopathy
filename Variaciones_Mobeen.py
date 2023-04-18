@@ -31,6 +31,9 @@ import numpy as np #para las métricas de la red
 #importamos también las funcioness definidas para el entrenamiento y puesta a prueba de los modelos
 from modules.CNN_utilities import entrena, representa_test, obtiene_metricas, tester
 
+#importamos el paquete para el cálculo del tiempo de ejecución
+import time
+
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 4
 #en la arquitectura propuesta por Mobeen no se especifica ninguna escala, por lo que se empleará una escala cualquiera (512 por ejemplo)
@@ -296,8 +299,12 @@ for capas in [2,3,4]:
             #previo al entrenamiento imprimimos por pantalla las características de la red, para poder identificar su entrenamiento
             print('--------------------------------------')
             print(f'Entrenamiento. Características:\n  -Capas:{capas}\n  -Filtros:{n_filtros}\n  -Neuronas:{n_neuronas}\n')
+            #capturamos el tiempo previo al entrenamiento
+            inicio = time.time()
             #entrenamos la red
             entrena(modelo,epocas,train_loader,optimizer,criterion)
+            #y el tiempo tras el entrenamiento
+            fin = time.time()
             
             #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
             y_true_iphone, y_pred_iphone, predictions_iphone = tester(modelo,test_i_loader)
@@ -306,11 +313,11 @@ for capas in [2,3,4]:
             #las mostramos por pantalla
             print('\n--------------------------------------')
             print(f'Test. Características:\n  -Capas:{capas}\n  -Filtros:{n_filtros}\n  -Neuronas:{n_neuronas}\n  -Test:iphone')
-            print(f' - Matriz de confusión:\n{metricas_iphone[0]}\n - Accuracy:{metricas_iphone[1]}\n - Balanced accuracy:{metricas_iphone[2]}\n - F-score:{metricas_iphone[3]}\n - Kappa:{metricas_iphone[4]}\n - AUC:{metricas_iphone[5]}')
+            print(f' - Matriz de confusión:\n{metricas_iphone[0]}\n - Accuracy:{metricas_iphone[1]}\n - Balanced accuracy:{metricas_iphone[2]}\n - F-score:{metricas_iphone[3]}\n - Kappa:{metricas_iphone[4]}\n - AUC:{metricas_iphone[5]}\n - Tiempo:{(fin-inicio)/60} mins')
             #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
             with open('Resultados.csv','a') as fd:
                 fd.write('\n')
-                fd.write(f'OCT,No,No,No,RGB,Mobeen,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]}')
+                fd.write(f'OCT,No,No,No,RGB,Mobeen,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
                 
                 
             #ahora ponemos a prueba la red con el conjunto de Samsung usando la función tester y recogemos los resultados para obtener las métricas
@@ -320,11 +327,11 @@ for capas in [2,3,4]:
             #las mostramos por pantalla
             print('\n--------------------------------------')
             print(f'Test. Características:\n  -Capas:{capas}\n  -Filtros:{n_filtros}\n  -Neuronas:{n_neuronas}\n  -Test:Samsung')
-            print(f' - Matriz de confusión:\n{metricas_samsung[0]}\n - Accuracy:{metricas_samsung[1]}\n - Balanced accuracy:{metricas_samsung[2]}\n - F-score:{metricas_samsung[3]}\n - Kappa:{metricas_samsung[4]}\n - AUC:{metricas_samsung[5]}')
+            print(f' - Matriz de confusión:\n{metricas_samsung[0]}\n - Accuracy:{metricas_samsung[1]}\n - Balanced accuracy:{metricas_samsung[2]}\n - F-score:{metricas_samsung[3]}\n - Kappa:{metricas_samsung[4]}\n - AUC:{metricas_samsung[5]}\n - Tiempo:{(fin-inicio)/60} mins')
             #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
             with open('Resultados.csv','a') as fd:
                 fd.write('\n')
-                fd.write(f'OCT,No,No,No,RGB,Mobeen,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]}')
+                fd.write(f'OCT,No,No,No,RGB,Mobeen,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
                 
             #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
             torch.save(modelo.state_dict(), f'modelos/Mobeen/OCT_Noval_Noprep_Noinp_RGB_{capas}_{filtros}_{neuronas}.pth')
