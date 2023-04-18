@@ -36,6 +36,9 @@ import sklearn
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
 import seaborn as sns
 
+#e importamos el paquete que permitirá controlar los tiempos de entrenamiento
+import time
+
 #en este script se entrenarán modelos que siguen una estructura idéntica a la relatada en los siguientes artículos:
 # - Automatic Detection and Classification of Diabetic Retinopathy stages using CNN (Ghosh R.,Ghosh K.)
 # - Classification of Diabetic Retinopathy Images Based on Customised CNN Architecture (Mobeen-ur-Rehman)
@@ -260,6 +263,8 @@ optimizer = torch.optim.Adam(params = ghosh.parameters()) #dejamos el valor de l
 #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para poder graficarlo posteriormente
 acc_graph = []
 loss_graph = []
+#capturamos el tiempo antes del entrenamiento
+inicio = time.time()
 #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
@@ -286,6 +291,9 @@ for epoch in range(epocas):
     #añadimos los valores a la lista correspondiente
     loss_graph.append(loss.data.item())
     acc_graph.append(correct/len(OCT))
+
+#y capturamos el tiempo tras el entrenamiento
+fin = time.time()
 
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
@@ -325,6 +333,9 @@ with torch.no_grad():
 y_true_iphone = np.concatenate(y_true_iphone)
 y_pred_iphone = np.concatenate(y_pred_iphone)
 predictions = np.concatenate(predictions)
+
+#antes de mostrar las métricas, mostramos el tiempo
+print(f'El tiempo de entrenamiento del modelo Ghosh fue de {(fin-inicio)/60} minutos.')
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 #primero la matriz de confusión
@@ -495,6 +506,8 @@ optimizer = torch.optim.Adam(params = mobeen.parameters()) #dejamos el valor de 
 #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para poder graficarlo posteriormente
 acc_graph = []
 loss_graph = []
+#captura del tiempo antes de entrenar
+inicio = time.time()
 #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
@@ -521,6 +534,9 @@ for epoch in range(epocas):
     #añadimos los valores a la lista correspondiente
     loss_graph.append(loss.data.item())
     acc_graph.append(correct/len(OCT))
+
+#captura del tiempo tras el entrenamiento
+fin = time.time()
 
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
@@ -560,6 +576,9 @@ with torch.no_grad():
 y_true_iphone = np.concatenate(y_true_iphone)
 y_pred_iphone = np.concatenate(y_pred_iphone)
 predictions = np.concatenate(predictions)
+
+#antes de calcular y mostrar las métricas, mostramos el tiempo de entrenamiento en minutos
+print(f'El tiempo de entrenamiento del modelo Mobeen fue de {(fin-inicio)/60} minutos.')
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 #primero la matriz de confusión
@@ -810,6 +829,8 @@ optimizer = torch.optim.Adam(params = rajagopalan.parameters()) #dejamos el valo
 #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para poder graficarlo posteriormente
 acc_graph = []
 loss_graph = []
+#capturamos el tiempo antes de entrenar
+inicio = time.time()
 #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
@@ -836,6 +857,9 @@ for epoch in range(epocas):
     #añadimos los valores a la lista correspondiente
     loss_graph.append(loss.data.item())
     acc_graph.append(correct/len(OCT))
+
+#y capturamos el tiempo tras el entrenamiento
+fin = time.time()
 
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
@@ -931,6 +955,9 @@ with torch.no_grad():
 y_true_samsung = np.concatenate(y_true_samsung)
 y_pred_samsung = np.concatenate(y_pred_samsung)
 predictions = np.concatenate(predictions)
+
+#antes de calcular y mostrar las métricas, mostramos el tiempo de entrenamiento en minutos
+print(f'El tiempo de entrenamiento del modelo Rajagopalan fue de {(fin-inicio)/60} minutos.')
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 matrix_samsung = confusion_matrix(y_true_samsung, y_pred_samsung)
@@ -1121,6 +1148,8 @@ optimizer = torch.optim.Adam(params = alqudah.parameters()) #dejamos el valor de
 #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para poder graficarlo posteriormente
 acc_graph = []
 loss_graph = []
+#capturamos el tiempo antes de entrenar
+inicio = time.time()
 #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
@@ -1148,6 +1177,9 @@ for epoch in range(epocas):
     loss_graph.append(loss.data.item())
     acc_graph.append(correct/len(OCT))
 
+#capturamos el tiempo tras el entrenamiento
+fin = time.time()
+    
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
 plt.title('Evolución del Accuracy')
@@ -1186,6 +1218,9 @@ with torch.no_grad():
 y_true_iphone = np.concatenate(y_true_iphone)
 y_pred_iphone = np.concatenate(y_pred_iphone)
 predictions = np.concatenate(predictions)
+
+#antes de calcular y mostrar las métricas, mostramos el tiempo de entrenamiento en minutos
+print(f'El tiempo de entrenamiento del modelo Alqudah fue de {(fin-inicio)/60} minutos.')
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 #primero la matriz de confusión

@@ -41,6 +41,9 @@ import sklearn
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
 import seaborn as sns
 
+#e importamos el paquete para el cálculo del tiempo de ejecución
+import time
+
 #es necesario incluir la siguiente línea para que no se produzcan errores en la representación de las imágenes (entran en conflicto algunos ficheros de matplotlib con los de PyTorch sino)
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
@@ -206,6 +209,8 @@ optimizer = torch.optim.Adam(params = cnn.parameters(), #los parámetros son los
 #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de cada época para poder graficarlo posteriormente
 acc_graph = []
 loss_graph = []
+#capturamos el tiempo antes de comenzar el entrenamiento
+inicio = time.time()
 #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
@@ -233,6 +238,9 @@ for epoch in range(epocas):
     loss_graph.append(loss.data.item())
     acc_graph.append(correct/len(OCT))
 
+#y volvemos a capturar el tiempo una vez finalizado el entrenamiento
+fin = time.time()
+    
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
 plt.title('Evolución del Accuracy')
@@ -271,6 +279,9 @@ with torch.no_grad():
 y_true_iphone = np.concatenate(y_true_iphone)
 y_pred_iphone = np.concatenate(y_pred_iphone)
 predictions = np.concatenate(predictions)
+
+#antes de calcular y mostrar las métricas, mostramos el tiempo de entrenamiento en minutos
+print(f'El tiempo de entrenamiento del modelo fue de {(fin-inicio)/60} minutos.')
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 #primero la matriz de confusión
