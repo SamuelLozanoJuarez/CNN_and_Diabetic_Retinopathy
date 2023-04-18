@@ -1,1 +1,1 @@
-img_entrenamiento,validacion,preprocesamiento,inpaint,RGB_gray,arquitectura,capas,filtros,neuronas,test,Acc,Bal_acc,F-score,Kappa,AUC
+img_entrenamiento,validacion,preprocesamiento,inpaint,RGB_gray,arquitectura,capas,filtros,neuronas,test,Acc,Bal_acc,F-score,Kappa,AUC,Tiempo(mins)
