@@ -68,6 +68,97 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     #devolvemos los valores de loss y accuracy almacenados
     return acc_graph, loss_graph
 
+def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion):
+    #primero importamos los paquetes necesarios
+    import torch
+    #inicializamos best_val_loss (que es el parámetro que va a marcar el Early Stopping) como infinito
+    best_val_loss = float('inf')
+    #creamos también una variable para almacenar los parámetros del mejor modelo (aquel con menor val_loss)
+    best_model_params = None
+    #iniciamos también un contador, para poder aplicar Early Stopping con la paciencia deseada
+    contador = 0
+    #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de train cada época para devolverlas
+    acc_graph = []
+    loss_graph = []
+    #y 2 listas en las que almacenaremos los valores de accuracy y loss de validación cada época para poder devolverlas
+    val_acc_graph = []
+    val_loss_graph = []
+    
+    #para entrenar el modelo vamos a iterar el número de épocas determinadas, calculando el valor de loss y accuracy para cada época
+    for epoch in range(epocas):
+        #establecemos el número de predicciones correctas inicial a 0
+        correct = 0
+        #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
+        for data in train_loader:
+            inputs, labels = data
+            #establecemos a 0 los parámetros del modelo
+            optimizer.zero_grad()
+            #generamos las predicciones de los inputs
+            outputs = red(inputs)
+            #calculamos el loss, la desviación de las predicciones con respecto a las etiquetas
+            loss = criterion(outputs, labels)
+            #propagamos hacia atrás el valor loss
+            loss.backward()
+            #y modificamos los pesos en función del loss y la función optimizer
+            optimizer.step()
+            #actualizamos el número de predicciones correctas
+            _, predicted = torch.max(outputs.data, 1)
+            correct += (predicted == labels).sum().item()
+            
+        #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
+        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {loss.data.item()}')
+        #añadimos los valores a la lista correspondiente
+        loss_graph.append(loss.data.item())
+        acc_graph.append(correct/len(train_loader.dataset))
+
+        #realizamos ahora las iteraciones correspondientes a las imágenes de validación
+        #primero establecemos el valor del loss de validación a cero
+        val_loss = 0.0
+        #establecemos así mismo el número de predicciones correctas nuevamente a cero
+        correct = 0
+        #cargamos las imágenes de validación y sus etiquetas
+        for data in val_loader:
+            inputs, labels = data
+            #generamos las predicciones a partir de los inputs
+            outputs = red(inputs)
+            #calculamos el loss
+            loss = criterion(outputs, labels)
+            #y lo vamos acumulando
+            val_loss += loss.item()
+            #finalmente calculamos el número de predicciones correctas
+            _, predicted = torch.max(outputs.data, 1)
+            correct += (predicted == labels).sum().item()
+        
+        #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy de validación
+        print(f'Época {epoch +1}/{epocas} - Val_accuracy: {correct/len(val_loader.dataset)} - Val_loss: {loss.data.item()}')
+        #añadimos los valores a la lista correspondiente
+        val_loss_graph.append(loss.data.item())
+        val_acc_graph.append(correct/len(val_loader.dataset))
+        
+        #finalmente solo falta realizar la comprobación del Early Stopping
+        #si el valor de val_loss de esta época es inferior al mejor conseguido hasta el momento:
+        if val_loss < best_val_loss:
+            #entonces actualiza el valor del mejor val_loss (ya que lo que queremos es minimizar este valor)
+            best_val_loss = val_loss
+            #posteriormente guarda el estado del modelo actual
+            best_model_params = red.state_dict()
+            #y vuelve a establecer el contador de paciencia a 0
+            contador = 0
+        #si el valor de val_loss no disminuye (no mejora) con respecto al último mejor:
+        else:
+            #si se ha llegado al límite de la paciencia establecida detiene el entrenamiento para evitar el sobreentrenamiento
+            if contador == paciencia:
+                break
+            #si aún no ha llegado al límite de la paciencia entonces incrementa el contador en uno y sigue entrenando
+            else:
+                contador += 1
+        
+        #finalmente, una vez finalizado el entrenamiento se debe cargar el mejor estado del modelo
+        red.load_state_dict(best_model_params)
+        
+    #y devolver las métricas almacenadas de entrenamiento y validación
+    return acc_graph, loss_graph, val_acc_graph, val_loss_graph
+
 def representa_train(valores,metrica,red):
     '''
     Genera y muestra una gráfica en la que se representa la evolución de una determinada métrica de entrenamiento de una red (Accuracy o Loss) a lo largo de las épocas.
