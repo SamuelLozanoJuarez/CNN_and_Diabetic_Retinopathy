@@ -69,6 +69,25 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     return acc_graph, loss_graph
 
 def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion):
+    '''
+    Realiza el entrenamiento completo de la red pasada como parámetro, empleando para ello las imágenes de entrenamiento proporcionadas por la estructura "loader" también pasada como parámetro.
+    Además de llevar a cabo el entrenamiento, también es capaz de almacenar las métricas del entrenamiento (loss y accuracy).
+    Esta función tiene en cuenta el conjunto de datos de validación en el entrenamiento, incluyendo estrategias de "early stopping" que evitan el sobreentrenamiento.
+    
+    Parámetros
+    ------------------------------------------------------------------------
+    red: instancia del modelo de CNN que se desea entrenar. 
+    epocas: valor entero que representa el número de épocas que se desea entrenar el modelo.
+    paciencia: valor entero que representa el número de épocas consecutivas con valores de val_loss en aumennto que espera la función antes de detener el entrenamiento.
+    train_loader: función de tipo DataLoader() que irá generando los lotes de imágenes con sus respectivas etiquetas usados en el entrenamiento de la red.
+    val_loader: función de tipo DataLoader() que irá generando los lotes de imágenes con sus respectivas etiquetas usados en la validación de la red.
+    optimizer: función optimizadora de la red (encargada de modificar el valor de los parámetros y pesos de la red en base a la diferencia entre etiquetas reales y etiquetas predichas). Suele ser una función perteneciente al paquete torch.optim
+    criterion: función de tipo "loss" que nos permite conocer cómo de alejadas están las predicciones de la red con respecto a las etiquetas reales. Suele pertenecer al módulo nn.
+    
+    Return
+    ------------------------------------------------------------------------
+    Devuelve 4 elementos: una lista que contiene los valores de accuracy de entrenamiento a lo largo de las épocas (acc_graph), una lista que devuelve los valores del loss de entrenamiento a lo largo de las épocas (loss_graph), una lista que contiene los valores de accuracy de validación a lo largo de las épocas (val_acc_graph) y una lista que devuelve los valores del loss de validación a lo largo de las épocas (val_loss_graph).
+    '''
     #primero importamos los paquetes necesarios
     import torch
     #inicializamos best_val_loss (que es el parámetro que va a marcar el Early Stopping) como infinito
