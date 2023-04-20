@@ -149,7 +149,7 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
             correct += (predicted == labels).sum().item()
         
         #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy de validación
-        print(f'Época {epoch +1}/{epocas} - Val_accuracy: {correct/len(val_loader.dataset)} - Val_loss: {loss.data.item()}')
+        print(f'Época {epoch +1}/{epocas} - Val_accuracy: {correct/len(val_loader.dataset)} - Val_loss: {loss.data.item()}\n')
         #añadimos los valores a la lista correspondiente
         val_loss_graph.append(loss.data.item())
         val_acc_graph.append(correct/len(val_loader.dataset))
@@ -227,6 +227,10 @@ def tester(red,loader):
     y_pred: array unidimensional de numpy que contiene al lista de etiquetas predichas por el modelo para cada imagen.
     predictions: array de numpy que contiene la probabilidad de pertenencia a cada clase para cada imagen proporcionada por la red. Se emplea en el posterior cálculo de AUC.
     '''
+    #realizamos las importaciones necesarias 
+    import torch
+    import torch.nn as nn
+    import numpy as np
     #creamos las 2 listas para almacenar las etiquetas reales y las etiquetas predichas
     y_true = []
     y_pred = []
