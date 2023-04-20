@@ -32,6 +32,7 @@ import numpy as np #para las métricas de la red
 from modules.CNN_utilities import entrena, representa_test, obtiene_metricas, tester
 
 #importamos el paquete que permite calcular el tiempo de entrenamiento
+import time
 
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 4
