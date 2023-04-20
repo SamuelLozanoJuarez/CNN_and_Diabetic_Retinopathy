@@ -41,6 +41,8 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
     for epoch in range(epocas):
         #establecemos el número de predicciones correctas inicial a 0
         correct = 0
+        #y el acumulador de loss a 0.0
+        train_loss = 0.0
         #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader pasada como parámetro
         for i, data in enumerate(train_loader):
             #obtenemos las imágenes y etiquetas del lote por separado
@@ -58,11 +60,13 @@ def entrena(red,epocas,train_loader,optimizer,criterion):
             #actualizamos el número de predicciones correctas
             _, predicted = torch.max(outputs.data, 1)
             correct += (predicted == labels).sum().item()
+            #añadimos el valor de loss al acumulador train_loss
+            train_loss += loss.item()
 
         #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
-        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {loss.data.item()}')
+        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {train_loss/len(train_loader.dataset)}')
         #añadimos los valores a la lista correspondiente
-        loss_graph.append(loss.data.item())
+        loss_graph.append(train_loss/len(train_loader.dataset))
         acc_graph.append(correct/len(train_loader.dataset))
         
     #devolvemos los valores de loss y accuracy almacenados
@@ -107,6 +111,8 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
     for epoch in range(epocas):
         #establecemos el número de predicciones correctas inicial a 0
         correct = 0
+        #y el acumulador de loss a 0.0
+        train_loss = 0.0
         #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
         for data in train_loader:
             inputs, labels = data
@@ -123,11 +129,13 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
             #actualizamos el número de predicciones correctas
             _, predicted = torch.max(outputs.data, 1)
             correct += (predicted == labels).sum().item()
+            #añadimos el valor de loss al acumulador train_loss
+            train_loss += loss.item()
             
         #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
-        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {loss.data.item()}')
+        print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(train_loader.dataset)} - Loss: {train_loss/len(train_loader.dataset)}')
         #añadimos los valores a la lista correspondiente
-        loss_graph.append(loss.data.item())
+        loss_graph.append(train_loss/len(train_loader.dataset))
         acc_graph.append(correct/len(train_loader.dataset))
 
         #realizamos ahora las iteraciones correspondientes a las imágenes de validación
@@ -149,16 +157,16 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
             correct += (predicted == labels).sum().item()
         
         #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy de validación
-        print(f'Época {epoch +1}/{epocas} - Val_accuracy: {correct/len(val_loader.dataset)} - Val_loss: {loss.data.item()}\n')
+        print(f'Época {epoch +1}/{epocas} - Val_accuracy: {correct/len(val_loader.dataset)} - Val_loss: {val_loss/len(val_loader.dataset)}\n')
         #añadimos los valores a la lista correspondiente
-        val_loss_graph.append(loss.data.item())
+        val_loss_graph.append(val_loss/len(val_loader.dataset))
         val_acc_graph.append(correct/len(val_loader.dataset))
         
         #finalmente solo falta realizar la comprobación del Early Stopping
         #si el valor de val_loss de esta época es inferior al mejor conseguido hasta el momento:
-        if val_loss < best_val_loss:
+        if (val_loss/len(val_loader.dataset)) < best_val_loss:
             #entonces actualiza el valor del mejor val_loss (ya que lo que queremos es minimizar este valor)
-            best_val_loss = val_loss
+            best_val_loss = val_loss/len(val_loader.dataset)
             #posteriormente guarda el estado del modelo actual
             best_model_params = red.state_dict()
             #y vuelve a establecer el contador de paciencia a 0

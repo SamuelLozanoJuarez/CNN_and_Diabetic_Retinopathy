@@ -215,6 +215,8 @@ inicio = time.time()
 for epoch in range(epocas):
     #establecemos el número de predicciones correctas inicial a 0
     correct = 0
+    #y el acumulador de loss a 0.0
+    train_loss = 0.0
     #y cargamos las imágenes de entrenamiento y sus etiquetas usando la estructura Loader previamente creada
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -231,11 +233,13 @@ for epoch in range(epocas):
         #actualizamos el número de predicciones correctas
         _, predicted = torch.max(outputs.data, 1)
         correct += (predicted == labels).sum().item()
+        #añadimos el valor de loss al acumulador train_loss
+        train_loss += loss.item()
     
     #una vez finalizada la época (que recorre todo el conjunto de imágenes) mostramos el valor del loss y del accuracy
-    print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(OCT)} - Loss: {loss.data.item()}')
+    print(f'Época {epoch +1}/{epocas} - Accuracy: {correct/len(OCT)} - Loss: {train_loss/len(OCT)}')
     #añadimos los valores a la lista correspondiente
-    loss_graph.append(loss.data.item())
+    loss_graph.append(train_loss/len(OCT))
     acc_graph.append(correct/len(OCT))
 
 #y volvemos a capturar el tiempo una vez finalizado el entrenamiento
