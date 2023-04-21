@@ -357,3 +357,76 @@ def obtiene_metricas(y_true, y_pred, predictions):
     #finalmente creamos la lista de métricas y la devolvemos
     metricas = [matrix, accuracy, bal_acc, f_score, kappa, auc]
     return metricas
+
+def guarda_graficas(imagenes,validacion,preproc,inpaint,color,arq,capas,filtros,neuronas,acc,loss,val_acc = 0,val_loss = 0):
+    '''
+    Genera las gráficas que representan la evolución de las métricas accuracy, loss, val_accuracy y val_loss a lo largo de las épocas de entrenamiento de un modelo. Además de generar estas gráficas posteriormente las almacena.
+    
+    Parámetros
+    ------------------------------------------------------------------------
+    imagenes: String que indica qué conjunto de imágenes se han usado en el entrenamiento. Puede tomar el valor "OCT" si las imágenes usadas fueron únicamente las proporcionadas por el HUBU o "BigData" si son las tomadas de los repositorios.
+    validacion: String que indica si en el entrenamiento se ha usado validación o no. Puede tomar el valor "Si" o "No".
+    preproc: String que indica si en el entrenamiento se han usado imágenes preprocesadas o no. Puede tomar el valor "Si" o "No".
+    inpaint: String que indica si en el entrenamiento se han usado imágenes inpaintadas o no. Puede tomar el valor "Si" o "No".
+    color: String que indica si las imágenes usadas eran en blanco y negro (bn) o a color (RGB).
+    arq: String que indica la arquitectura empleada en la construcción del modelo (Alqudah, Ghosh, Mobeen, Rajagopalan o Basica).
+    capas: entero que representa el número de capas convolucionales del modelo.
+    filtros: float que representa el factor por el que se han multiplicado el número de filtros de cada capa convolucional.
+    neuronas: String que representa el número de neuronas de las últimas capas fully-connected del modelo.
+    acc: lista que contiene los valores del accuracy a lo largo de las distintas épocas de entrenamiento.
+    loss: lista que contiene los valores del loss a lo largo de las distintas épocas de entrenamiento.
+    val_acc: lista que contiene los valores del val_accuracy a lo largo de las distintas épocas de entrenamiento.
+    val_loss: lista que contiene los valores del val_loss a lo largo de las distintas épocas de entrenamiento.
+
+    Return
+    ------------------------------------------------------------------------
+    No devuelve ningún valor.
+    '''
+    #primero realizamos las importaciones necesarias
+    import matplotlib
+    from matplotlib import pyplot as plt
+    
+    #creamos la figura que representará el accuracy y loss, asignándole el tamaño deseado
+    plt.figure(figsize = (10,10))
+    #creamos las marcas correspondientes en cada eje
+    plt.xticks(range(1,len(acc)+1))
+    plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+    #representamos el accuracy y el loss asignándole un color y etiqueta a cada representación
+    plt.plot(range(1,len(acc)+1),acc,color = 'red',label = 'Accuracy')
+    plt.plot(range(1,len(loss)+1),loss,color = 'blue', label = 'Loss')
+    #damos el nombre a los ejes
+    plt.xlabel('\nNº época',fontsize = 12)
+    plt.ylabel('Valor\n',fontsize = 12)
+    #y el título a la gráfica
+    plt.title(f'Entrenamiento {arq}, capas: {capas}, filtros: {filtros}, neuronas: {neuronas}\nDataset: {imagenes}, validacion: {validacion}, preprocesamiento: {preproc}, inpainting: {inpaint}, color: {color}',fontsize = 15)
+    #incluimos la leyenda
+    plt.legend()
+    #finalmente guardamos la figura
+    #primero debemos redefinir las cadenas de filtros y neuronas para eliminar los puntos y barras laterales que darán problemas en el nombre
+    filtros_str = str(filtros).replace(".","punto")
+    neuronas_str = str(neuronas).replace("/","slash")
+    plt.savefig(f'graficas/{arq}/Entrenamiento_{imagenes}_{validacion}val_{preproc}prep_{inpaint}inp_{color}_{capas}_{filtros_str}_{neuronas_str}.png',dpi = 300)
+    #y cerramos la figura
+    plt.close()
+    
+    #ahora debemos repetir el proceso pero para las gráficas de validación
+    if val_acc != 0 and val_loss != 0:
+        #creamos la figura que representará el accuracy y loss, asignándole el tamaño deseado
+        plt.figure(figsize = (10,10))
+        #creamos las marcas correspondientes en cada eje
+        plt.xticks(range(1,len(val_acc)+1))
+        plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+        #representamos el accuracy y el loss asignándole un color y etiqueta a cada representación
+        plt.plot(range(1,len(val_acc)+1),val_acc,color = 'orange',label = 'Val Accuracy')
+        plt.plot(range(1,len(val_loss)+1),val_loss,color = 'cyan', label = 'Val Loss')
+        #damos el nombre a los ejes
+        plt.xlabel('\nNº época',fontsize = 12)
+        plt.ylabel('Valor\n',fontsize = 12)
+        #y el título a la gráfica
+        plt.title(f'Validación {arq}, capas: {capas}, filtros: {filtros}, neuronas: {neuronas}\nDataset: {imagenes}, validacion: {validacion}, preprocesamiento: {preproc}, inpainting: {inpaint}, color: {color}',fontsize = 15)
+        #incluimos la leyenda
+        plt.legend()
+        #finalmente guardamos la figura
+        plt.savefig(f'graficas/{arq}/Validacion_{imagenes}_{validacion}val_{preproc}prep_{inpaint}inp_{color}_{capas}_{filtros_str}_{neuronas_str}.png',dpi = 300)
+        #y cerramos la figura
+        plt.close()

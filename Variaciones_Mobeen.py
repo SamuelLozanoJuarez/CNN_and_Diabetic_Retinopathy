@@ -334,5 +334,8 @@ for capas in [2,3,4]:
                 fd.write(f'OCT,No,No,No,RGB,Mobeen,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
                 
             #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
-            torch.save(modelo.state_dict(), f'modelos/Mobeen/OCT_Noval_Noprep_Noinp_RGB_{capas}_{str(filtros).replace('.','punto')}_{str(neuronas).replace('/','slash')}.pth')
+            #para ello es necesario redefinir el valor de filtros y neuronas, para eliminar los puntos y barras laterales que no serían permitidos en el nombre del archivo
+            filtros_str = str(filtros).replace('.','punto')
+            neuronas_str = str(neuronas).replace('/','slash')
+            torch.save(modelo.state_dict(), f'modelos/Mobeen/OCT_Noval_Noprep_Noinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
 
