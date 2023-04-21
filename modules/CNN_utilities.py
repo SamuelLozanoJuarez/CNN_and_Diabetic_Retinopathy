@@ -99,7 +99,7 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
     #creamos también una variable para almacenar los parámetros del mejor modelo (aquel con menor val_loss)
     best_model_params = None
     #iniciamos también un contador, para poder aplicar Early Stopping con la paciencia deseada
-    contador = 0
+    contador = 1
     #definimos 2 listas en las que almacenaremos los valores de accuracy y loss de train cada época para devolverlas
     acc_graph = []
     loss_graph = []
@@ -169,8 +169,8 @@ def entrena_val(red,epocas,paciencia,train_loader,val_loader,optimizer,criterion
             best_val_loss = val_loss/len(val_loader.dataset)
             #posteriormente guarda el estado del modelo actual
             best_model_params = red.state_dict()
-            #y vuelve a establecer el contador de paciencia a 0
-            contador = 0
+            #y vuelve a establecer el contador de paciencia a 1
+            contador = 1
         #si el valor de val_loss no disminuye (no mejora) con respecto al último mejor:
         else:
             #si se ha llegado al límite de la paciencia establecida detiene el entrenamiento para evitar el sobreentrenamiento
