@@ -36,7 +36,7 @@ from matplotlib import pyplot as plt #para poder representar las gráficas
 import numpy as np #para las métricas de la red
 
 #importamos también las funcioness definidas para el entrenamiento y puesta a prueba de los modelos
-from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas, tester
+from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas, tester, guarda_graficas
 
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
@@ -179,10 +179,12 @@ print(f'Entrenamiento. Características:\n  -Capas: 2\n  -Neuronas: 120/84\n  -E
 
 #capturamos el tiempo antes del entrenamiento
 inicio = time.time()
-#entrenamos el modelo con 7 épocas de paciencia
-entrena_val(cnn,epocas,7,train_loader,val_loader,optimizer,criterion)
+#entrenamos el modelo con 7 épocas de paciencia y recogemos las métricas para posteriormente guardar las gráficas
+acc,loss,val_acc,val_loss = entrena_val(cnn,epocas,7,train_loader,val_loader,optimizer,criterion)
 #y nuevamente calculamos el tiempo tras el entrenamiento
 fin = time.time()
+#posteriormente generamos y almacenamos las gráficas correspondientes a estas métricas
+guarda_graficas('OCT','Si','No','No','RGB','Basica',2,1.0,'120/84',acc,loss,val_acc,val_loss)
 
 #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
 y_true_iphone, y_pred_iphone, predictions_iphone = tester(cnn,test_i_loader)

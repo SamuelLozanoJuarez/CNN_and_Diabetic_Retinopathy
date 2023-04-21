@@ -244,6 +244,9 @@ for epoch in range(epocas):
 
 #y volvemos a capturar el tiempo una vez finalizado el entrenamiento
 fin = time.time()
+
+#guardamos las gráficas de entrenamiento
+guarda_graficas('OCT','No','No','No','RGB','Basica',2,1.0,'120/84',acc_graph,loss_graph)
     
 #a continuación mostramos la evolución temporal del accuracy
 plt.figure(figsize = (10,7))
@@ -318,6 +321,11 @@ print(f'El valor de Kappa del modelo con imágenes de iphone es: {kappa_iphone}'
 auc_iphone = roc_auc_score(y_true = y_true_iphone, y_score = predictions, multi_class = 'ovr')
 print(f'El valor de AUC del modelo con imágenes de iphone es: {auc_iphone}')
 
+#vamos a incluir los resultados en el fichero .csv
+with open('Resultados.csv','a') as fd:
+    fd.write('\n')
+    fd.write(f'OCT,No,No,No,RGB,Básica,2,1.0,120/84,iphone,{accuracy_iphone},{bal_acc_iphone},{f_score_iphone},{kappa_iphone},{auc_iphone},{(fin-inicio)/60}')
+
 #realizamos el mismo proceso para las imágenes de Samsung
 #creamos 2 listas para almacenar las etiquetas reales y las etiquetas predichas y así poder calcular las métricas
 y_true_samsung = []
@@ -370,3 +378,10 @@ print(f'El valor de Kappa del modelo con imágenes de samsung es: {kappa_samsung
 auc_samsung = roc_auc_score(y_true = y_true_samsung, y_score = predictions, multi_class = 'ovr')
 print(f'El valor de AUC del modelo con imágenes de samsung es: {auc_samsung}')
 
+#vamos a incluir los resultados en el fichero .csv
+with open('Resultados.csv','a') as fd:
+    fd.write('\n')
+    fd.write(f'OCT,No,No,No,RGB,Básica,2,1.0,120/84,Samsung,{accuracy_samsung},{bal_acc_samsung},{f_score_samsung},{kappa_samsung},{auc_samsung},{(fin-inicio)/60}')
+
+#por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
+torch.save(cnn.state_dict(), f'modelos/Basica/OCT_Noval_Noprep_Noinp_RGB.pth')

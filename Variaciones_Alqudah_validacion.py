@@ -30,7 +30,7 @@ from matplotlib import pyplot as plt #para poder representar las gráficas
 import numpy as np #para las métricas de la red
 
 #importamos también las funcioness definidas para el entrenamiento y puesta a prueba de los modelos
-from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas, tester
+from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas, tester, guarda_graficas
 
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
@@ -353,10 +353,13 @@ for capas in [2,4,6]:
             print(f'Entrenamiento. Características:\n  -Capas:{capas}\n  -Filtros:{n_filtros}\n  -Neuronas:{n_neuronas}\n  -Early Stopping\n')
             #capturamos el tiempo previo al entrenamiento
             inicio = time.time()
-            #entrenamos la red indicando una paciencia de 7 épocas
-            entrena_val(modelo,epocas,7,train_loader,val_loader,optimizer,criterion)
+            #entrenamos la red indicando una paciencia de 7 épocas y guardamos las métricas para su posterior graficación
+            acc,loss,val_acc,val_loss = entrena_val(modelo,epocas,7,train_loader,val_loader,optimizer,criterion)
             #y el tiempo posterior al entrenamiento
             fin = time.time()
+            
+            #guardamos las gráficas
+            guarda_graficas('OCT','Si','No','No','RGB','Alqudah',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
             
             #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
             y_true_iphone, y_pred_iphone, predictions_iphone = tester(modelo,test_i_loader)
@@ -386,5 +389,7 @@ for capas in [2,4,6]:
                 fd.write(f'OCT,Sí,No,No,RGB,Alqudah,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
                 
             #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
-            torch.save(modelo.state_dict(), f'modelos/Alqudah/OCT_Sival_Noprep_Noinp_RGB_{capas}_{filtros}_{neuronas}.pth')
-
+            #primero para ello debemos cambiar el String de filtros y neuronas para evitar los puntos y barras laterales
+            filtros_str = str(n_filtros).replace(".","punto")
+            neuronas_str = str(n_neuronas).replace("/","slash")
+            torch.save(modelo.state_dict(), f'modelos/Alqudah/OCT_Sival_Noprep_Noinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
