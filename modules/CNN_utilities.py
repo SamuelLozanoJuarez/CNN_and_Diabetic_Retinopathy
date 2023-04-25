@@ -339,7 +339,6 @@ def obtiene_metricas(y_true, y_pred, predictions):
     #en este caso vamos a realizar una importación de las dependencias necesarias, ya que puede que no estén importadas en el script
     import sklearn
     from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
-    import seaborn as sns
     
     #primero obtenemos la matriz de confusión
     matrix = confusion_matrix(y_true, y_pred)

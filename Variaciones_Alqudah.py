@@ -185,7 +185,7 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
             #definimos la primera capa convolucional
             self.conv1 = nn.Conv2d(
                 in_channels = 3, #3 canales de entrada porque las imágenes son a color
-                out_channels = 32, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                out_channels = int(32*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                 kernel_size = 3, #suele tratarse de un número impar
                 stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen (lo dejamos por defecto ya que el artículo no dice nada)
                 padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -193,8 +193,8 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
 
             #segunda capa convolucional
             self.conv2 = nn.Conv2d(
-                in_channels = 32, #32 canales de entrada porque es el número de salidas de la capa anterior
-                out_channels = 16, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                in_channels = int(32*filtros), #32 canales de entrada porque es el número de salidas de la capa anterior
+                out_channels = int(16*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                 kernel_size = 3, #suele tratarse de un número impar
                 stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                 padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -202,8 +202,8 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
             if capas_conv > 2:
                 #tercera capa convolucional
                 self.conv3 = nn.Conv2d(
-                    in_channels = 16, #16 canales de entrada porque es el número de salidas de la capa anterior
-                    out_channels = 8, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                    in_channels = int(16*filtros), #16 canales de entrada porque es el número de salidas de la capa anterior
+                    out_channels = int(8*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                     kernel_size = 3, #suele tratarse de un número impar
                     stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                     padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -211,8 +211,8 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
 
                 #cuarta capa convolucional
                 self.conv4 = nn.Conv2d(
-                    in_channels = 8, #8 canales de entrada porque es el número de salidas de la capa anterior
-                    out_channels = 16, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                    in_channels = int(8*filtros), #8 canales de entrada porque es el número de salidas de la capa anterior
+                    out_channels = int(16*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                     kernel_size = 3, #suele tratarse de un número impar
                     stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                     padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -221,8 +221,8 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
                 if capas_conv > 4:
                     #quinta capa convolucional
                     self.conv5 = nn.Conv2d(
-                        in_channels = 16, #16 canales de entrada porque es el número de salidas de la capa anterior
-                        out_channels = 32, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                        in_channels = int(16*filtros), #16 canales de entrada porque es el número de salidas de la capa anterior
+                        out_channels = int(32*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                         kernel_size = 3, #suele tratarse de un número impar
                         stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                         padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
@@ -230,8 +230,8 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
 
                     #sexta y última capa convolucional
                     self.conv6 = nn.Conv2d(
-                        in_channels = 32, #32 canales de entrada porque es el número de salidas de la capa anterior
-                        out_channels = 16, #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
+                        in_channels = int(32*filtros), #32 canales de entrada porque es el número de salidas de la capa anterior
+                        out_channels = int(16*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
                         kernel_size = 3, #suele tratarse de un número impar
                         stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                         padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
