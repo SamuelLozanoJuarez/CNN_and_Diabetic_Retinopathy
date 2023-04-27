@@ -245,15 +245,15 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
 
             #como novedad se introduce un nuevo tipo de capa: BatchNormalization
             self.batch_norm1 = nn.BatchNorm2d(
-                num_features = 32 #número de características a normalizar (salidas de la capa a normalizar en este caso)
+                num_features = int(32*filtros) #número de características a normalizar (salidas de la capa a normalizar en este caso)
             )
 
             self.batch_norm2_4 = nn.BatchNorm2d(
-                num_features = 16 #número de características a normalizar (salidas de la capa a normalizar en este caso)
+                num_features = int(16*filtros) #número de características a normalizar (salidas de la capa a normalizar en este caso)
             )
 
             self.batch_norm3 = nn.BatchNorm2d(
-                num_features = 8 #número de características a normalizar (salidas de la capa a normalizar en este caso)
+                num_features = int(8*filtros) #número de características a normalizar (salidas de la capa a normalizar en este caso)
             )
             
             #usando la función descrita anteriormente y la ecuación features = num_filtros*ancho*alto podemos calcular el número de características
