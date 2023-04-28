@@ -264,7 +264,7 @@ def crea_Rajagopalan(capas_conv, filtros, neuronas):
             if capas_conv == 3:
                 neuronas_entrada = int(256*filtros)*calcula_dim(capas_conv)*calcula_dim(capas_conv)
             #si el número de capas convolucionales es 5, el número de filtros será 256 multiplicado por el parámetro filtros
-            elif capas_conv == 3:
+            elif capas_conv == 5:
                 neuronas_entrada = int(256*filtros)*calcula_dim(capas_conv)*calcula_dim(capas_conv)
             #si el número de capas convolucionales es 7, el número de filtros será 128 multiplicado por el parámetro filtros
             else:
