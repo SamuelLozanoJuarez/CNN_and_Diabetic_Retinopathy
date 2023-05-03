@@ -1,0 +1,74 @@
+Tamaño del conjunto de datos de train: 113
+Tamaño del conjunto de datos de test de Samsung: 93
+Tamaño del conjunto de datos de test de iPhone: 99
+--------------------------------------
+Entrenamiento. Características:
+  -Capas: 2
+  -Neuronas: 120/84
+  -Early Stopping
+
+Época 1/150 - Accuracy: 0.36666666666666664 - Loss: 0.48020284440782335
+Época 1/150 - Val_accuracy: 0.4782608695652174 - Val_loss: 0.38557637256124744
+
+Época 2/150 - Accuracy: 0.5222222222222223 - Loss: 0.37729131513171726
+Época 2/150 - Val_accuracy: 0.4782608695652174 - Val_loss: 0.354489196901736
+
+Época 3/150 - Accuracy: 0.5333333333333333 - Loss: 0.3299241986539629
+Época 3/150 - Val_accuracy: 0.4782608695652174 - Val_loss: 0.3658247797385506
+
+Época 4/150 - Accuracy: 0.5444444444444444 - Loss: 0.29868887464205424
+Época 4/150 - Val_accuracy: 0.4782608695652174 - Val_loss: 0.3760895418084186
+
+Época 5/150 - Accuracy: 0.5777777777777777 - Loss: 0.2776192135281033
+Época 5/150 - Val_accuracy: 0.391304347826087 - Val_loss: 0.43494545635969745
+
+Época 6/150 - Accuracy: 0.6666666666666666 - Loss: 0.23504648937119377
+Época 6/150 - Val_accuracy: 0.30434782608695654 - Val_loss: 0.49641487909399945
+
+Época 7/150 - Accuracy: 0.7444444444444445 - Loss: 0.1884067838390668
+Época 7/150 - Val_accuracy: 0.30434782608695654 - Val_loss: 0.7928572374841442
+
+Época 8/150 - Accuracy: 0.6333333333333333 - Loss: 0.2058075229326884
+Época 8/150 - Val_accuracy: 0.2608695652173913 - Val_loss: 0.5733857699062513
+
+Época 9/150 - Accuracy: 0.7666666666666667 - Loss: 0.2858444046643045
+Época 9/150 - Val_accuracy: 0.30434782608695654 - Val_loss: 0.6576512741005939
+
+
+--------------------------------------
+Test. Características:
+  -Capas: 2
+  -Neuronas: 120/84
+  -Test:iphone
+
+ - Matriz de confusión:
+[[ 0 10 11  0  1]
+ [ 2  4  7  0  0]
+ [ 5 21 20  2  0]
+ [ 1  3  4  0  0]
+ [ 2  3  3  0  0]]
+ - Accuracy:0.24242424242424243
+ - Balanced accuracy:0.14487179487179488
+ - F-score:0.2279907799621061
+ - Kappa:-0.08173076923076938
+ - AUC:0.4778215045190546
+ - Tiempo:3.524613944689433 mins
+
+--------------------------------------
+Test. Características:
+  -Capas: 2
+  -Neuronas: 120/84
+  -Test:Samsung
+
+ - Matriz de confusión:
+[[ 1 17  7  0  0]
+ [ 1  2  1  0  0]
+ [ 2 31 14  0  0]
+ [ 0  2  5  0  0]
+ [ 1  4  5  0  0]]
+ - Accuracy:0.1827956989247312
+ - Balanced accuracy:0.1675744680851064
+ - F-score:0.19990926001542575
+ - Kappa:-0.04002354326074142
+ - AUC:0.5502431989457024
+ - Tiempo:3.524613944689433 mins
