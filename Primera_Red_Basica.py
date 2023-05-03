@@ -44,6 +44,9 @@ import seaborn as sns
 #e importamos el paquete para el cálculo del tiempo de ejecución
 import time
 
+#importamos la función para guardar las gráficas
+from modules.CNN_utilities import guarda_graficas 
+
 #es necesario incluir la siguiente línea para que no se produzcan errores en la representación de las imágenes (entran en conflicto algunos ficheros de matplotlib con los de PyTorch sino)
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
