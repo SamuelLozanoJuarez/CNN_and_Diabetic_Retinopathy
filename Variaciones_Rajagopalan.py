@@ -234,7 +234,7 @@ def crea_Rajagopalan(capas_conv, filtros, neuronas):
                     self.conv6 = nn.Conv2d(
                         in_channels = int(256*filtros), #256 canales de entrada porque es el número de salidas de la capa anterior
                         out_channels = int(128*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
-                        kernel_size = 3, #suele tratarse de un número impar
+                        kernel_size = 2,
                         stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                         padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
                     )
@@ -242,7 +242,7 @@ def crea_Rajagopalan(capas_conv, filtros, neuronas):
                     self.conv7 = nn.Conv2d(
                         in_channels = int(128*filtros), #128 canales de entrada porque es el número de salidas de la capa anterior
                         out_channels = int(128*filtros), #se trata del número de salidas de la capa. Es el número de kernels de la capa convolucional
-                        kernel_size = 3, #suele tratarse de un número impar
+                        kernel_size = 1, #suele tratarse de un número impar
                         stride = 1, #cantidad píxeles que se desplaza el filtro sobre la imagen
                         padding = 0, #cantidad de relleno que se va a aplicar sobre los bordes de la imagen
                     )
