@@ -35,7 +35,7 @@ from torch.utils.data import DataLoader
 from matplotlib import pyplot as plt #para poder representar las gráficas
 import numpy as np #para las métricas de la red
 
-#importamos también las funcioness definidas para el entrenamiento y puesta a prueba de los modelos
+#importamos también las funciones definidas para el entrenamiento y puesta a prueba de los modelos
 from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas, tester, guarda_graficas
 
 #importamos el paquete que permite calcular el tiempo de entrenamiento
