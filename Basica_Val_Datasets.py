@@ -54,7 +54,7 @@ transform = transforms.Compose(
 
 #a continuación cargamos el conjunto de imágenes de train (Datasets) y los dos de test (iPhone y Samsung)
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
-print(f'Tamaño del conjunto de datos de train: {len(OCT)}')
+print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
 Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
