@@ -1,7 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
+'''
+#########################################################################################################################
+INFORMACIÓN DEL FICHERO
+#########################################################################################################################
 
-# In[1]:
+Autor: Samuel Lozano Juárez
+Fecha: 04/05/2023
+Institución: UBU | Grado en Ingeniería de la Salud
+
+Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
+El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
+Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
+
+A continuación se incluye el código que permite crear varios modelos según la arquitectura propuesta en el artículo de Alqudah, pero realizando las modificacionesdeseadas en los parámetros (número de capas convolucionales de la arquitectura, número de filtros por capa  y número de neuronas de las capas fully-connected).
+Para el entrenamiento se usará un conjunto de datos de validación y se empleará la estrategia de Early Stopping, para evitar el sobreentrenamiento. Las imágenes usadas en el entrenamiento son obtenidas de los distintos repositorios (Kaggle, Zenodo y GitHub).
+Todas estas arquitecturas serán entrenadas y testeadas, y sus resultados se almacenarán automáticamente en un archivo .csv llamado Resultados.
+Además también se guardarán el estado de los modelos (sus pesos) por si quisieran reutilizarse.
+'''
 
 
 #primero importamos todos los paquetes necesarios
@@ -19,29 +33,17 @@ from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
 
-
-# In[2]:
-
-
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 4
 #en la arquitectura propuesta por Mobeen no se especifica ninguna escala, por lo que se empleará una escala cualquiera (512 por ejemplo)
 escala = 256
 epocas = 150 #aumentamos el número de épocas ya que vamos a implementar Early Stopping
 
-
-# In[3]:
-
-
 #a continuación definimos la operación que permitirá transformar las imágenes del repositorio en Tensores que puedan ser empleados por PyTorch
 transform = transforms.Compose(
     [transforms.ToTensor(), #transforma la imagen de formato PIL a formato tensor
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)), #normaliza el tensor para que la media de sus valores sea 0 y su desviación estándar 0.5
      transforms.Resize((escala, escala))]) #redimensionamos las imágenes
-
-
-# In[ ]:
-
 
 #a continuación cargamos el conjunto de imágenes de train (Datasets) y los dos de test (iPhone y Samsung)
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
@@ -52,10 +54,6 @@ print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
 iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
-
-
-# In[ ]:
-
 
 #establecemos una lista con el nombre de las etiquetas
 classes = Datasets.classes
@@ -94,10 +92,6 @@ test_i_loader = DataLoader(
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
-
-
-# In[4]:
-
 
 #a partir de este punto el script es prácticamente idéntico al entrenamiento con imágenes de OCT
 #Los parámetros modificados serán los siguientes:
