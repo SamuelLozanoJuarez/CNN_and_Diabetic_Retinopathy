@@ -39,7 +39,8 @@ from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
-batch = 4
+#debido a que en esta ocasión vamos a emplear imágenes de repositorios (~35000 imágenes) hay que aumentar el tamaño del batch
+batch = 64
 #en la arquitectura propuesta por Mobeen no se especifica ninguna escala, por lo que se empleará una escala cualquiera (512 por ejemplo)
 escala = 512
 epocas = 150 #ya que tenemos activado el Early Stopping
@@ -72,28 +73,28 @@ train_dataset, val_dataset = torch.utils.data.random_split(Datasets, [train_size
 # Crear cargadores de datos para cada conjunto
 train_loader = torch.utils.data.DataLoader(
     dataset = train_dataset,
-    batch_size = 4, 
+    batch_size = batch, 
     shuffle = True,
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 val_loader = torch.utils.data.DataLoader(
     dataset = val_dataset,
-    batch_size = 4,
+    batch_size = batch,
     shuffle = True,
     num_workers = 2
 )
 
 test_S_loader = DataLoader(
     dataset = Samsung,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_i_loader = DataLoader(
     dataset = iPhone,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
