@@ -1,8 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
+'''
+#########################################################################################################################
+INFORMACIÓN DEL FICHERO
+#########################################################################################################################
+Autor: Samuel Lozano Juárez
+Fecha: 09/05/2023
+Institución: UBU | Grado en Ingeniería de la Salud
 
-# In[2]:
+Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
+El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
+Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
 
+En el código que se encuentra a continuación se define la función que permite realizar el inpainting de una imagen, así como las líneas necesarias para ejecutar esta función sobre todas las imágenes de nuestros directorios.
+
+Para llevar a cabo el proceso de inpainting me he guiado por el ejemplo proporcionado por la propia librería Scikit-image: https://scikit-image.org/docs/stable/auto_examples/filters/plot_inpaint.html .
+
+Para la elaboración de la máscara me he inspirado en el ejemplo proporcionado por OpenCV para la búsqueda de círculos en imágenes: https://docs.opencv.org/4.x/da/d53/tutorial_py_houghcircles.html .
+'''
 
 #primero importamos los paquetes necesarios
 import os
@@ -19,10 +32,6 @@ from skimage import color
 from pyinpaint import Inpaint
 from skimage.restoration import inpaint
 from PIL import Image
-
-
-# In[1]:
-
 
 #definimos la función que permite aplicar el proceso de inpainting sobre un archivo concreto
 def inpainting(dispositivo,grado,archivo):
@@ -111,10 +120,6 @@ def inpainting(dispositivo,grado,archivo):
     #almacenamos la imagen resultante en el directorio correspondiente
     destino = 'Classified Data/Images/' + dispositivo + '/Inpaint/' + grado + '/' + archivo
     io.imsave(destino, img_inp)
-
-
-# In[ ]:
-
 
 #vamos a aplicar la función definida en la parte superior para aplicar el inpainting a todas las imágenes
 #recorremos los posibles dispositivos sobre los que aplicarlo
