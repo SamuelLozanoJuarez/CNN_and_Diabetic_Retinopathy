@@ -33,6 +33,11 @@ from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
 
+#incluimos las siguientes líneas para evitar problemas al trabajar con imágenes truncadas
+import PIL
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 4
 #en la arquitectura propuesta por Mobeen no se especifica ninguna escala, por lo que se empleará una escala cualquiera (512 por ejemplo)
