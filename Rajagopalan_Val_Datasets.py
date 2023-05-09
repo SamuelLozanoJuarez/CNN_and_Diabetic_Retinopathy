@@ -75,28 +75,28 @@ train_loader = torch.utils.data.DataLoader(
     dataset = train_dataset,
     batch_size = batch, 
     shuffle = True,
-    num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 12 #voy a probar aumentando el número de trabajadores a 12 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 val_loader = torch.utils.data.DataLoader(
     dataset = val_dataset,
     batch_size = batch,
     shuffle = True,
-    num_workers = 2
+    num_workers = 12 #voy a probar aumentando el número de trabajadores a 12 2
 )
 
 test_S_loader = DataLoader(
     dataset = Samsung,
     batch_size = 4, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
-    num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 12 #voy a probar aumentando el número de trabajadores a 12 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_i_loader = DataLoader(
     dataset = iPhone,
     batch_size = 4, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
-    num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 12 #voy a probar aumentando el número de trabajadores a 12 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 #a partir de este punto el script es prácticamente idéntico al entrenamiento con imágenes de OCT
