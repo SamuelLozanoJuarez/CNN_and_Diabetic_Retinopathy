@@ -387,9 +387,14 @@ def guarda_graficas(imagenes,validacion,preproc,inpaint,color,arq,capas,filtros,
     
     #creamos la figura que representará el accuracy y loss, asignándole el tamaño deseado
     plt.figure(figsize = (10,10))
-    #creamos las marcas correspondientes en cada eje
-    plt.xticks(range(1,len(acc)+1))
-    plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+    #creamos las marcas correspondientes en cada eje y rotamos 90 grados las etiquetas del eje X
+    plt.xticks(range(1,len(acc)+1),rotation = 90)
+    #vamos a definir una lista de elementos adicional por si acaso los valores de loss superasen el 1.0
+    adicional = []
+    if max(loss) > 1.0:
+        adicional += list(range(1,int(max(loss))+1,1))
+        adicional.append(max(loss))
+    plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0] + adicional)
     #representamos el accuracy y el loss asignándole un color y etiqueta a cada representación
     plt.plot(range(1,len(acc)+1),acc,color = 'red',label = 'Accuracy')
     plt.plot(range(1,len(loss)+1),loss,color = 'blue', label = 'Loss')
@@ -412,9 +417,14 @@ def guarda_graficas(imagenes,validacion,preproc,inpaint,color,arq,capas,filtros,
     if val_acc != 0 and val_loss != 0:
         #creamos la figura que representará el accuracy y loss, asignándole el tamaño deseado
         plt.figure(figsize = (10,10))
-        #creamos las marcas correspondientes en cada eje
-        plt.xticks(range(1,len(val_acc)+1))
-        plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+        #creamos las marcas correspondientes en cada eje y giramos las etiquetas del eje X 90 grados
+        plt.xticks(range(1,len(val_acc)+1),rotation = 90)
+        #vamos a definir una lista de elementos adicional por si acaso los valores de loss superasen el 1.0
+        adicional_val = []
+        if max(val_loss) > 1.0:
+            adicional_val += list(range(1,int(max(val_loss))+1,1))
+            adicional_val.append(max(val_loss))
+        plt.yticks([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0] + adicional_val)
         #representamos el accuracy y el loss asignándole un color y etiqueta a cada representación
         plt.plot(range(1,len(val_acc)+1),val_acc,color = 'orange',label = 'Val Accuracy')
         plt.plot(range(1,len(val_loss)+1),val_loss,color = 'cyan', label = 'Val Loss')
