@@ -39,10 +39,14 @@ import os
 #importamos los paquetes necesarios para el cálculo de las métricas
 import sklearn
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, cohen_kappa_score, roc_auc_score, confusion_matrix
-import seaborn as sns
 
 #e importamos el paquete para el cálculo del tiempo de ejecución
 import time
+
+#incluimos las siguientes líneas para evitar problemas al trabajar con imágenes truncadas
+import PIL
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 #importamos la función para guardar las gráficas
 from modules.CNN_utilities import guarda_graficas 
@@ -62,8 +66,8 @@ transform = transforms.Compose(
      transforms.Resize((escala, escala))]) #redimensionamos las imágenes
 
 #a continuación cargamos el conjunto de imágenes de train (OCT) y los dos de test (iPhone y Samsung)
-OCT = ImageFolder(root = 'Datos/Classified Data/Images/OCT', transform = transform)
-print(f'Tamaño del conjunto de datos de train: {len(OCT)}')
+Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
+print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
 Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
@@ -72,67 +76,29 @@ iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone', transform = t
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas
-classes = OCT.classes
+classes = Datasets.classes
 
 #y definimos también las funciones que van a ir cargando las imágenes en el modelo
 train_loader = DataLoader(
-    dataset = OCT,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
+    dataset = Datasets,
+    batch_size = batch, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_S_loader = DataLoader(
     dataset = Samsung,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = batch, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_i_loader = DataLoader(
     dataset = iPhone,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = batch, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
-
-#para comprobar que los loaders funcionan correctamente vamos a probar a cargar las imágenes y mostrarlas
-#convertimos el train_loader a iterador, para poder así coger un batch
-#el batch está compuesto por una tupla de 2 elementos: las imágenes (tensores en este caso) y las etiquetas asociadas
-images, labels = next(iter(train_loader))
-
-#mostramos las imágenes y las labels asociadas
-print('IMÁGENES DEL CONJUNTO DE TRAIN')
-for i,j in zip(images,labels):
-    plt.figure(figsize = (5,5))
-    plt.axis('off')
-    plt.title(f'Etiqueta de la imagen: {classes[j]}')
-    plt.imshow(np.transpose((i/2+0.5).numpy(), (1,2,0)))
-    plt.show()
-
-#hacemos el mismo proceso con las imágenes de test de iPhone
-images, labels = next(iter(test_i_loader))
-
-#mostramos las imágenes y las labels asociadas
-print('IMÁGENES DEL TEST IPHONE')
-for i,j in zip(images,labels):
-    plt.figure(figsize = (5,5))
-    plt.axis('off')
-    plt.title(f'Etiqueta de la imagen: {classes[j]}')
-    plt.imshow(np.transpose((i/2+0.5).numpy(), (1,2,0)))
-    plt.show()
-
-#y con el conjunto de imágenes de test de Samsung
-images, labels = next(iter(test_S_loader))
-
-#mostramos las imágenes y las labels asociadas
-print('IMÁGENES DEL TEST SAMSUNG')
-for i,j in zip(images,labels):
-    plt.figure(figsize = (5,5))
-    plt.axis('off')
-    plt.title(f'Etiqueta de la imagen: {classes[j]}')
-    plt.imshow(np.transpose((i/2+0.5).numpy(), (1,2,0)))
-    plt.show()
 
 #una vez que hemos comprobado que las funciones de carga funcionan correctamente ya podemos definir el modelo
 #los modelos se definen como clases que heredan todos ellos de un mismo padre: nn.Module
@@ -202,7 +168,7 @@ cnn = CNN().to(device)
 # Si hay más de una GPU disponible, utilizar DataParallel
 if torch.cuda.device_count() > 1:
     print("Utilizando", torch.cuda.device_count(), "GPUs")
-    net = nn.DataParallel(net)
+    cnn = nn.DataParallel(cnn)
 
 
 #a continuación debemos entrenar el modelo, para ello es necesario definir una función loss que evalúa la desviación entre las predicciones y los valores reales
@@ -276,17 +242,7 @@ print(f'El tiempo de entrenamiento del modelo fue de {(fin-inicio)/60} minutos.'
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 #primero la matriz de confusión
 matrix_iphone = confusion_matrix(y_true_iphone, y_pred_iphone)
-#usamos el paquete seaborn para mostrar de manera más visual la matriz de confusión
-plot = sns.heatmap(matrix_iphone, annot = True, cmap = 'Reds', cbar = False)
-#establecemos título
-plot.set_title('Matriz de confusión - iPhone\n')
-#título de cada eje
-plot.set_xlabel('\nGrado Iphone')
-plot.set_ylabel('Grado real\n')
-#y el significado de cada fila y columna de la matriz
-plot.xaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
-plot.yaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
-print(plot)
+print(matrix_iphone)
 
 #calculamos el valor de accuracy
 accuracy_iphone = accuracy_score(y_true = y_true_iphone, y_pred = y_pred_iphone)
@@ -334,16 +290,7 @@ predictions = np.concatenate(predictions)
 
 #a partir de las predicciones y las labels reales podemos calcular las métricas deseadas
 matrix_samsung = confusion_matrix(y_true_samsung, y_pred_samsung)
-plot = sns.heatmap(matrix_samsung, annot = True, cmap = 'Reds', cbar = False)
-#establecemos título
-plot.set_title('Matriz de confusión - Samsung\n')
-#título de cada eje
-plot.set_xlabel('\nGrado Samsung')
-plot.set_ylabel('Grado real\n')
-#y el significado de cada fila y columna de la matriz
-plot.xaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
-plot.yaxis.set_ticklabels(['Grado1','Grado2','Grado3','Grado4','Grado5'])
-print(plot)
+print(matrix_samsung)
 
 #calculamos el valor de accuracy
 accuracy_samsung = accuracy_score(y_true = y_true_samsung, y_pred = y_pred_samsung)
