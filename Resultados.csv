@@ -1,4 +1,4 @@
-img_entrenamiento,validacion,preprocesamiento,inpaint,RGB_gray,arquitectura,capas,filtros,neuronas,test,Acc,Bal_acc,F-score,Kappa,AUC,Tiempo(mins)
+img_entrenamiento,validacion,preprocesamiento,inpaint,RGB_gray,arquitectura,capas,filtros,neuronas,test,Acc,Bal_acc,F_score,Kappa,AUC,Tiempo(mins)
 OCT,Sí­,No,No,RGB,Básica,2,1.0,120/84,iphone,0.24242424242424243,0.14487179487179488,0.2279907799621061,-0.08173076923076938,0.4778215045190546,3.524613944689433
 OCT,Sí,No,No,RGB,Básica,2,1.0,120/84,Samsung,0.1827956989247312,0.1675744680851064,0.19990926001542575,-0.04002354326074142,0.5502431989457024,3.524613944689433
 OCT,No,No,No,RGB,Alqudah,2,1.0,0/0,iphone,0.16161616161616163,0.19064685314685315,0.13924773450297248,-0.006985294117647145,0.4918539074855143,4.89661480585734
