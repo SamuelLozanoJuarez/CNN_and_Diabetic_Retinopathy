@@ -68,28 +68,28 @@ train_dataset, val_dataset = torch.utils.data.random_split(OCT, [train_size, val
 # Crear cargadores de datos para cada conjunto
 train_loader = torch.utils.data.DataLoader(
     dataset = train_dataset,
-    batch_size = 4, 
+    batch_size = batch, 
     shuffle = True,
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 val_loader = torch.utils.data.DataLoader(
     dataset = val_dataset,
-    batch_size = 4,
+    batch_size = batch,
     shuffle = True,
     num_workers = 2
 )
 
 test_S_loader = DataLoader(
     dataset = Samsung,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = batch, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_i_loader = DataLoader(
     dataset = iPhone,
-    batch_size = 4, #establecemos un tamaño de lote (batch_size) de 10, ya que son pocas imágenes y podemos permitírnoslo
+    batch_size = batch, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
