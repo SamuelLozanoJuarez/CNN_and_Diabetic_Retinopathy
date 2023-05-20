@@ -41,6 +41,11 @@ from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
 
+#incluimos las siguientes líneas para evitar problemas al trabajar con imágenes truncadas
+import PIL
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 128 #es necesario aumentar el tamaño del Batch, para reducir los tiempos de entrenamiento
 escala = 640
@@ -56,10 +61,10 @@ transform = transforms.Compose(
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
 print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
-Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
-iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas

@@ -41,6 +41,11 @@ from modules.CNN_utilities import entrena_val, representa_test, obtiene_metricas
 #importamos el paquete que permite calcular el tiempo de entrenamiento
 import time
 
+#incluimos las siguientes líneas para evitar problemas al trabajar con imágenes truncadas
+import PIL
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 #establecemos el tamaño del batch, la escala de las imágenes y el número de épocas de entrenamiento
 batch = 128 #aumentamos el tamaño del batch para reducir el tiempo de entrenamiento
 #en la arquitectura propuesta por Mobeen no se especifica ninguna escala, por lo que se empleará una escala cualquiera (512 por ejemplo)
@@ -53,10 +58,6 @@ transform = transforms.Compose(
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)), #normaliza el tensor para que la media de sus valores sea 0 y su desviación estándar 0.5
      transforms.Resize((escala, escala))]) #redimensionamos las imágenes
 
-
-# In[3]:
-
-
 #vamos a definir el valor de los parámetros capas, filtros y neuronas, ya que no podemos ejecutar todas las posibles combinaciones por el tiempo que implicaría
 #las combinaciones que se van a probar son las siguientes:
 #  * 2,2.0,0/0
@@ -67,18 +68,14 @@ capas = 2
 n_filtros = 2.0
 n_neuronas = '0/0'
 
-
-# In[ ]:
-
-
 #a continuación cargamos el conjunto de imágenes de train (Datasets) y los dos de test (iPhone y Samsung)
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
 print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
-Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
-iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas
@@ -89,10 +86,6 @@ classes = Datasets.classes
 train_size = int(0.8 * len(Datasets))
 val_size = len(Datasets) - train_size
 train_dataset, val_dataset = torch.utils.data.random_split(Datasets, [train_size, val_size])
-
-
-# In[ ]:
-
 
 # Crear cargadores de datos para cada conjunto
 train_loader = torch.utils.data.DataLoader(
@@ -122,10 +115,6 @@ test_i_loader = DataLoader(
     shuffle = True, #indicamos que mezcle las imágenes
     num_workers = 8 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
-
-
-# In[2]:
-
 
 #Para facilitar la lectura del código y sobre todo su ejecución, voy a definir una función que permita lanzar las ejecuciones necesarias de manera automática (de forma similar a como se hizo en las variaciones anteriores).
 
@@ -354,10 +343,6 @@ def crea_Alqudah(capas_conv, filtros, neuronas):
     modelo = Alqudah()
     #y la devolvemos
     return modelo
-
-
-# In[ ]:
-
 
 #vamos a ejecutar únicamente el entrenamiento de un modelo, con los parámetros deseados
 #para cada combinacion de los parámetros creamos el modelo
