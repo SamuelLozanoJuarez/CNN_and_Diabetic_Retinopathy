@@ -69,7 +69,7 @@ train_dataset, val_dataset = torch.utils.data.random_split(OCT, [train_size, val
 # Crear cargadores de datos para cada conjunto
 train_loader = torch.utils.data.DataLoader(
     dataset = train_dataset,
-    batch_size = 4, 
+    batch_size = batch, 
     shuffle = True,
     num_workers = 2 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
