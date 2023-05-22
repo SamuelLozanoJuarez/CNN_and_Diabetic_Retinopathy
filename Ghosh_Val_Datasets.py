@@ -85,28 +85,28 @@ train_loader = torch.utils.data.DataLoader(
     dataset = train_dataset,
     batch_size = batch, 
     shuffle = True,
-    num_workers = 8 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 4 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 val_loader = torch.utils.data.DataLoader(
     dataset = val_dataset,
     batch_size = batch,
     shuffle = True,
-    num_workers = 8
+    num_workers = 4
 )
 
 test_S_loader = DataLoader(
     dataset = Samsung,
     batch_size = batch, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
-    num_workers = 8 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 4 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 test_i_loader = DataLoader(
     dataset = iPhone,
     batch_size = batch, #establecemos un tamaño de lote (batch_size) de 4, ya que son pocas imágenes y podemos permitírnoslo
     shuffle = True, #indicamos que mezcle las imágenes
-    num_workers = 8 #genera subprocesos para cargar los datos y así liberamos el proceso main
+    num_workers = 4 #genera subprocesos para cargar los datos y así liberamos el proceso main
 )
 
 #Para facilitar la lectura del código y sobre todo su ejecución, voy a definir una función que permita lanzar las ejecuciones necesarias de manera automática
