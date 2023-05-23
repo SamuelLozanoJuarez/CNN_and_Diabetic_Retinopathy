@@ -4,7 +4,7 @@ INFORMACIÓN DEL FICHERO
 #########################################################################################################################
 
 Autor: Samuel Lozano Juárez
-Fecha: 20/05/2023
+Fecha: 23/05/2023
 Institución: UBU | Grado en Ingeniería de la Salud
 
 Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
@@ -13,6 +13,9 @@ Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel
 
 A continuación se incluye el código que permite crear varios modelos según la arquitectura propuesta en el artículo de Rajagopalan, pero realizando las modificacionesdeseadas en los parámetros (número de capas convolucionales de la arquitectura, número de filtros por capa  y número de neuronas de las capas fully-connected).
 Para el entrenamiento se usarán las imágenes de los repositorios y un conjunto de datos de validación y se empleará la estrategia de Early Stopping, para evitar el sobreentrenamiento.
+
+Para testear los modelos se emplearán imágenes de Samsung e iPhone inpaintadas, modificadas para eliminar el flash de la imagen.
+
 Todas estas arquitecturas serán entrenadas y testeadas, y sus resultados se almacenarán automáticamente en un archivo .csv llamado Resultados.
 Además también se guardarán el estado de los modelos (sus pesos) por si quisieran reutilizarse.
 '''
@@ -65,10 +68,10 @@ transform = transforms.Compose(
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
 print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
-Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
-iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas
@@ -347,7 +350,7 @@ acc,loss,val_acc,val_loss = entrena_val(modelo,epocas,7,train_loader,val_loader,
 fin = time.time()
 
 #guardamos las gráficas
-guarda_graficas('Datasets','Si','No','No','RGB','Rajagopalan',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
+guarda_graficas('Datasets','Si','No','Si','RGB','Rajagopalan',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
 
 #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
 y_true_iphone, y_pred_iphone, predictions_iphone = tester(modelo,test_i_loader)
@@ -360,7 +363,7 @@ print(f' - Matriz de confusión:\n{metricas_iphone[0]}\n - Accuracy:{metricas_ip
 #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
 with open('Resultados.csv','a') as fd:
     fd.write('\n')
-    fd.write(f'Datasets,Sí,No,No,RGB,Rajagopalan,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
+    fd.write(f'Datasets,Sí,No,Sí,RGB,Rajagopalan,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
 
 
 #ahora ponemos a prueba la red con el conjunto de Samsung usando la función tester y recogemos los resultados para obtener las métricas
@@ -374,11 +377,11 @@ print(f' - Matriz de confusión:\n{metricas_samsung[0]}\n - Accuracy:{metricas_s
 #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
 with open('Resultados.csv','a') as fd:
     fd.write('\n')
-    fd.write(f'Datasets,Sí,No,No,RGB,Rajagopalan,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
+    fd.write(f'Datasets,Sí,No,Sí,RGB,Rajagopalan,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
 
 #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
 #primero para ello debemos cambiar el String de filtros y neuronas para evitar los puntos y barras laterales
 filtros_str = str(n_filtros).replace(".","punto")
 neuronas_str = str(n_neuronas).replace("/","slash")
-torch.save(modelo.state_dict(), f'modelos/Rajagopalan/Datasets_Sival_Noprep_Noinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
+torch.save(modelo.state_dict(), f'modelos/Rajagopalan/Datasets_Sival_Noprep_Siinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
 
