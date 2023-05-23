@@ -4,7 +4,7 @@ INFORMACIÓN DEL FICHERO
 #########################################################################################################################
 
 Autor: Samuel Lozano Juárez
-Fecha: 20/05/2023
+Fecha: 23/05/2023
 Institución: UBU | Grado en Ingeniería de la Salud
 
 Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
@@ -16,6 +16,8 @@ estructuras necesarias para poder entrenar dicha red (como por ejemplo las funci
 batches o lotes para el entrenamiento).
 
 El entrenamiento de la red se llevará a cabo empleando las imágenes obtenidas de los repositorios y un conjunto de validación para poder aplicar la estrategia de Early Stopping y evitar el sobreentrenamiento.
+
+Para testear los modelos se emplearán imágenes de Samsung e iPhone inpaintadas, modificadas para eliminar el flash de la imagen.
 
 La arquitectura del modelo será básica, siguiendo la estructura que se encuentra disponible en la propia página del framework Pytorch:
 https://pytorch.org/tutorials/beginner/introyt/introyt1_tutorial.html#pytorch-models
@@ -61,10 +63,10 @@ transform = transforms.Compose(
 Datasets = ImageFolder(root = 'Datos/Classified Data/Images/Datasets', transform = transform)
 print(f'Tamaño del conjunto de datos de train: {len(Datasets)}')
 
-Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
-iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #establecemos una lista con el nombre de las etiquetas
@@ -189,7 +191,7 @@ acc,loss,val_acc,val_loss = entrena_val(cnn,epocas,7,train_loader,val_loader,opt
 #y nuevamente calculamos el tiempo tras el entrenamiento
 fin = time.time()
 #posteriormente generamos y almacenamos las gráficas correspondientes a estas métricas
-guarda_graficas('Datasets','Si','No','No','RGB','Basica',2,1.0,'120/84',acc,loss,val_acc,val_loss)
+guarda_graficas('Datasets','Si','No','Si','RGB','Basica',2,1.0,'120/84',acc,loss,val_acc,val_loss)
 
 #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
 y_true_iphone, y_pred_iphone, predictions_iphone = tester(cnn,test_i_loader)
@@ -203,7 +205,7 @@ print(f' - Matriz de confusión:\n{metricas_iphone[0]}\n - Accuracy:{metricas_ip
 #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
 with open('Resultados.csv','a') as fd:
     fd.write('\n')
-    fd.write(f'Datasets,Sí,No,No,RGB,Básica,2,1.0,120/84,iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
+    fd.write(f'Datasets,Sí,No,Sí,RGB,Básica,2,1.0,120/84,iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
 
 
 #ahora ponemos a prueba la red con el conjunto de Samsung usando la función tester y recogemos los resultados para obtener las métricas
@@ -217,8 +219,8 @@ print(f' - Matriz de confusión:\n{metricas_samsung[0]}\n - Accuracy:{metricas_s
 #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
 with open('Resultados.csv','a') as fd:
     fd.write('\n')
-    fd.write(f'Datasets,Sí,No,No,RGB,Básica,2,1.0,120/84,Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
+    fd.write(f'Datasets,Sí,No,Sí,RGB,Básica,2,1.0,120/84,Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
     
 #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
-torch.save(cnn.state_dict(), f'modelos/Basica/Datasets_Sival_Noprep_Noinp_RGB.pth')
+torch.save(cnn.state_dict(), f'modelos/Basica/Datasets_Sival_Noprep_Siinp_RGB.pth')
 
