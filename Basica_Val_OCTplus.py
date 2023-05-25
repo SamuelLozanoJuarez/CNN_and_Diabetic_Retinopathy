@@ -68,7 +68,7 @@ for root_dir in root_dirs_OCT_S:
 
 #concatenamos esas imágenes y mostramos el tamaño total del dataset de entrenamiento
 OCT_S = ConcatDataset(datasets_OCT_S)
-print(f'Tamaño del conjunto de datos de train: {len(OCT_S)}')
+print(f'Tamaño del conjunto de datos de train OCT+Samsung: {len(OCT_S)}')
 
 #cargamos el dataset de test y mostramos su tamaño
 iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
@@ -119,7 +119,7 @@ for root_dir in root_dirs_OCT_i:
 
 #concatenamos esas imágenes y mostramos el tamaño total del dataset de entrenamiento
 OCT_i = ConcatDataset(datasets_OCT_i)
-print(f'Tamaño del conjunto de datos de train: {len(OCT_i)}')
+print(f'Tamaño del conjunto de datos de train OCT+iPhone: {len(OCT_i)}')
 
 Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
