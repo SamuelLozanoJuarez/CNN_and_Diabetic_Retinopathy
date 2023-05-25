@@ -4,7 +4,7 @@ INFORMACIÓN DEL FICHERO
 #########################################################################################################################
 
 Autor: Samuel Lozano Juárez
-Fecha: 20/04/2023
+Fecha: 25/05/2023
 Institución: UBU | Grado en Ingeniería de la Salud
 
 Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
@@ -15,6 +15,8 @@ A continuación se incluye el código que permite crear varios modelos según la
 Para el entrenamiento se usará un conjunto de datos de validación y se empleará la estrategia de Early Stopping, para evitar el sobreentrenamiento.
 
 Para entrenar los modelos se usarán imágenes de OCT + Samsung o iPhone y se testearán con el conjunto de imágenes no empleado en el entrenamiento (iPhone o Samsung respectivamente).
+
+Para el test se usarán imágenes de iPhone y Samsung inpaintadas para eliminar el flash de la imagen.
 
 Todas estas arquitecturas serán entrenadas y testeadas, y sus resultados se almacenarán automáticamente en un archivo .csv llamado Resultados.
 Además también se guardarán el estado de los modelos (sus pesos) por si quisieran reutilizarse.
@@ -66,7 +68,7 @@ OCT_S = ConcatDataset(datasets_OCT_S)
 print(f'Tamaño del conjunto de datos de train OCT+Samsung: {len(OCT_S)}')
 
 #cargamos el dataset de test y mostramos su tamaño
-iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/No_inpaint', transform = transform)
+iPhone = ImageFolder(root = 'Datos/Classified Data/Images/iPhone/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de iPhone: {len(iPhone)}')
 
 #en esta ocasión, debido a que vamos a implementar EarlyStopping es necesario dividir el conjunto de entrenamiento en train y validation
@@ -116,7 +118,7 @@ for root_dir in root_dirs_OCT_i:
 OCT_i = ConcatDataset(datasets_OCT_i)
 print(f'Tamaño del conjunto de datos de train OCT+iPhone: {len(OCT_i)}')
 
-Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/No_inpaint', transform = transform)
+Samsung = ImageFolder(root = 'Datos/Classified Data/Images/Samsung/Inpaint', transform = transform)
 print(f'Tamaño del conjunto de datos de test de Samsung: {len(Samsung)}')
 
 #en esta ocasión, debido a que vamos a implementar EarlyStopping es necesario dividir el conjunto de entrenamiento en train y validation
@@ -449,7 +451,7 @@ for capas in [6,9,13]:
             fin = time.time()
             
             #guardamos las gráficas
-            guarda_graficas('OCT_S','Si','No','No','RGB','Ghosh',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
+            guarda_graficas('OCT_S','Si','No','Si','RGB','Ghosh',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
             
             #ponemos a prueba la red con el conjunto de iPhone usando la función tester y recogemos los resultados para obtener las métricas
             y_true_iphone, y_pred_iphone, predictions_iphone = tester(modelo,test_i_loader)
@@ -462,13 +464,13 @@ for capas in [6,9,13]:
             #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
             with open('Resultados.csv','a') as fd:
                 fd.write('\n')
-                fd.write(f'OCT_S,Sí,No,No,RGB,Ghosh,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
+                fd.write(f'OCT_S,Sí,No,Sí,RGB,Ghosh,{capas},{n_filtros},{n_neuronas},iphone,{metricas_iphone[1]},{metricas_iphone[2]},{metricas_iphone[3]},{metricas_iphone[4]},{metricas_iphone[5]},{(fin-inicio)/60}')
             
             #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
             #primero para ello debemos cambiar el String de filtros y neuronas para evitar los puntos y barras laterales
             filtros_str = str(n_filtros).replace(".","punto")
             neuronas_str = str(n_neuronas).replace("/","slash")
-            torch.save(modelo.state_dict(), f'modelos/Ghosh/OCT_S_Sival_Noprep_Noinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
+            torch.save(modelo.state_dict(), f'modelos/Ghosh/OCT_S_Sival_Noprep_Siinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
             
             #REPETIMOS EL PROCESO PERO ENTRENANDO CON IPHONE Y TESTEANDO CON SAMSUNG
             #creamos nuevamente el modelo sobreescribiéndolo
@@ -489,7 +491,7 @@ for capas in [6,9,13]:
             fin = time.time()
             
             #guardamos las gráficas
-            guarda_graficas('OCT_i','Si','No','No','RGB','Ghosh',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
+            guarda_graficas('OCT_i','Si','No','Si','RGB','Ghosh',capas,n_filtros,n_neuronas,acc,loss,val_acc,val_loss)
             
             #ahora ponemos a prueba la red con el conjunto de Samsung usando la función tester y recogemos los resultados para obtener las métricas
             y_true_samsung, y_pred_samsung, predictions_samsung = tester(modelo,test_S_loader)
@@ -502,11 +504,11 @@ for capas in [6,9,13]:
             #escribimos las métricas (a excepción de la matriz de confusión) en el archivo Resultados.csv previamente creado
             with open('Resultados.csv','a') as fd:
                 fd.write('\n')
-                fd.write(f'OCT_i,Sí,No,No,RGB,Ghosh,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
+                fd.write(f'OCT_i,Sí,No,Sí,RGB,Ghosh,{capas},{n_filtros},{n_neuronas},Samsung,{metricas_samsung[1]},{metricas_samsung[2]},{metricas_samsung[3]},{metricas_samsung[4]},{metricas_samsung[5]},{(fin-inicio)/60}')
                 
             #por último vamos a guardar el modelo, sus pesos y estado actual, por si se quisiera volver a emplear
             #primero para ello debemos cambiar el String de filtros y neuronas para evitar los puntos y barras laterales
             filtros_str = str(n_filtros).replace(".","punto")
             neuronas_str = str(n_neuronas).replace("/","slash")
-            torch.save(modelo.state_dict(), f'modelos/Ghosh/OCT_i_Sival_Noprep_Noinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
+            torch.save(modelo.state_dict(), f'modelos/Ghosh/OCT_i_Sival_Noprep_Siinp_RGB_{capas}_{filtros_str}_{neuronas_str}.pth')
 
