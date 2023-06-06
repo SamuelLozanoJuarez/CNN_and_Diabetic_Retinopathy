@@ -13,7 +13,7 @@ Es por ello que en las siguientes secciones y subsecciones se van a explicar los
 
 En este documento y sus correspondientes anexos se recoge toda la información del proyecto \textit{Detección del grado de retinopatía diabética mediante redes convolucionales}.
 
-En la memoria principal se incluyen los capítulos detallados en el \hyperref[toc]{Índice}: \hyperref[Obj]{Objetivos}, \hyperref[Intro]{Introducción}, \hyperref[Met]{Metodología}, \hyperref[Conc]{Conclusiones}, \hyperref[Aspe]{Aspectos relevantes del desarrollo del proyecto} y \hyperref[Fut]{Líneas futuras}. Además se incluye la correspondiente bibliografía en la que se citan todas las fuentes empleadas en el proyecto.
+En la memoria principal se incluyen los capítulos detallados en el \hyperref[toc]{Índice}: \hyperref[Obj]{Objetivos}, \hyperref[Intro]{Introducción}, \hyperref[Met]{Metodología}, \hyperref[Conc]{Conclusiones} y \hyperref[Fut]{Líneas futuras}. Además se incluye la correspondiente bibliografía en la que se citan todas las fuentes empleadas en el proyecto.
 
 Asimismo se entrega una memoria de anexos, que contiene materiales adicionales y ampliaciones de los contenidos de la memoria principal.
 
@@ -276,16 +276,7 @@ Para poder introducir esta información en las capas densas debe realizarse un p
 
 Las distintas capas densas también pueden ir intercaladas por capas de activación, para introducir no linealidades. Tras la ejecución de todas las capas densas se encuentra la última capa de neuronas que es la que proporciona la salida. Como se ha mencionado anteriormente el número de neuronas de esta capa dependerá del número de etiquetas distintas que tenga nuestro problema \cite{cnn:ieee, cnn:biblia_deeplearning}. 
 
-\section{Marco de trabajo}
-
-El marco de trabajo hace referencia al conjunto de herramientas, criterios y conceptos que se emplean para enfrentar una determinada tarea. En este caso, cuando hablamos de marco de trabajo me refiero al entorno de programación que se va a emplear y las bibliotecas que se van a usar. En mi caso se trabajará con PyTorch.
-
-PyTorch es una herramienta ampliamente utilizada en el desarrollo de proyectos de redes neuronales. Se trata de una biblioteca científica (un conjunto de funciones prediseñadas y de estructuras de datos) de código abierto desarrollada por Facebook en 2016 y basada en el lenguaje de programación Python \cite{marco:pytorch_libro}. Esta biblioteca nos va a permitir construir los modelos de CNN de una manera más sencilla, así como crear las estructuras y herramientas necesarias para poder llevar a cabo el entrenamiento y validación de estos modelos \cite{marco:pytorch}.
-
-Se ha seleccionado este marco de trabajo debido a las ventajas que presenta en comparación con otros posibles entornos como TensorFlow. PyTorch es sencillo de entender, permite utilizar el depurador de código de Python y está diseñado para ser ejecutado en unidades de procesamiento gráfico (GPU), por lo que el código se ejecutará más rápidamente \cite{marco:pytorch_libro}. Además es una herramienta de desarrollo de redes neuronales más enfocada a la investigación y especialmente en el campo de la visión por computador \cite{marco:pytorch}.
-
-La abstracción básica de PyTorch, la estructura de datos sobre la que se sustenta esta biblioteca y que se emplea para almacenar todo tipo de datos, se denomina \textit{tensor} \cite{marco:pytorch_libro}. Un tensor no es más que una matriz multidimensional que almacena en su interior elementos del mismo tipo (generalmente números decimales) \cite{marco:pytorch_web}. Siendo muy reduccionistas, podríamos afirmar que toda la computación realizada por PyTorch se puede definir como creación de tensores y operaciones con ellos \cite{marco:pytorch_libro}.
-
+\titlespacing{\section}{0pt}{0.25cm}{0.15cm}
 \section{Estado del arte y trabajos relacionados}
 
 Para la búsqueda de trabajos relacionados se usaron los siguientes términos de búsqueda: \textit{CNN, diabetic retinopathy, smartphone}. En aquellos repositorios en que no aparecía ningún resultado se probó a sustituir el último término por \textit{mobile}.
@@ -324,5 +315,3 @@ Para lograr la clasificación de las imágenes se empleó una arquitectura de CN
 La CNN empleada fue construida desde cero empleando la biblioteca Keras, del marco de trabajo TensorFlow. El modelo consta de 3 capas convolucionales, cada una de ellas de 32 filtros, y sus correspondientes 3 capas de \textit{pooling}. Tras estas 6 capas se encuentra una capa densa y finalmente la capa de salida. Para el entrenamiento del modelo se emplearon 1200 imágenes de fondo de ojo, adquiridas del repositorio público del programa Messidor. Cada una de las imágenes fueron posteriormente preprocesadas, eliminando el fondo de las fotografías, redimensionándolas (256x256 píxels) y convirtiéndolas a escala de gris. Por último, aquellas imágenes etiquetadas como casos positivos, se rotaron 90, 120, 180 y 270 grados, con el objetivo de obtener una mayor cantidad de imágenes con RD y así solucionar el desbalanceo entre clases. El porcentaje de acierto del modelo, usando las imágenes obtenidas con el dispositivo '20D' fue del 81.6\% \cite{soa:mohammad}.
 
 Además del diseño y entrenamiento del modelo, en la publicación también se hace referencia al desarrollo de una aplicación móvil, tanto para Android como para iOS, que permita obtener una predicción por parte del modelo a partir de una imagen tomada en el mismo dispositivo en que se encuentra la aplicación instalada \cite{soa:mohammad}.
-
-Como se p
