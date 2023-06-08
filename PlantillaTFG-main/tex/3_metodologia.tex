@@ -30,6 +30,7 @@ De todas las imágenes disponibles se eliminaron 205 por no estar etiquetadas o 
 \centering
 \begin{tabular}{@{}llllll|l@{}}
 \toprule
+\rowcolor[HTML]{C0C0C0}
         & G1 & G2 & G3  & G4 & G5 & Total \\ \midrule
 OCT     & 25 & 20 & 58  & 4  & 6  & 113   \\
 iPhone  & 22 & 13 & 48  & 8  & 8  & 99    \\
@@ -62,11 +63,13 @@ Por último, la tabla \ref{tab:repositorios} resume el tamaño de cada conjunto 
 \begin{table}[]
 \centering
 \begin{tabular}{@{}llllll|l@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0}
          & G1    & G2   & G3   & G4   & G5   & Total \\ \midrule
 Kaggle   & 23610 & 2443 & 5292 & 873  & 708  & 32926 \\
 DeepDRiD & 914   & 222  & 398  & 354  & 112  & 2000  \\
 Zenodo   & 711   & 6    & 110  & 349  & 261  & 1437  \\ \midrule
-Total    & 25235 & 2671 & 5800 & 1576 & 1081 & 36363
+Total    & 25235 & 2671 & 5800 & 1576 & 1081 & 36363 \\ \bottomrule
 \end{tabular}
 \caption{Distribución de las imágenes de los repositorios entre los distintos dispositivos (filas) y grados (columnas).}
 \label{tab:repositorios}
@@ -174,6 +177,10 @@ Se trata de un paquete desarrollado específicamente para las tareas de visión 
 \subsubsection{\texttt{Scikit-Image}}
 
 \texttt{Scikit-Image} es una colección de algoritmos diseñados para el procesamiento de imágenes. Incorpora funciones para la modificación de imágenes, su manipulación dentro del equipo y su impresión en pantalla, así como métodos para el reconocimiento de formas o la aplicación de filtros. En el proyecto se empleó para la detección de los destellos de flash en las imágenes y así poder aplicar el \textit{inpainting}. Para más información: \url{https://scikit-image.org/}.
+
+\subsubsection{\texttt{shutil}}
+
+Este paquete incorpora funciones que permiten operar a alto nivel con archivos y colecciones de archivos. Especialmente ofrece operaciones que dan soporte a la copia de archivos. En el proyecto se empleó para la organización de las imágenes en los distintos directorios. Para más información: \url{https://docs.python.org/es/3/library/shutil.html}.
 
 \subsection{Marco de trabajo}
 

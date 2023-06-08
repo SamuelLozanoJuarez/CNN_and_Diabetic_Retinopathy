@@ -38,6 +38,9 @@
 % Subfiguras
 \usepackage{subcaption}
 
+% Tablas
+\usepackage{arydshln}
+
 % Huérfanas y viudas
 \widowpenalty100000
 \clubpenalty100000
@@ -182,7 +185,7 @@
 
 y
 
-\noindent D. \nombreTutorb, profesor del departamento de Ingeniería Informática, área de Ciencias de la Computación e Inteligencia Artificial.
+\noindent D. \nombreTutorb, profesor del departamento de Digitalización, área de Ciencias de la Computación e Inteligencia Artificial.
 
 \noindent Exponen:
 
@@ -230,12 +233,16 @@ D. \nombreTutorb
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+La retinopatía diabética es una microangiopatía que afecta a los vasos sanguíneos de la retina, y constituye la complicación más común de la diabetes mellitus afectando a más de 100 millones de personas en el mundo. Constituye la primera causa de ceguera evitable en adultos. La mayor parte de los pacientes no presentan ningún síntoma hasta el desarrollo avanzado de la enfermedad, por lo que los exámenes diagnósticos periódicos desempeñan un papel fundamental. Es por ello que han desarrollado distintos dispositivos, como Ret-iN CaM, que permiten tomar fotografías de fondo de ojo empleando la cámara de un teléfono móvil.
+
+En este proyecto se busca desarrollar una red neuronal convolucional capaz de diagnosticar el grado de retinopatía diabética empleando imágenes adquiridas con dispositivos iPhone y Samsung. Para ello se han probado más de 2000 modelos empleando distintas técnicas y grandes conjuntos de imágenes diferentes para su entrenamiento, con el objetivo de encontrar aquel con un rendimiento superior al del ser humano.
+
+Tras la creación de las distintas redes se ha realizado un análisis de los resultados obtenidos y se han detallado futuras líneas de trabajo que permitirán mejorar el rendimiento de los modelos.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Palabras separadas por comas que identifiquen el contenido del proyecto Ej: servidor web, buscador de vuelos, android \ldots
+Aprendizaje automático, redes neuronales convolucionales, retinopatía diabética, diagnóstico, imagen médica, fondo de ojo, teléfono móvil, PyTorch
 \end{abstract}
 
 \clearpage
@@ -243,15 +250,36 @@ Palabras separadas por comas que identifiquen el contenido del proyecto Ej: serv
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+Diabetic retinopathy is a microangiopathy affecting the blood vessels of the retina, and is the most common complication of diabetes mellitus, affecting more than 100 million people worldwide. It is the leading cause of avoidable blindness in adults. Most patients do not show any symptoms until late in the course of the disease, so regular screening plays a key role. This is why several devices have been developed, such as Ret-iN CaM, which allow fundus photographs to be taken using a mobile phone camera.
+
+This project aims to develop a convolutional neural network capable of diagnosing the degree of diabetic retinopathy using images acquired with iPhone and Samsung devices. To do this, more than 2,000 models have been tested using different techniques and large sets of different images for training, with the aim of finding one with a performance superior to that of a human being.
+
+After the creation of the different networks, an analysis of the results obtained has been carried out and future lines of work have been detailed to improve the performance of the models.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+Machine learning, convolutional neural networks, diabetic retinopathy, diagnosis, medical imaging, eye fundus, smartphone, PyTorch
 \end{abstract}
 
 \clearpage
+
+\renewcommand*\abstractname{Agradecimientos}
+\begin{abstract}
+A mis tutores Daniel Urda y Darío Fernández, especialmente a Daniel por su gran implicación en el proyecto, la confianza depositada y los ánimos.
+
+A los miembros del Grupo de Inteligencia Computacional Aplicada, Nuño Basurto y Álvaro Herrero. 
+
+A todos los que han hecho posible el desarrollo del Grado en Ingeniería de la Salud, en especial a aquellos profesores que tanto me han enseñado y al coordinador de la carrera, José Francisco.
+
+A SCAYLE y su equipo, por el excelente servicio ofrecido y la ayuda prestada.
+
+A mi familia y a Pilar, por apoyarme y animarme cuando más lo necesitaba. 
+
+Muchas gracias a todos.
+\end{abstract}
+
+\newpage\null\thispagestyle{empty}\newpage
 
 % Indices
 \tableofcontents \label{toc}

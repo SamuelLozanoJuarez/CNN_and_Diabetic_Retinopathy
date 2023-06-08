@@ -1,27 +1,400 @@
 \capitulo{4}{Conclusiones} \label{Conc}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
+En este capítulo se describen los pasos más importantes en el desarrollo del TFG, así como la estrategia seguida para la realización de los objetivos del proyecto. También se recogen algunos de los resultados obtenidos.
 
 \section{Aspectos relevantes.}
 
-Como ya ha sido comentado en el capítulo \ref{Obj}, la principal motivación del proyecto era el desarrollo de una CNN capaz de predecir el grado de RD a partir de una imagen de fondo de ojo. Para lograr este objetivo se ha seguido una estrategia que podríamos considerar de \textit{fuerza bruta}, creando numerosas arquitecturas y probando todas las combinaciones posibles entre dichas arquitecturas y distintos conjuntos de datos de entrenamiento, para tratar de encontrar un modelo con un desempeño superior al de un oftalmólogo. 
+Una vez descritos los datos, herramientas y técnicas principales que van a usarse en el entrenamiento de los modelos, se va a proceder a explicar algunos de los aspectos más relevantes en cada etapa del proyecto.
 
-Este apartado pretende recoger los aspectos más interesantes del \textbf{desarrollo del proyecto}, comentados por los autores del mismo.
+Como ya ha sido comentado en el capítulo \hyperref[Obj]{Objetivos}, la principal motivación del proyecto era el desarrollo de una CNN capaz de predecir el grado de RD a partir de una imagen de fondo de ojo. Para lograr este objetivo se ha seguido una estrategia que podríamos considerar de \textit{fuerza bruta}, creando numerosas arquitecturas y probando todas las combinaciones posibles entre dichas arquitecturas y los distintos conjuntos de datos de entrenamiento, para tratar de encontrar un modelo con un desempeño superior al de un oftalmólogo. 
 
-Debe incluir los detalles más relevantes en cada fase del desarrollo, justificando los caminos tomados, especialmente aquellos que no sean triviales. 
+Se trata pues de un objetivo práctico y no solo teórico, que en caso de alcanzarse podría suponer un beneficio para la asistencia sanitaria, tanto en tiempo como en planificación y costes.
 
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del proyecto y también los resultados negativos obtenidos por soluciones previas a la solución entregada.
+\subsection{Depuración de datos}
 
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+Uno de los aspectos relevantes del trabajo es que se trata de un proyecto real, que hace uso de imágenes de pacientes reales. Esto supone tener que enfrentarse a los problemas que pueden surgir en la práctica clínica habitual, como la depuración y curado de los datos, así como el manejo de imágenes mal clasificadas, desorganizadas o la presencia de valores \textit{missing}. 
+
+\subsubsection{Cohorte local}
+
+Del conjunto de imágenes pertenecientes a la cohorte local, descritas en el capítulo \hyperref[Met]{Metodología}, se realizó un filtrado para tratar de eliminar aquellas que pudieran perjudicar el entrenamiento de los modelos. Para ello se decidió establecer los siguientes criterios de inclusión: 
+
+\begin{itemize}
+    \item No presentar ningún valor \textit{missing} en alguna de las columnas relevantes del archivo Excel.
+    \item Tener una calidad igual o superior a 4 (manteniendo por tanto imágenes con calidad buena o excelente).
+    \item Que existan las 6 imágenes correspondientes del mismo paciente (fotografía del ojo izquierdo y derecho tomadas cada una de ellas con Samsung, iPhone y OCT).
+\end{itemize}
+
+Para llevar a cabo esta tarea de depuración y filtrado, se empleó la biblioteca \texttt{pandas} de Python junto con el archivo Excel proporcionado en el conjunto de datos.
+
+Una vez eliminados los registros que no cumplen alguno de los criterios establecidos se llevó a cabo la clasificación y etiquetado de las imágenes. En el campo \textit{GRADO RETINOPATÍA DIABÉTICA} del archivo Excel se encuentran 2 etiquetas correspondientes al diagnóstico de la imagen: una proporcionada por el ofatlmólogo 1 y otra por el oftalmólogo 2. En aquellos registros en que ambos diagnósticos no fueran coincidentes se sustituyó el más favorable por el peor, es decir, prevaleció el grado más alto. Se tomó esta decisión con el propósito de desarrollar modelos que tiendan a sobrediagnosticar frente a subdiagnosticar. 
+
+Una vez se homogeneizaron los diagnósticos de cada imagen, se procedió a la clasificación de las mismas. Para ello se crearon 5 subdirectorios (G1-G5) en cada directorio Samsung, iPhone, OCT \footnote{Para más información sobre la estructura de directorios consultar el anexo \textit{Manual del investigador}.}, y se distribuyeron las imágenes en los distintos subdirectorios según su etiqueta empleando el módulo \texttt{shutil} (aquellas imágenes etiquetadas como \textit{1} se alojaron en la carpeta \textit{G1}, las etiquetadas como \textit{2} en la carpeta \textit{G2} y así sucesivamente).
+
+\subsubsection{Repositorios}
+
+Las imágenes obtenidas de los distintos repositorios también fueron manipuladas para su organización y clasificación, pero no se aplicó ningún criterio de selección, todas las imágenes fueron tenidas en cuenta. Sin embargo, sí que llevó a cabo una distribución de las imágenes en los distintos subdirectorios (al igual que las imágenes de la cohorte local).
+
+Las fotografías del repositorio Kaggle fueron organizadas empleando para ello la etiqueta almacenada en el fichero .csv incluido en la descarga de las imágenes. En el caso de Zenodo, las imágenes descargadas ya se encontraban distribuidas en carpetas según su etiqueta, pero se realizó el mapeo de las 7 categorías en que se encontraban clasificadas a los 5 grados utilizados en el proyecto. Por último, las fotografías del repositorio DeepDRiD se organizaron utilizando las etiquetas contenidas en los archivos .csv incluidos en la descarga de las imágenes.
+
+Para el análisis de los archivos CSV se empleó la biblioteca \texttt{pandas} y para la organización de las imágenes y su distribución en los subdirectorios se empleó \texttt{shutil}.
+
+\subsection{Cálculo del \textit{baseline}}
+
+Para poder determinar si un modelo alcanza un desempeño superior al ofrecido por los oftalmólogos es necesario calcular el rendimiento de los oftalmólogos en el diagnóstico con imágenes de Samsung e iPhone. Para ello, haciendo uso del archivo Excel proporcionado se calcularon las siguientes métricas: coeficiente Kappa de Cohen (\textit{Cohen's Kappa)}, \textit{Balanced Accuracy}, Valor-F (\textit{F-score}) y el área bajo la curva ROC\footnote{Una explicación más detallada de estas métricas puede encontrarse en el anexo \textit{Estudio experimental}.}. Se seleccionaron las métricas Valor-F y área bajo la curva ROC por ser ampliamente utilizadas en la literatura \cite{soa:mueller, soa:seetha}. Se optó por emplear el coeficiente Kappa de Cohen por ser la métrica más aceptada para la evaluación del rendimiento de modelos cuando el resultado de interés puede medirse en una escala nominal \cite{kappa:kappa}, y \textit{Balanced Accuracy} ya que es más adecuada que \textit{accuracy} para la evaluación de clasificadores que operan con conjuntos de datos desbalanceados (como es nuestro caso) \cite{bal_acc}.
+
+En la obtención de estos valores se consideraron como etiquetas verdaderas los diagnósticos proporcionados por los oftalmólogos con las imágenes tomadas con OCT, mientras que se consideraron como etiquetas a evaluar los diagnósticos ofrecidos por los oftalmólogos empleando imágenes de Samsung y de iPhone. El cálculo de estas métricas fue realizado haciendo uso del módulo \texttt{sklearn.metrics} en Python. Los resultados del \textit{baseline} se encuentran en la tabla \ref{tab:baseline}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0}
+                  & iPhone & Samsung \\ \midrule
+Balanced accuracy & 0.4564 & 0.5434  \\
+F-score           & 0.5611 & 0.5370  \\
+AUC-ROC           & 0.6874 & 0.6746  \\
+Cohen's Kappa     & 0.3538 & 0.3543  \\ \bottomrule
+\end{tabular}
+\caption{Valor de las métricas de \textit{baseline} obtenidas por los oftalmólogos sobre imágenes de iPhone y Samsung.}
+\label{tab:baseline}
+\end{table}
+
+\subsection{Arquitecturas desarrolladas}
+
+\subsubsection{Principales}
+
+Con el objetivo de encontrar una CNN capaz de superar las métricas del \textit{baseline}, se decidió explorar la literatura para recabar distintas arquitecturas empleadas en otros artículos relacionados con el análisis de fondo de ojo y la RD. En total se recopilaron 4 estructuras, que junto con la estructura de CNN planteada en la documentación de PyTorch\footnote{Disponible en: \url{https://pytorch.org/tutorials/beginner/introyt/introyt1_tutorial.html##pytorch-models}.}, constituyen las 5 arquitecturas fundamentales sobre las que se sustenta el proyecto.
+
+El nombre que recibirán estas arquitecturas en el desarrollo del TFG será el correspondiente al autor del artículo del cual se obtuvieron. Así pues encontramos la arquitectura \textit{Ghosh} \cite{CNNarch:Ghosh}, la arquitectura \textit{Alqudah} \cite{CNNarch:Alqudah}, arquitectura \textit{Mobeen} \cite{CNNarch:Mobeen} y arquitectura \textit{Rajagopalan} \cite{CNNarch:Rajagopalan}. La arquitectura planteada en la documentación de PyTorch recibirá el nombre de \textit{Básica}.
+
+A continuación se describen brevemente los componentes de cada arquitectura\footnote{Si se desea conocer con más detalle la estructura de estas arquitecturas explórese el anexo \textit{Estudio experimental}.}, como también puede observarse en la figura \ref{fig:estructuras}.
+
+\begin{figure}[!t]
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{img/estructura_Basica.png}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{img/estructura_Mobeen.png}
+\end{subfigure}
+
+\vspace{0.3cm} % Espacio vertical entre filas
+
+\begin{subfigure}[t]{0.35\textwidth}
+  \includegraphics[width=\textwidth]{img/estructura_alqudah.png}
+\end{subfigure}
+\begin{subfigure}[t]{0.25\textwidth}
+  \includegraphics[width=\textwidth]{img/estructura_ghosh.png}
+\end{subfigure}
+\begin{subfigure}[t]{0.35\textwidth}
+  \includegraphics[width=\textwidth]{img/estructura_rajagopalan.png}
+\end{subfigure}
+
+\caption{Estructuras de las 5 principales arquitecturas empleadas. En la fila superior, de izquierda a derecha: arquitectura Básica, arquitectura Mobeen. En la fila inferior, de izquierda a derecha: arquitectura Alqudah, arquitectura Ghosh, arquitectura Rajagopalan. Fuente propia.}
+\label{fig:estructuras}
+\end{figure}
+
+\begin{itemize}[itemsep=0.25em]
+
+    \item \textbf{Básica}. Compuesta por 2 capas convolucionales, 4 de activación ReLU y 2 de \textit{maxpooling}. Finalmente posee 3 capas \textit{fully-connected}.
+
+    \item \textbf{Mobeen}. Formada por 2 capas convolucionales, 4 capas de activación ReLU, 2 de \textit{maxpooling} y 3 densas.
+
+    \item \textbf{Alqudah}. Compuesta por 4 capas convolucionales, 4 capas de normalización del \textit{batch}, 4 capas de activación ReLU, 3 capas de \textit{maxpooling} y una capa densa.
+    
+    \item \textbf{Ghosh}. Formada por 13 capas convolucionales, 5 capas de \textit{maxpooling}, 2 capas de activación Maxout, 3 capas de regularización Dropout y 2 capas densas. 
+    
+    \item \textbf{Rajagopalan}. Compuesta por 5 capas convolucionales, 7 capas de activación ReLU, 2 capas de \textit{maxpooling} y 3 capas \textit{fully-connected.}
+\end{itemize}
+
+\subsubsection{Variaciones}
+
+Se consideró que estas 5 arquitecturas fundamentales no eran suficientes para la estrategia de fuerza bruta que quería desempeñarse. Es por ello que se plantearon distintas variaciones en las 4 CNN encontradas en la literatura. Estas modificaciones se realizaron buscando obtener variantes de las arquitecturas originales pero sin perder la idea de cada modelo inicial.
+
+Para llevar a cabo las variaciones, se generaron nuevas arquitecturas alterando los siguientes parámetros de las originales: el número de capas convolucionales, el número de filtros por capa convolucional y el número de neuronas de las capas densas. 
+
+Las variaciones en el número de capas convolucionales, así como en el número de neuronas, serán específicas para cada arquitectura. Sin embargo, las variaciones con respecto al número de filtros son las mismas en las 4 arquitecturas. Todas estas posibles combinaciones se pueden observar en la tabla \ref{tab:variaciones}. En esta tabla se encuentran: 
+
+\begin{itemize}
+    \item Primera columna: el posible número de capas convolucionales que pueden crearse en las variaciones de cada modelo.
+    \item Segunda columna: el número de filtros por cada capa convolucional, pudiendo ser la misma cantidad que en la arquitectura (1x), la mitad (0.5x) o el doble (2x).
+    \item Tercera columna: el número de neuronas en las capas densas del modelo. El número de neuronas de las distintas capas se encuentra separado usando la barra lateral ``/''.
+    \item Cuarta columna: representa la cantidad de posibles variaciones de dicha arquitectura que pueden obtenerse mediante la combinación de los distintos valores de los parámetros.
+    \item Destacado en letra negrita podemos encontrar los valores de los parámetros presentes en las arquitecturas originales.
+\end{itemize}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0}
+Arquitectura      & \begin{tabular}[c]{@{}l@{}}Capas\\ convolucionales\end{tabular} & \begin{tabular}[c]{@{}l@{}}Filtros por \\ capa\end{tabular} & Neuronas                                                                                                    & \begin{tabular}[c]{@{}l@{}}Nº posibles \\ variaciones\end{tabular} \\ \midrule
+Mobeen      & \textbf{2}, 3 o 4                                                        & \textbf{1x}, 0.5x o 2x                                               & \begin{tabular}[c]{@{}l@{}}\textbf{100/50}, 256/128,\\ 128/64, 64/32,\\ 32/64, 64/128\end{tabular}                     & 54                                                                 \\ \midrule
+Alqudah     & 2, \textbf{4} o 6                                                        & \textbf{1x}, 0.5x o 2x                                               & \begin{tabular}[c]{@{}l@{}}\textbf{0/0}, 512/256,\\ 128/64, 64/128,\\ 128/256\end{tabular}                             & 45                                                                 \\ \midrule
+Ghosh       & 6, 9 o \textbf{13}                                                       & \textbf{1x}, 0.5x o 2x                                               & \begin{tabular}[c]{@{}l@{}}\textbf{256/1024/512},\\ 128/512/256,\\ 64/256/128,\\ 128/256/512,\\ 512/256/128\end{tabular} & 45                                                                 \\ \midrule
+Rajagopalan & 3, \textbf{5} o 7                                                        & \textbf{1x}, 0.5x o 2x                                               & \begin{tabular}[c]{@{}l@{}}\textbf{512/256},\\ 1024/512,\\ 256/128,\\ 128/64,\\ 64/128,\\ 128/256\end{tabular}               & 54                                                                 \\ \bottomrule
+\end{tabular}%
+}
+\caption{Posibles valores de los parámetros en la creación de variaciones para las distintas arquitecturas.}
+\label{tab:variaciones}
+\end{table}
+
+Considerando todas las variaciones descritas en la tabla \ref{tab:variaciones}, junto con la arquitectura Básica, el número de posibles modelos asciende hasta $199$. La creación y entrenamiento de esta cantidad de modelos es una tarea de cómputo bastante exigente, que difícilmente puede ser ejecutada en un ordenador convencional, o al menos no en un tiempo coherente. Es por ello que surgió la necesidad de emplear un supercomputador. Para poder solventar este problema se solicitó al centro de Supercomputación de Castilla y León (SCAYLE) acceso a sus servidores para poder realizar estas ejecuciones, concediéndosenos dicho permiso\footnote{Pueden encontrarse más detalles acerca de la partición de SCAYLE en la que se ejecutaron las tareas en el anexo \textit{Estudio experimental}.}.
+
+\subsection{Conjuntos de entrenamiento}
+
+Debido al objetivo del proyecto, el conjunto de imágenes que se empleen para la validación de los modelos han de estar constituidos siempre por fotografías adquiridas con teléfonos móviles. Sin embargo, podemos utilizar distintos conjuntos de imágenes para el entrenamiento de los modelos, combinando la cohorte local y los repositorios.
+
+Además, para mayor variación, podemos emplear las distintas imágenes bien en su aspecto original bien tras aplicarles alguna transformación (preprocesamiento, inpainting o ambas dos).
+
+A continuación se van a describir los conjuntos de imágenes empleados en el entrenamiento de los modelos.
+
+\subsubsection{OCT}
+
+Se trata del conjunto más sencillo y pequeño de los que se pueden emplear para el entrenamiento. Está compuesto únicamente por las 113 imágenes de la cohorte local obtenidas con el OCT.
+
+Generalmente los modelos de CNN construidos desde cero requieren un número de imágenes de entrenamiento muy superior a las proporcionadas por este conjunto, por lo que no se espera obtener un gran rendimiento de aquellos modelos entrenados únicamente con OCT. La ventaja de este \textit{dataset} es el poco espacio que ocupa en la memoria, así como el poco tiempo que se necesita para entrenar un modelo con él.
+
+\subsubsection{OCT \textit{plus}}
+
+Es una ampliación del conjunto OCT para tratar de mejorar el rendimiento de los modelos. Está constituido por las 113 imágenes de OCT junto con las imágenes de la cohorte local obtenidas con el dispositivo Samsung o el dispositivo iPhone. Por tanto existen dos opciones: que el conjunto esté formado por las imágenes de OCT y Samsung, contando en ese caso con 206 imágenes de entrenamiento y empleando únicamente las imágenes de iPhone para la evaluación; y que el conjunto esté formado por OCT e iPhone, con un total de 212 imágenes de entrenamiento y empleando en este caso para evaluar únicamente las de Samsung.
+
+\subsubsection{Datasets}
+
+Está formado por la combinación de las imágenes obtenidas de los 3 repositorios: Kaggle, Zenodo y DeepDRiD, junto con las imágenes de OCT, lo que suma un total de 36476 imágenes. Es el conjunto de entrenamiento más grande que podemos emplear en este proyecto.
+
+Puede ser el más apropiado para el entrenamiento de una CNN desde cero, aunque sus principales desventajas son el espacio que ocupa en disco (más de 40 GB) y el tiempo que requiere un modelo para entrenar usándolo. Es por ello que el entrenamiento de redes empleando este \textit{dataset} se realizó exclusivamente en SCAYLE.
+
+Como ya se ha mencionado anteriormente, estos 3 conjuntos pueden emplearse en su versión original o modificados tras aplicar el preprocesamiento. Además, las imágenes del conjunto OCT \textit{plus} puede emplearse en la forma original, preprocesadas, ``inpaintadas'' o preprocesadas e ``inpaintadas''.
+
+La misma situación se produce al emplear las imágenes de evaluación (Samsung e iPhone), que pueden ser usadas en su versión original, preprocesadas, inpaintadas o preprocesadas e inpaintadas. Sin embargo, en el desarrollo del proyecto, siempre que se emplearon imágenes preprocesadas en el entrenamiento, también se usaron en la evaluación (ya fueran inpaintadas o no).
+
+\subsection{Combinaciones entre arquitecturas y datos}
+
+Una vez han sido definidas las arquitecturas (y sus variaciones) y los posibles conjuntos de datos, se van a mencionar las distintas combinaciones entre arquitecturas y conjuntos de entrenamiento que se llevaron a cabo en el desarrollo del proyecto.
+
+La primera clasificación que se puede realizar entre entrenamientos es si se empleó la estrategia de \textit{early stopping} o no. Con respecto a las ejecuciones sin \textit{early stopping}, únicamente se realizaron empleando el conjunto de OCT, sin preprocesamiento, para entrenar las 199 arquitecturas planteadas. Para la evaluación de estos modelos, igualmente se emplearon imágenes no preprocesadas y sin inpaint.
+
+El resto de entrenamientos que se van a mencionar a cotinuación se realizaron implementando la técnica de \textit{early stopping}.
+
+El conjunto de datos OCT se empleó, tanto preprocesado como no preprocesado, para entrenar las 199 arquitecturas propuestas, y estas se evaluaron usando imágenes inpaintadas y no inpaintadas. Lo mismo se realizó con el conjunto OCT \textit{plus}, que se usó preprocesado (con inpainting y sin inpainting) y no preprocesado (con inpainting y sin inpainting) para el entrenamiento de las 199 arquitecturas, posteriormente evaluadas de igual forma con imágenes inpaintadas y no inpaintadas.
+
+Por último, el conjunto ``Datasets'' se empleó, tanto preprocesado como original, para el entrenamiento de un número reducido de arquitecturas. Los otros conjuntos de datos, debido a su reducido tamaño, podían emplearse para entrenar las 199 arquitecturas. Sin embargo, ``Datasets'' es 180 veces más grande que OCT \textit{plus} y 320 veces más grande que OCT, por lo que el tiempo de entrenamiento de cada modelo es notablemente superior. Es por ello que de las 199 arquitecturas posibles, se seleccionaron 17 para ser entrenadas con estos conjuntos.
+
+Para llevar a cabo esa selección, se optó por escoger 4 variaciones de cada arquitectura de la literatura, más la arquitectura Básica original. Con el objetivo de entrenar las mejores redes se optó por aquellas arquitecturas que mejor rendimiento ofrecieron con los demás conjuntos de datos. 
+
+Debido a que ninguno de los modelos entrenados hasta el momento superó el \textit{baseline} se buscó aquella red que ofreciese un rendimiento más próximo al deseado. Para ello se calculó la distancia euclídea entre los resultados de cada modelo entrenado y los valores del \textit{baseline}. La idea de emplear la distancia euclídea para evaluar la similitud de dos elementos ya ha sido empleada por otros autores en el contexto de \textit{machine learning} \cite{conc:euclidea}.
+
+De esta manera se seleccionaron las 3 variaciones de cada arquitectura que menor valor de distancia euclídea obtuvieron. La cuarta variación fue escogida manualmente, seleccionando de entre todas aquella que representase la red más compleja, más profunda y con mayor número de capas. Se tomó esta decisión ya que el rendimiento de un modelo depende del conjunto de datos con que se entrene, así una red más simple puede ofrecer buen desempeño con un conjunto pequeño pero ser insuficiente para un mayor número de imágenes. Es por ello que, tal y como se sugiere en \cite{conc:very_deep, conc:large_deep}, se seleccionó de cada arquitectura aquella variación más profunda.
+
+\begin{table}[]
+\centering
+\renewcommand{\arraystretch}{1.25}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ccccc@{}}
+\specialrule{1.25pt}{0pt}{0pt}
+\rowcolor[HTML]{C0C0C0} 
+Validación            & \begin{tabular}[c]{@{}c@{}}Conjunto de\\ entrenamiento\end{tabular}                 & Preprocesamiento              & Inpainting & \begin{tabular}[c]{@{}c@{}}Nº de \\ variaciones\\ probadas\end{tabular} \\ \specialrule{1.25pt}{0pt}{0pt}
+No                    & OCT                                                                                   & No preproc.                   & -          & 199                                                                     \\ \specialrule{1.25pt}{0pt}{0pt}
+                      &                                                                                       & No preproc.                   & -          & 199                                                                     \\ \cmidrule(l){3-5} 
+                      & \multirow{-2}{*}{OCT}                                                                 & Sí preproc.                   & -          & 199                                                                     \\ \cmidrule(l){2-5} 
+                      &                                                                                       &                               & No inp.    & 199                                                                     \\
+                      &                                                                                       & \multirow{-2}{*}{No preproc.} & Sí inp.    & 199                                                                     \\ \cmidrule(l){3-5} 
+                      &                                                                                       &                               & No inp.    & 199                                                                     \\
+                      & \multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}OCT \textit{plus}\\ Samsung\end{tabular}} & \multirow{-2}{*}{Sí preproc.} & Sí inp.    & 199                                                                     \\ \cmidrule(l){2-5} 
+                      &                                                                                       &                               & No inp.    & 199                                                                     \\
+                      &                                                                                       & \multirow{-2}{*}{No preproc.} & Sí inp.    & 199                                                                     \\ \cmidrule(l){3-5} 
+                      &                                                                                       &                               & No inp.    & 199                                                                     \\
+                      & \multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}OCT \textit{plus}\\ iPhone\end{tabular}}  & \multirow{-2}{*}{Sí preproc.} & Sí inp.    & 199                                                                     \\ \cmidrule(l){2-5} 
+                      &                                                                                       & No preproc.                   & -          & 17                                                                      \\ \cmidrule(l){3-5} 
+\multirow{-12}{*}{Sí} & \multirow{-2}{*}{Datasets}                                                            & Sí preproc.                   & -          & 17                                                                      \\ \specialrule{1.25pt}{0pt}{0pt}
+Total                 &                                                                                       &                               &            & 2223                                                                    \\ \specialrule{1.25pt}{0pt}{0pt}
+\end{tabular}%
+}
+\caption{Enumeración de las posibles combinaciones entre arquitecturas, conjuntos de datos y técnicas desarrolladas en el proyecto.}
+\label{tab:combinaciones}
+\end{table}
+
+En la tabla \ref{tab:combinaciones} se puede observar un resumen y enumeración de todas las combinaciones probadas en el proyecto. El conjunto OCT \textit{plus} ha sido dividido en dos para su representación: OCT \textit{plus} Samsung y OCT \textit{plus} iPhone, ya que han dado lugar a modelos distintos usando ambos subconjuntos. 
+
+Podemos considerar que se ha logrado desarrollar esa estrategia de \textit{fuerza bruta} ideada en un inicio, ya que se han creado, entrenado y evaluado un total de 2223 modelos distintos.
 
 \section{Resumen de resultados.}
 
-Breve resumen de los resultados. En caso de ser un trabajo muy experimental, los resultados completos pueden aparecer en su anexo correspondiente.
+Para llevar a cabo el análisis de los miles de resultados obtenidos, ubicados en un fichero CSV, se hizo uso del programa online \texttt{Databricks}, para poder hacer uso de herramientas de BigData a través de la biblioteca PySpark.
 
-\section{Discusión.}
+\subsection{Mejor modelo}
 
-Discusión y análisis de los resultados obtenidos.
+El principal objetivo del estudio de los resultados era determinar si alguno de los modelos propuestos superaba el \textit{baseline} calculado. Por desgracia, ninguno de los modelos creados tuvo el rendimiento adecuado para superar dichos valores.
 
+Es por ello que, con el objetivo de encontrar los mejores candidatos para futuras extensiones del trabajo, se decidió obtener los modelos que mejor rindieron según las diferentes métricas.
 
+\subsubsection{\textit{Balanced accuracy}}
 
+El \textit{baseline} para esta métrica se encuentra en 0.456 para iPhone y 0.543 para Samsung.
 
+El valor de \textit{balanced accuracy} más alto obtenido empleando imágenes de \textbf{iPhone} fue de 0.305, siendo logrado por un modelo construido según la arquitectura Mobeen y entrenado con el conjunto de imágenes OCT \textit{plus} sin preprocesamiento ni inpaint.
+
+El valor de \textit{balanced accuracy} más alto obtenido empleando imágenes de \textbf{Samsung} fue de 0.371, siendo logrado por un modelo construido según la arquitectura Alqudah y entrenado con el conjunto de imágenes OCT \textit{plus} inpaintadas y sin preprocesamiento.
+
+\subsubsection{Valor F}
+
+El \textit{baseline} para esta métrica se encuentra en 0.561 para iPhone y 0.537 para Samsung.
+
+El valor de \textit{F score} más alto obtenido empleando imágenes de \textbf{iPhone} fue de 0.436, siendo logrado por un modelo construido según la arquitectura Alqudah y entrenado con el conjunto de imágenes OCT \textit{plus} preprocesadas y sin inpaint.
+
+El valor de \textit{F score} más alto obtenido empleando imágenes de \textbf{Samsung} fue de 0.467, siendo logrado por un modelo construido según la arquitectura Alqudah y entrenado con el conjunto de imágenes OCT sin preprocesamiento.
+
+\subsubsection{Coeficiente Kappa de Cohen}
+
+El \textit{baseline} para esta métrica se encuentra en 0.354 para iPhone y 0.354 para Samsung.
+
+El valor del coeficiente Kappa de Cohen más alto obtenido empleando imágenes de \textbf{iPhone} fue de 0.186, siendo logrado por un modelo construido según la arquitectura Alqudah y entrenado con el conjunto de imágenes OCT \textit{plus} preprocesadas y sin inpaint.
+
+El valor de coeficiente Kappa de Cohen más alto obtenido empleando imágenes de \textbf{Samsung} fue de 0.176, siendo logrado por un modelo construido según la arquitectura Ghosh, entrenado con el conjunto de imágenes Datasets preprocesadas y sobre imágenes de test inpaintadas.
+
+\subsubsection{Área bajo la curva ROC}
+
+El \textit{baseline} para esta métrica se encuentra en 0.687 para iPhone y 0.675 para Samsung.
+
+El valor de AUC más alto obtenido empleando imágenes de \textbf{iPhone} fue de 0.637, siendo logrado por un modelo construido según la arquitectura Alqudah y entrenado con el conjunto de imágenes OCT \textit{plus} sin preprocesar ni inpaintar, y usando como test imágenes inpaintadas.
+
+El valor de \textit{F score} más alto obtenido empleando imágenes de \textbf{Samsung} fue de 0.655, siendo logrado por un modelo construido según la arquitectura Ghosh y entrenado con el conjunto de imágenes OCT \textit{plus} preprocesadas e inpaintadas, y usando como test imágenes inpaintadas.
+
+\begin{figure}[!t]
+\centering
+\begin{subfigure}[t]{0.7\textwidth}
+  \includegraphics[width=\textwidth]{img/Confussion_matrix_iphone.png}
+\end{subfigure}
+
+\vspace{0.1cm} % Espacio vertical entre filas
+
+\begin{subfigure}[t]{0.7\textwidth}
+  \includegraphics[width=\textwidth]{img/Confussion_matrix_samsung.png}
+\end{subfigure}
+
+\caption{Matrices de confusión de los modelos con un rendimiento más próximo al deseado. La matriz superior pertenece al modelo evaluado con iPhone. La matriz inferior pertenece al modelo evaluado con Samsung. Fuente propia.}
+\label{fig:matrices}
+\end{figure}
+
+\subsubsection{Distancia euclídea}
+
+Con el propósito de encontrar aquel modelo que más pudiese aproximarse al rendimiento deseado se empleó la distancia euclídea para determinar la red que hubiese tenido un rendimiento más cercano al \textit{baseline}, con el objetivo de considerar ese modelo para su mejoría mediante la aplicación de nuevas estrategias.
+
+El modelo más próximo a los resultados deseados evaluado con imágenes de \textbf{iPhone} se construyó siguiendo la arquitectura Alqudah y fue entrenado con el conjunto OCT \textit{plus} usando imágenes preprocesadas sin inpaint. Su matriz de confusión puede observarse en la figura \ref{fig:matrices} y obtuvo un valor de \textit{balanced accuracy} de 0.276, un valor F igual a 0.436, un AUC de 0.528 y un coeficiente Kappa de Cohen igual a 0.186.
+
+Por otra parte, modelo más próximo a los resultados deseados evaluado con imágenes de \textbf{Samsung} se construyó siguiendo la arquitectura Rajagopalan y fue entrenado con el conjunto Datasets usando imágenes preprocesadas y evaluado con imágenes inpaintadas. Su matriz de confusión puede observarse en la figura \ref{fig:matrices} y obtuvo un valor de \textit{balanced accuracy} de 0.351, un valor F igual a 0.414, un AUC de 0.655 y un coeficiente Kappa de Cohen igual a 0.143.
+
+\subsection{Comparación de estructuras}
+
+Para realizar un análisis más exhaustivo de los modelos creados, en las tablas \ref{tab:arq_iphone} y \ref{tab:arq_samsung} se pueden observar una comparativa entre el rendimiento medio de las distintas arquitecturas para iPhone y Samsung. Entre paréntesis se encuentra el valor máximo alcanzado por algún modelo construido según dicha arquitectura. Se incluye además el tiempo de entrenamiento medio y máximo para cada una de las arquitecturas.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Arquitectura & \begin{tabular}[c]{@{}l@{}}Balanced\\ accuracy\end{tabular} & Valor F     & AUC         & \begin{tabular}[c]{@{}l@{}}Coeficiente\\ Kappa\end{tabular} & \begin{tabular}[c]{@{}l@{}}Tiempo\\ (min.)\end{tabular} \\ \midrule
+\rowcolor[HTML]{EFEFEF}
+Baseline     & 0.456                                                       & 0.561       & 0.687       & 0.354                                                       & -                                                       \\
+Alqudah      & 0.21 (0.3)                                                  & 0.31 (0.44) & 0.52 (0.64) & 0.02 (0.19)                                                 & 17.54 (1396.21)                                         \\
+Básica       & 0.2 (0.26)                                                  & 0.27 (0.4)  & 0.51 (0.57) & 0.01 (0.1)                                                  & 184.62 (887.85)                                         \\
+Ghosh        & 0.2 (0.29)                                                  & 0.31 (0.4)  & 0.5 (0.61)  & 0.01 (0.13)                                                 & 20.75 (1995.44)                                         \\
+Mobeen       & 0.2 (0.3)                                                   & 0.31 (0.43) & 0.51 (0.6)  & 0.01 (0.18)                                                 & 13.36 (638.45)                                          \\
+Rajagopalan  & 0.2 (0.29)                                                  & 0.31 (0.4)  & 0.5 (0.64)  & 0.0 (0.12)                                                    & 11.28 (1126.86)                                         \\ \bottomrule
+\end{tabular}%
+}
+\caption{Valor medio y máximo de las distintas métricas de rendimiento para cada arquitectura evaluando con imágenes de iPhone.}
+\label{tab:arq_iphone}
+\end{table}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Arquitectura & \begin{tabular}[c]{@{}l@{}}Balanced\\ accuracy\end{tabular} & Valor F     & AUC         & \begin{tabular}[c]{@{}l@{}}Coeficiente\\ Kappa\end{tabular} & \begin{tabular}[c]{@{}l@{}}Tiempo\\ (min.)\end{tabular} \\ \midrule
+\rowcolor[HTML]{EFEFEF}
+Baseline     & 0.543                                                       & 0.537       & 0.675       & 0.354                                                       & -                                                       \\
+Alqudah      & 0.21 (0.37)                                                 & 0.35 (0.46) & 0.52 (0.64) & 0.02 (0.17)                                                 & 17.15 (1396.2)                                          \\
+Básica       & 0.22 (0.33)                                                 & 0.28 (0.38) & 0.51 (0.59) & 0.01 (0.09)                                                 & 184.19 (887.85)                                         \\
+Ghosh        & 0.2 (0.31)                                                  & 0.34 (0.42) & 0.5 (0.66)  & 0.0 (0.18)                                                  & 20.15 (1995.44)                                         \\
+Mobeen       & 0.21 (0.34)                                                 & 0.31 (0.46) & 0.53 (0.65) & 0.0 (0.17)                                                  & 13.18 (638.45)                                          \\
+Rajagopalan  & 0.2 (0.35)                                                  & 0.34 (0.47) & 0.5 (0.65)  & 0.0 (0.16)                                                  & 10.64 (1126.86)                                         \\ \bottomrule
+\end{tabular}%
+}
+\caption{Valor medio y máximo de las distintas métricas de rendimiento para cada arquitectura evaluando con imágenes de Samsung.}
+\label{tab:arq_samsung}
+\end{table}
+
+\subsection{Comparación de conjuntos de datos}
+
+De igual forma se ha querido comparar los distintos conjuntos de datos, evaluando el valor medio de las métricas obtenidas al emplear dichos conjuntos como entrenamiento, así como los tiempos de entrenamiento medio y máximo al emplear los distintos conjuntos de datos. Esta información puede consultarse en las tablas \ref{tab:conj_iphone} y \ref{tab:conj_samsung}.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Arquitectura                                                              & \begin{tabular}[c]{@{}l@{}}Balanced\\ accuracy\end{tabular} & Valor F     & AUC         & \begin{tabular}[c]{@{}l@{}}Coeficiente\\ Kappa\end{tabular} & \begin{tabular}[c]{@{}l@{}}Tiempo\\ (min.)\end{tabular} \\ \midrule
+\rowcolor[HTML]{EFEFEF} 
+Baseline                                                                  & 0.456                                                       & 0.561       & 0.687       & 0.3538                                                      & -                                                       \\
+Datasets                                                                  & 0.22 (0.3)                                                  & 0.21 (0.4)  & 0.53 (0.64) & 0.03 (0.14)                                                 & 545.02 (1995.44)                                        \\
+OCT                                                                       & 0.2 (0.3)                                                   & 0.2 (0.42)  & 0.5 (0.63)  & 0.0 (0.15)                                                  & 3.26 (52.27)                                            \\
+\begin{tabular}[c]{@{}l@{}}OCT \textit{plus} \\ Samsung\end{tabular}      & 0.2 (0.3)                                                   & 0.32 (0.44) & 0.51 (0.64) & 0.01 (0.19)                                                 & 3.85 (16.11)                                            \\
+\begin{tabular}[c]{@{}l@{}}OCT \textit{plus} \\ Samsung inp.\end{tabular} & 0.2 (0.3)                                                   & 0.32 (0.43) & 0.51 (0.62) & 0.01 (0.18)                                                 & 3.87 (17.06)                                            \\ \bottomrule
+\end{tabular}%
+}
+\caption{Valor medio y máximo de las distintas métricas de rendimiento para cada conjunto de datos evaluando con imágenes de iPhone.}
+\label{tab:conj_iphone}
+\end{table}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Arquitectura                                                             & \begin{tabular}[c]{@{}l@{}}Balanced\\ accuracy\end{tabular} & Valor F     & AUC         & \begin{tabular}[c]{@{}l@{}}Coeficiente\\ Kappa\end{tabular} & \begin{tabular}[c]{@{}l@{}}Tiempo\\ (min.)\end{tabular} \\ \midrule
+\rowcolor[HTML]{EFEFEF} 
+Baseline                                                                 & 0.543                                                       & 0.537       & 0.675       & 0.354                                                       & -                                                       \\
+Datasets                                                                 & 0.22 (0.35)                                                 & 0.21 (0.42) & 0.53 (0.65) & 0.03 (0.18)                                                 & 545.02 (1995.44)                                        \\
+OCT                                                                      & 0.21 (0.36)                                                 & 0.33 (0.47) & 0.52 (0.64) & 0.01 (0.17)                                                 & 3.26 (52.27)                                            \\
+\begin{tabular}[c]{@{}l@{}}OCT \textit{plus} \\ iPhone\end{tabular}      & 0.21 (0.33)                                                 & 0.34 (0.45) & 0.51 (0.64) & 0.01 (0.15)                                                 & 3.07 (17.55)                                            \\
+\begin{tabular}[c]{@{}l@{}}OCT \textit{plus} \\ iPhone inp.\end{tabular} & 0.2 (0.37)                                                  & 0.34 (0.46) & 0.51 (0.66) & 0.0 (0.17)                                                  & 3.17 (26.97)   
+\\ \bottomrule
+\end{tabular}%
+}
+\caption{Valor medio y máximo de las distintas métricas de rendimiento para cada conjunto de datos evaluando con imágenes de Samsung.}
+\label{tab:conj_samsung}
+\end{table}
+
+\section{Discusión.} 
+
+Pese a que ningún modelo rindió al nivel requerido, hay algunas combinaciones de arquitectura y conjuntos de datos que podrían llegar a superar las métricas establecidas si se continua ampliando el trabajo y se aplican algunas de las herramientas propuestas en el capítulo \hyperref[Fut]{Líneas futuras}.
+
+Por ejemplo, se ha comprobado en la literatura, que la arquitectura Ghosh ha sido capaz de obtener un 85\% de acierto y un valor de coeficiente Kappa de Cohen de 0.74 en el diagnóstico de RD a partir de imágenes de fondo de ojo \cite{CNNarch:Ghosh}. Así como publicaciones que demuestran un porcentaje de \textit{accuracy} del 98\% usando la arquitectura Alqudah \cite{CNNarch:Alqudah} y un \textit{accuracy} del 97\% empleando la arquitectura Rajagopalan para la detección de patologías de la retina \cite{CNNarch:Rajagopalan}. Por lo que existe un amplio margen de mejora.
+
+Si se observan las tablas \ref{tab:arq_iphone} y \ref{tab:arq_samsung} se puede comprobar que no existen grandes diferencias en cuanto al rendimiento entre distintas arquitecturas, por lo que no se puede afirmar que ninguna de ellas destaque por encima de las demás.
+
+Sin embargo, se puede observar que tanto en evaluación con iPhone como con Samsung, la arquitectura Básica obtiene valores de \textit{F-score} que se alejan del resto de arquitecturas, ya que se encuentra a una distancia superior a la desviación estándar ($0.016$ para iPhone y $0.0257$ para Samsung) con respecto a la media del Valor F ($0.302$ para iPhone y $0.324$ para Samsung).
+
+Con respecto a los tiempos de ejecución de cada arquitectura, si bien es cierto que en ambas tablas la arquitectura Básica es la que mayor tiempo medio de ejecución presenta, no se trata de la red que mayor tiempo de entrenamiento requiere. El valor tan elevado de la arquitectura Básica en comparación con el resto de modelos se debe a que para esta arquitectura se han ejecutado el mismo número de variaciones con todos los conjuntos de datos posibles, y el entrenamiento de los modelos usando el conjunto Datasets requiere de mayor cantidad de tiempo en comparación con los conjuntos OCT y OCT \textit{plus}. 
+
+Sin embargo, en el resto de topologías se han ejecutado más variaciones empleando conjuntos pequeños (OCT y OCT \textit{plus}) que el conjunto Datasets, debido a los motivos previamente comentados en la subsección \textit{Combinaciones entre arquitecturas y datos} de la sección \textit{Aspectos relevantes}, y como consecuencia de ello, la media del tiempo de ejecución disminuye, se diluyen los valores altos ya que se encuentran en menor proporción en el resto de arquitecturas.
+
+Si observamos los tiempos máximos de ejecución de cada arquitectura podremos observar que Ghosh es la que mayor valor presenta, seguida por Alqudah y Rajagopalan. Esto parece ser coherente ya que se trata de las 3 arquitecturas más complejas y profundas de las 5 probadas.
+
+Con respecto a los conjuntos de datos, tampoco se observa una diferencia significativa entre ellos, a excepción del conjunto Datasets que rinde por debajo de los demás conjuntos si se compara la métrica Valor F y por encima si se compara el Coeficiente Kappa de Cohen.
+
+De igual manera los modelos entrenados con el conjunto OCT muestran un Valor F más bajo que OCT \textit{plus} al ser evaluados con imágenes de iPhone. No se observa esta diferencia al evaluar con Samsung.
+
+Con respecto a los tiempos de ejecución, como se mencionó en la subección \textit{Combinaciones entre arquitecturas y datos} de la sección \textit{Aspectos relevantes}, el conjunto que requiere mayor tiempo de entrenamiento es \textit{Datasets}, que necesita de media 130 veces más tiempo que los demás conjuntos. Esto se debe a que está formado por una cantidad de datos notablemente mayor.
+
+Sin embargo, pese a que el conjunto Datasets requiera más tiempo de entrenamiento y no parezca ofrecer una mejora de los rendimientos, es el conjunto más adecuado para el entrenamiento de modelos desde cero, ya que como se menciona en \cite{large_datasets} y \cite{imagenet}, se necesita un gran número de imágenes para el entrenamiento de CNN desde cero.
+
+\textbf{Debido a que ninguno de los modelos ha logrado superar las métricas, se debe seguir trabajando e investigando en el desarrollo de una CNN capaz de superar el \textit{baseline}.}

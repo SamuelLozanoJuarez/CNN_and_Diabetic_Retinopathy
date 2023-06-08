@@ -281,17 +281,18 @@ Las distintas capas densas también pueden ir intercaladas por capas de activaci
 
 Para la búsqueda de trabajos relacionados se usaron los siguientes términos de búsqueda: \textit{CNN, diabetic retinopathy, smartphone}. En aquellos repositorios en que no aparecía ningún resultado se probó a sustituir el último término por \textit{mobile}.
 
-Se ha llevado a cabo una revisión de la literatura en Web Of Science, Google Scholar, Science Direct, Scopus y PubMed de un total de 74 artículos (3 de ellos correspondientes a Web of Science, 64 a Google Scholar, 1 a Science Direct, 5 a Scopus y 1 a PubMed). Para realizar la búsqueda no se tuvieron en cuenta las revisiones bibliográficas (\textit{review}, y en Google Scholar se consideraron únicamente aquellas publicaciones realizadas en el año 2022 y se sustituyó el último término por los términos \textit{iPhone, Android}\footnote{Se decidió realizar este filtrado ya que si no el número de resultados superaba las 5000 publicaciones}.
+Se ha llevado a cabo una revisión de la literatura en Web Of Science, Google Scholar, Science Direct, Scopus y PubMed de un total de 74 artículos (3 de ellos correspondientes a Web of Science, 64 a Google Scholar, 1 a Science Direct, 5 a Scopus y 1 a PubMed). Para realizar la búsqueda no se tuvieron en cuenta las revisiones bibliográficas (\textit{review}), y en Google Scholar se consideraron únicamente aquellas publicaciones realizadas en el año 2022 y se sustituyó el último término por los términos \textit{iPhone, Android}\footnote{Se decidió realizar este filtrado ya que si no el número de resultados superaba las 5000 publicaciones}.
 
 De los 74 artículos encontrados, solo 4 fueron considerados para su estudio. Los otros 70 restantes fueron excluidos por alguno de los siguientes motivos:
 
 \begin{itemize} [itemsep=0.25em]
-    \item No emplear imágenes tomadas con teléfono móvil en el entremamiento/validación de los modelos (12 artículos).
+    \item No emplear imágenes tomadas con teléfono móvil en el entrenamiento/evaluación de los modelos (12 artículos).
     \item Estar enfocados en el entrenamiento de CNNs con otra finalidad diferente al diagnóstico de RD (41 artículos).
     \item Estar repetidos en distintos repositorios (3 artículos).
     \item Tratarse de revisiones bibliográficas no filtradas previamente (14 artículos).
 \end{itemize}
 
+\newpage
 \textit{Artículos seleccionados entre 2020 y 2023}
 
 [Simon Mueller. 2020] Este estudio se enfoca en el uso de un dispositivo (Paxos Scope) para la adquisición de vídeo de la retina de los pacientes, acoplando este dispositivo a la cámara de un teléfono móvil. Se plantea un flujo de trabajo en 3 pasos para el análisis de las imágenes. Primero se recorta cada uno de los fotogramas del vídeo para seleccionar únicamente la subregión de cada fotograma en la que aparece la imagen de la retina. Posteriormente se seleccionan aquellos fotogramas que proporcionan mayor información empleando para ello estrategias de inteligencia artificial como \textit{Support Vector Machine}, con el objetivo de seleccionar aquellos fotogramas en los que la imagen de retina fuera lo más nítida posible. Por último se lleva a cabo la clasificación de las imágenes en los distintos grados de RD utilizando aprendizaje de múltiples instancias (MIL por sus siglas en inglés) junto con un mecanismo de atención que permite a la CNN empleada aprender en qué fotogramas debe basar la predicción \cite{soa:mueller}. 

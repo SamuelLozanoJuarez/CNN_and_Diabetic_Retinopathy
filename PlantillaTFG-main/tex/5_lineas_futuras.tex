@@ -1,3 +1,84 @@
 \capitulo{5}{Lineas de trabajo futuras} \label{Fut}
 
-Este capítulo debería ser informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado.
+Como se puede apreciar en la sección \textit{Resultados} del capítulo \hyperref[Conc]{Conclusiones}, los resultados obtenidos en el desarrollo del proyecto no han logrado alcanzar el objetivo propuesto, ninguno de los modelos desarrollados ha demostrado un rendimiento superior al \textit{baseline} obtenido por los oftalmólogos.
+
+Es por ello que en este capítulo se van a plantear posibles líneas para continuar trabajando en la mejora del proyecto.
+
+\section{Compensación del desbalanceo}
+
+Si observamos las matrices de confusión proporcionadas por algunos de los modelos, como la mostrada en la figura \ref{fig:matriz}, podremos observar que la CNN correspondiente ha clasificado todas las imágenes de evaluación como una única clase. Este problema es bastante habitual cuando se trabaja con conjuntos de datos desbalanceados, es decir, en los que el número de ejemplos es mucho mayor en una clase (o varias) que en las demás \cite{fut:desbalanceados}. 
+
+Como resultado de este desequilibrio, el modelo recibe un mayor número de instancias de una determinada clase y por tanto genera una tendencia hacia la predicción de dicha etiqueta. Esto provoca que al evaluar la red empleando imágenes no vistas, la CNN tienda a clasificar dichas imágenes como la clase mayoritaria para la cual se ha sobreespecializado \cite{fut:desbalanceados_2}. 
+
+Como ya se mostró en la sección \textit{Descripción de los datos} del capítulo \hyperref[Met]{Metodología}, el conjunto de datos que se posee para el entrenamiento de los modelos está muy desbalanceado (hay 5 veces más imágenes etiquetadas como \textit{grado 1} que las etiquetadas como el siguiente grado mayoritario, \textit{grado 3}, y 25 veces más imágenes de \textit{grado 1} que imágenes de la clase minoritaria \textit{grado 5}).
+
+Para tratar de solucionar este problema, que afecta al rendimiento de los modelos, se plantean 3 posibles líneas de mejora para un futuro.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/matriz_sobreclasificación.png}
+    \caption{Matriz de confusión resultante de la evaluación de uno de los modelos usando el conjunto ``Datasets'' preprocesado. Fuente propia.}
+    \label{fig:matriz}
+\end{figure}
+
+\subsection{\textit{Class Weights}}
+
+Una primera alternativa para solucionar el desbalanceo de los datos puede ser el uso de \textit{class weights} o pesos de clase. En esta estrategia, se asigna un peso o valor a cada clase, de manera inversamente proporcional al número de instancias de dicha clase. De esta manera la clase mayoritaria recibirá un peso menor y la clase minoritaria un peso mayor \cite{classw:scienced}. 
+
+Cuando se realice el entrenamiento del modelo, el valor obtenido por la función de pérdida será multiplicado por el peso correspondiente a cada clase, de forma que los errores en imágenes de clases minoritarias penalizarán más que los errores en clases mayoritarias \cite{classw:book}. De esta manera lo que se consigue es que la red aprenda más de las instancias de clases minoritarias, reduciendo así el efecto del desequilibrio de clases \cite{classw:scienced}.
+
+\subsection{Balanceo del \textit{batch}}
+
+Otra posibilidad es diseñar la estructura de carga de datos para lograr el balanceo del \textit{batch} aunque el conjunto total de datos esté desequilibrado.
+
+El \textit{batch} es el lote de imágenes de tamaño $n$ (siendo $n$ generalmente potencia de $2$) que recibe el modelo en cada iteración para llevar a cabo el entrenamiento y generar las predicciones que posteriormente se utilizarán para calcular la función de pérdida. Si el conjunto de datos está desbalanceado se puede emplear el balanceo del \textit{batch}, es decir, que la proporción de imágenes que reciba la red en el lote sea igual para todas las clases \cite{bal_batch:scihub}.
+
+Para llevar a cabo este equilibrio sintético dentro del \textit{batch} hay dos estrategias ampliamente utilizadas: \textit{oversampling} o sobremuestreo y \textit{undersampling} o submuestreo.
+
+El sobremuestreo consiste en incrementar el número de imágenes de la clase minoritaria, ya sea mediante la adición de nuevas imágenes, la creación de nuevas imágenes artificiales a partir de las ya existentes (\textit{data augmentation}) o mediante la repetición de las imágenes disponibles \cite{underover:ieee}. El objetivo por tanto es disponer de un mayor número de imágenes de las clases minoritarias para poder proporcionar a la red el mismo número de instancias de cada clase en un lote.
+
+El submuestreo sigue la idea opuesta, reducir el número de imágenes de la clase mayoritaria. Esta eliminación de imágenes puede realizarse de manera aleatoria o de manera dirigida, empleando el conocimiento que se tiene acerca de los datos. En este último caso, la reducción de imágenes puede emplearse también para la depuración de las imágenes \cite{underover:archive}.
+
+Aunque ambas técnicas son efectivas para lograr el balanceo del lote, el sobremuestreo, especialmente aplicado mediante \textit{data augmentation}, puede ofrecer mejores resultados que el submuestreo \cite{underover:ieee}.
+
+\subsection{\textit{Data augmentation}}
+
+Como se ha mencionado en el apartado anterior, una posibilidad para llevar a cabo el sobremuestreo es generar ``nuevas'' imágenes de manera sintética a partir de imágenes ya presentes en nuestro conjunto, esto se denomina \textit{data augmentation} \cite{dataa:arxiv}. 
+
+Para lograr este propósito pueden emplearse diferentes técnicas, aplicándolas directamente sobre las imágenes disponibles y aumentando así el número de instancias del conjunto de datos; o especificando estas técnicas en la estructura encargada de proporcionar las imágenes al modelo, de manera que las nuevas fotografías sintéticas se crearían volátilmente para el entrenamiento, pero no se almacenarían en nuestro disco.
+
+Algunas de las transformaciones que se pueden realizar sobre las imágenes con este propósito son: giro de las imágenes (siendo más habitual el giro horizontal que el vertical), rotación en ambos sentidos, recorte de las imágenes para modificar su tamaño, introducir ruido de manera artificial, aumentar/reducir el brillo o modificar el espacio de color de la imagen entre otras \cite{dataa:springer}.
+
+\section{\textit{Transfer Learning}}
+
+El uso de \textit{transfer learning} para el desarrollo de CNN es una de las técnicas más empleadas en la construcción de este tipo de redes \cite{trans:ieee, trans:scihub}. Esta estrategia consiste en emplear modelos ya entrenados con grandes conjuntos de datos (miles o millones de instancias) como base para la construcción de la CNN deseada. Para ello se toma una de estas redes exceptuando las últimas capas densas, que son las que van a especializarse en nuestro problema, y se bloquean los pesos para evitar que se modifiquen \cite{trans:springer}.
+
+Posteriormente se realiza lo que se denomina un ajuste fino, que consiste en sumar a la estructura bloqueada un número de capas densas, que son las que van a especializarse en el problema. Para ello se entrena toda la red con nuestro conjunto de datos, logrando así un modelo capaz de reconocer las imágenes de nuestro problema pero con la robustez de una red entrenada con millones de instancias \cite{trans:springer}.
+
+Algunos de los modelos más empleados en el uso de \textit{transfer learning} con CNN son AlexNet, VGG, Inception o ResNet; cada uno de ellos con sus distintas versiones \cite{trans:ieee,trans:scihub}.
+
+\section{\textit{Cross Validation}}
+
+La validación cruzada es un método que puede emplearse para la selección del mejor modelo entre varios disponibles \cite{crossval:scihub}. El objetivo de esta estrategia es reducir las diferencias en el rendimiento entre modelos que puedan deberse al conjunto de datos empleado en cada entrenamiento \cite{crossval:springer}.
+
+Cuando se dispone de un conjunto de datos para el entrenamiento, validación y evaluación de una red, generalmente este se divide en 3 subconjuntos de manera aleatoria: uno para entrenar el modelo, otro para su validación y un tercer conjunto para su evaluación. Sin embargo, debido a la partición aleatoria de estos datos, puede que un modelo sea entrenado con datos más apropiados para esa tarea o que otro modelo sea evaluado con imágenes más sencillas de predecir, por lo que las métricas de rendimiento podrían verse afectadas por la división de los datos \cite{crossval:elsevier}. 
+
+La estrategia de validación cruzada plantea una división inicial de los datos en $k$ partes, donde una de esas divisiones será empleada para la evaluación del modelo y las $k-1$ restantes para el entrenamiento (y validación). Una vez llevado a cabo este entrenamiento y evaluación, se asigna como partición de evaluación otra de las divisiones y se vuelve a entrenar y evaluar. Este proceso se repite $k$ veces, utilizando cada vez una partición distinta para la evaluación. Finalmente se calculan las métricas de rendimiento como la media entre las métricas obtenidas en cada iteración $k$ \cite{crossval:elsevier}.
+
+En nuestro caso, el uso de la validación cruzada reporta un beneficio adicional, y es que nos permitiría emplear en el entrenamiento imágenes de los distintos conjuntos, incluidos Samsung e iPhone, lo que puede suponer una mejora del rendimiento de los modelos.
+
+\section{Obtención de nuevas imágenes}
+
+Una última alternativa que podría plantearse para mejorar el rendimiento de los modelos, es tratar de obtener nuevas imágenes. Especialmente sería interesante conseguir imágenes tomadas con dispositivos móviles iPhone y Samsung, ya que son el tipo de fotografías que queremos utilizar en nuestros modelos.
+
+Podría tratarse de recoger más de estas imágenes de la cohorte local, solicitándoselas al HUBU, o bien buscar en repositorios públicos o conjuntos de datos utilizados en otros proyectos, como los mencionados en la sección \textit{Estado del arte y trabajos relacionados} del capítulo \hyperref[Met]{Metodología}.
+
+\section{Aplicación de las líneas futuras}
+
+He tenido la oportunidad de desarrollar, fuera del contexto del TFG y en colaboración con el Grupo de Inteligencia Computacional Aplicada (GICAP) de la Universidad de Burgos, muchas de las técnicas previamente mencionadas para mejorar el rendimiento de los modelos. 
+
+Debido a mi participación de becario en el programa ``Becas de Colaboración de estudiantes en Departamentos Universitarios'' ofrecida por el Ministerio de Educación y Formación Profesional, he trabajado con el GICAP en el desarrollo de CNNs para la detección de RD, de forma paralela al desarrollo del TFG, empleando otro marco de trabajo (Keras y TensorFlow) y otras herramientas. En este contexto he aplicado varias de las técnicas que aquí planteo como líneas futuras, como el uso de \textit{transfer learning}, validación cruzada y el balanceo del \textit{batch} con el objetivo de desarrollar CNNs con un mejor rendimiento.
+
+Los resultados de aplicar estas nuevas herramientas han sido positivos, obteniendo modelos con un desempeño superior al \textit{baseline} de los oftalmólogos. En concreto el uso de \textit{transfer learning} con las redes ResNet50V2 y VGG19 empleando \textit{cross validation} y balanceo del \textit{batch} ofrecieron un valor de AUC-ROC de 0.742 para Samsung y 0.723 para iPhone, que superan el \textit{baseline} establecido.
+
+Estos resultados positivos nos llevaron a la escritura del artículo \textit{Convolutional Neural Networks for Diabetic Retinopathy Grading from iPhone Fundus Images} para el congreso \textit{Hybrid Artificial Intelligence Systems}, que actualmente estamos modificando para adaptar a las correcciones realizadas por los revisores.
