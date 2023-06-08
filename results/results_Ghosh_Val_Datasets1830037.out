@@ -1,0 +1,117 @@
+Tamaño del conjunto de datos de train: 38676
+Tamaño del conjunto de datos de test de Samsung: 93
+Tamaño del conjunto de datos de test de iPhone: 99
+--------------------------------------
+Entrenamiento. Características:
+  -Capas:6
+  -Filtros:0.5
+  -Neuronas:256/1024/512
+  -Early Stopping
+
+Época 1/150 - Accuracy: 0.7071751777634131 - Loss: 0.015092680842628306
+Época 1/150 - Val_accuracy: 0.7163908996897621 - Val_loss: 0.014511642020268918
+
+Época 2/150 - Accuracy: 0.7084356819650938 - Loss: 0.014510359899721843
+Época 2/150 - Val_accuracy: 0.7162616339193382 - Val_loss: 0.014149999097683068
+
+Época 3/150 - Accuracy: 0.710245636716225 - Loss: 0.0142813604746469
+Época 3/150 - Val_accuracy: 0.7169079627714581 - Val_loss: 0.013796589082066497
+
+Época 4/150 - Accuracy: 0.7121848739495799 - Loss: 0.0141029441730392
+Época 4/150 - Val_accuracy: 0.71858841778697 - Val_loss: 0.013791334026540324
+
+Época 5/150 - Accuracy: 0.7114091790562379 - Loss: 0.01397384341370312
+Época 5/150 - Val_accuracy: 0.7197518097207859 - Val_loss: 0.013608415284595667
+
+Época 6/150 - Accuracy: 0.7126373626373627 - Loss: 0.013877936908716375
+Época 6/150 - Val_accuracy: 0.7216907962771458 - Val_loss: 0.013525679445562589
+
+Época 7/150 - Accuracy: 0.7129282482223659 - Loss: 0.013800928198913643
+Época 7/150 - Val_accuracy: 0.7200103412616339 - Val_loss: 0.013495596073714259
+
+Época 8/150 - Accuracy: 0.7130898513251455 - Loss: 0.01371266416333611
+Época 8/150 - Val_accuracy: 0.7225956566701137 - Val_loss: 0.013522971225006751
+
+Época 9/150 - Accuracy: 0.7152876535229477 - Loss: 0.013607046026411407
+Época 9/150 - Val_accuracy: 0.7213029989658738 - Val_loss: 0.01357252645424751
+
+Época 10/150 - Accuracy: 0.7149644473173885 - Loss: 0.013524852701749968
+Época 10/150 - Val_accuracy: 0.7214322647362978 - Val_loss: 0.013705651975990944
+
+Época 11/150 - Accuracy: 0.7162249515190692 - Loss: 0.013416814403373655
+Época 11/150 - Val_accuracy: 0.7225956566701137 - Val_loss: 0.01349594521855371
+
+Época 12/150 - Accuracy: 0.7166451195862961 - Loss: 0.013365423207369326
+Época 12/150 - Val_accuracy: 0.7244053774560496 - Val_loss: 0.013405871220248932
+
+Época 13/150 - Accuracy: 0.7173884938590821 - Loss: 0.0132374738309949
+Época 13/150 - Val_accuracy: 0.7211737331954499 - Val_loss: 0.013490384165293922
+
+Época 14/150 - Accuracy: 0.7185843568196509 - Loss: 0.013104136122490563
+Época 14/150 - Val_accuracy: 0.7225956566701137 - Val_loss: 0.013273445714068634
+
+Época 15/150 - Accuracy: 0.720846800258565 - Loss: 0.013043006020703466
+Época 15/150 - Val_accuracy: 0.7213029989658738 - Val_loss: 0.013523435110328363
+
+Época 16/150 - Accuracy: 0.7223658694246929 - Loss: 0.012886515171125618
+Época 16/150 - Val_accuracy: 0.7262150982419855 - Val_loss: 0.013266866539355517
+
+Época 17/150 - Accuracy: 0.7233354880413704 - Loss: 0.01274590814063529
+Época 17/150 - Val_accuracy: 0.7242761116856257 - Val_loss: 0.013717871063004605
+
+Época 18/150 - Accuracy: 0.7247575953458306 - Loss: 0.01261535578761936
+Época 18/150 - Val_accuracy: 0.7219493278179938 - Val_loss: 0.013410527293783185
+
+Época 19/150 - Accuracy: 0.7274078862314156 - Loss: 0.012411235969299337
+Época 19/150 - Val_accuracy: 0.719364012409514 - Val_loss: 0.013563905924466182
+
+Época 20/150 - Accuracy: 0.7298642533936651 - Loss: 0.01228212136835457
+Época 20/150 - Val_accuracy: 0.7232419855222337 - Val_loss: 0.013720326341357324
+
+Época 21/150 - Accuracy: 0.7332902391725921 - Loss: 0.012054359089311047
+Época 21/150 - Val_accuracy: 0.7223371251292657 - Val_loss: 0.013664020077087518
+
+Época 22/150 - Accuracy: 0.7366192630898514 - Loss: 0.011993149701209706
+Época 22/150 - Val_accuracy: 0.7236297828335057 - Val_loss: 0.013681059886220816
+
+Época 23/150 - Accuracy: 0.7369101486748546 - Loss: 0.011816603894108869
+Época 23/150 - Val_accuracy: 0.7215615305067218 - Val_loss: 0.014289336257846303
+
+
+--------------------------------------
+Test. Características:
+  -Capas:6
+  -Filtros:0.5
+  -Neuronas:256/1024/512
+  -Test:iphone
+ - Matriz de confusión:
+[[10  1  6  2  3]
+ [ 6  1  3  1  2]
+ [18  0 21  6  3]
+ [ 2  0  2  3  1]
+ [ 4  0  2  2  0]]
+ - Accuracy:0.35353535353535354
+ - Balanced accuracy:0.2687937062937063
+ - F-score:0.3595686016399842
+ - Kappa:0.10495832744737954
+ - AUC:0.5154917166529528
+ - Tiempo:574.8368042667706 mins
+
+--------------------------------------
+Test. Características:
+  -Capas:6
+  -Filtros:0.5
+  -Neuronas:256/1024/512
+  -Test:Samsung
+ - Matriz de confusión:
+[[14  0  3  6  2]
+ [ 3  0  1  0  0]
+ [23  1 10 11  2]
+ [ 2  0  4  0  1]
+ [ 5  0  5  0  0]]
+ - Accuracy:0.25806451612903225
+ - Balanced accuracy:0.1545531914893617
+ - F-score:0.24893326506229732
+ - Kappa:-0.03167202572347261
+ - AUC:0.42109785407085737
+ - Tiempo:574.8368042667706 mins

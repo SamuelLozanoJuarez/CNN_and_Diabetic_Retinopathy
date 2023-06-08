@@ -1,0 +1,105 @@
+Tamaño del conjunto de datos de train: 41825
+Tamaño del conjunto de datos de test de Samsung: 93
+Tamaño del conjunto de datos de test de iPhone: 99
+--------------------------------------
+Entrenamiento. Características:
+  -Capas:9
+  -Filtros:0.5
+  -Neuronas:64/256/128
+  -Early Stopping
+
+Época 1/150 - Accuracy: 0.6851464435146444 - Loss: 0.015937782582663807
+Época 1/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.01568307275196356
+
+Época 2/150 - Accuracy: 0.6882247459653318 - Loss: 0.015670264385377868
+Época 2/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015677084234469108
+
+Época 3/150 - Accuracy: 0.6882247459653318 - Loss: 0.015648278419442756
+Época 3/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.01563983503673437
+
+Época 4/150 - Accuracy: 0.6882247459653318 - Loss: 0.015643145964306698
+Época 4/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015642120962148644
+
+Época 5/150 - Accuracy: 0.6882247459653318 - Loss: 0.015621277362161672
+Época 5/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015621554652018527
+
+Época 6/150 - Accuracy: 0.6882247459653318 - Loss: 0.015599881630063556
+Época 6/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015659740928825473
+
+Época 7/150 - Accuracy: 0.6882247459653318 - Loss: 0.01560086315966479
+Época 7/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015614571182298859
+
+Época 8/150 - Accuracy: 0.6882247459653318 - Loss: 0.015595250172808864
+Época 8/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.01562122784897872
+
+Época 9/150 - Accuracy: 0.6882247459653318 - Loss: 0.015592661494633002
+Época 9/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015574123299342747
+
+Época 10/150 - Accuracy: 0.6882247459653318 - Loss: 0.015567270658790032
+Época 10/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015632665955371935
+
+Época 11/150 - Accuracy: 0.6882247459653318 - Loss: 0.015564461119219134
+Época 11/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015555974515127123
+
+Época 12/150 - Accuracy: 0.6882247459653318 - Loss: 0.015569608552115304
+Época 12/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015505016085207997
+
+Época 13/150 - Accuracy: 0.6882247459653318 - Loss: 0.015562582871048877
+Época 13/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.01553708107544146
+
+Época 14/150 - Accuracy: 0.6882247459653318 - Loss: 0.015570675576794882
+Época 14/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.01554124054620883
+
+Época 15/150 - Accuracy: 0.6882247459653318 - Loss: 0.015566673475828132
+Época 15/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015529724764952173
+
+Época 16/150 - Accuracy: 0.6882247459653318 - Loss: 0.015563877586896592
+Época 16/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015551678548654396
+
+Época 17/150 - Accuracy: 0.6882247459653318 - Loss: 0.015560241413201961
+Época 17/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015546570170517105
+
+Época 18/150 - Accuracy: 0.6882247459653318 - Loss: 0.015553953625524536
+Época 18/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015561192846554736
+
+Época 19/150 - Accuracy: 0.6882247459653318 - Loss: 0.015546005367520179
+Época 19/150 - Val_accuracy: 0.6907352062163777 - Val_loss: 0.015543327456951427
+
+
+--------------------------------------
+Test. Características:
+  -Capas:9
+  -Filtros:0.5
+  -Neuronas:64/256/128
+  -Test:iphone
+ - Matriz de confusión:
+[[22  0  0  0  0]
+ [13  0  0  0  0]
+ [48  0  0  0  0]
+ [ 8  0  0  0  0]
+ [ 8  0  0  0  0]]
+ - Accuracy:0.2222222222222222
+ - Balanced accuracy:0.2
+ - F-score:0.0808080808080808
+ - Kappa:0.0
+ - AUC:0.4569194290419884
+ - Tiempo:403.4331269462903 mins
+
+--------------------------------------
+Test. Características:
+  -Capas:9
+  -Filtros:0.5
+  -Neuronas:64/256/128
+  -Test:Samsung
+ - Matriz de confusión:
+[[25  0  0  0  0]
+ [ 4  0  0  0  0]
+ [47  0  0  0  0]
+ [ 7  0  0  0  0]
+ [10  0  0  0  0]]
+ - Accuracy:0.26881720430107525
+ - Balanced accuracy:0.2
+ - F-score:0.1139055950428285
+ - Kappa:0.0
+ - AUC:0.5360986935084557
+ - Tiempo:403.4331269462903 mins

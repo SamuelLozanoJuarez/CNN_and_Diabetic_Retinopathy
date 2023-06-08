@@ -1,14 +1,14 @@
 #!/bin/bash
 
 #Informacion del trabajo
-#SBATCH --job-name=RajagData
-#SBATCH -o results/results_Rajagopalan_Val_Datasets%j.out
-#SBATCH -e error/error_Rajagopalan_Val_Datasets%j.err
+#SBATCH --job-name=RaDatPrI
+#SBATCH -o results/results_Rajagopalan_Val_Datasets_Inp_Proc%j.out
+#SBATCH -e error/error_Rajagopalan_Val_Datasets_Inp_Proc%j.err
 
 #Recursos
 #SBATCH --partition=cascadelakegpu
 #SBATCH --qos=normal
-#SBATCH -n 8
+#SBATCH -n 16
 #SBATCH --mem=0
 #SBATCH --gres=gpu:1
 
@@ -25,7 +25,7 @@ export PATH=/home/ubu_eps_1/COMUNES/miniconda3/bin:$PATH
 source /home/ubu_eps_1/COMUNES/miniconda3/etc/profile.d/conda.sh
 conda activate env
 
-python Rajagopalan_Val_Datasets.py
+python Rajagopalan_Val_Datasets_Inp_Proc.py
 
 
 #Desactivamos el entorno
