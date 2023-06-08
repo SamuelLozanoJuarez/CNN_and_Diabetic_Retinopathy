@@ -1,0 +1,18 @@
+#######################################################################################################################
+INFORMACIÓN DEL FICHERO
+#########################################################################################################################
+
+Autor: Samuel Lozano Juárez
+Fecha: 07/06/2023
+Institución: UBU | Grado en Ingeniería de la Salud
+
+Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
+El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
+Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
+
+Debido al gran número de gráficass generadas (cerca de 9000), no es viable almacenarlas en el repositorio. Es por ello que se ha optado por dejar algunas de ellas en las capretas, para que sirvan de muestra. Se pueden encontrar todas ellas en la plataforma de OneDrive. El enlace para acceder a estas carpetas se encuentra al final de este documento.
+
+
+Enlace a OneDrive:
+
+https://universidaddeburgos-my.sharepoint.com/:f:/g/personal/slj1001_alu_ubu_es/EqSDeuDctBdOrFqGyeyFMt4Be7p9jBMVbeiBaAtzSbPZZw?e=uN2afn

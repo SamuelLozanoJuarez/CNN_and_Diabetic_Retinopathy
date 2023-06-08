@@ -114,7 +114,7 @@ best_fscore_s = resultados_s.sortBy(lambda x: x[12], ascending = False).first()
 #mostramos el resultado por pantalla
 print(f'------------------------------\nEl modelo que mejor valor de F-score obtuvo sobre imágenes de iPhone fue:\n * Arq: {best_fscore_i[5]}\n * Capas: {best_fscore_i[6]}\n * Filtros: {best_fscore_i[7]}\n * Neuronas: {best_fscore_i[8]}\n * Conjunto entrenamiento: {best_fscore_i[0]}\n * Validacion: {best_fscore_i[1]}\n * Preprocesamiento: {best_fscore_i[2]}\n * Inpaint: {best_fscore_i[3]}\n * Tiempo de entrenamiento (min): {best_fscore_i[15]}\n * F_SCORE: {best_fscore_i[12]}')
 
-print(f'------------------------------\nEl modelo que mejor valor de F-score obtuvo sobre imágenes de Samsung fue:\n * Arq: {best_balacc_s[5]}\n * Capas: {best_fscore_s[6]}\n * Filtros: {best_fscore_s[7]}\n * Neuronas: {best_fscore_s[8]}\n * Conjunto entrenamiento: {best_fscore_s[0]}\n * Validacion: {best_fscore_s[1]}\n * Preprocesamiento: {best_fscore_s[2]}\n * Inpaint: {best_fscore_s[3]}\n * Tiempo de entrenamiento (min): {best_fscore_s[15]}\n * F_SCORE: {best_fscore_s[12]}')
+print(f'------------------------------\nEl modelo que mejor valor de F-score obtuvo sobre imágenes de Samsung fue:\n * Arq: {best_fscore_s[5]}\n * Capas: {best_fscore_s[6]}\n * Filtros: {best_fscore_s[7]}\n * Neuronas: {best_fscore_s[8]}\n * Conjunto entrenamiento: {best_fscore_s[0]}\n * Validacion: {best_fscore_s[1]}\n * Preprocesamiento: {best_fscore_s[2]}\n * Inpaint: {best_fscore_s[3]}\n * Tiempo de entrenamiento (min): {best_fscore_s[15]}\n * F_SCORE: {best_fscore_s[12]}')
 
 #realizamos el mismo proceso para la métrica AUC
 best_auc_i = resultados_i.sortBy(lambda x: x[14], ascending = False).first()

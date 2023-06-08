@@ -11,11 +11,15 @@ El alumno a cargo de este proyecto es el declarado como autor en las líneas ant
 Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
 
 Debido a la gran cantidad de imágenes obtenidas de las distintas fuentes (Kaggle, Zenodo y GitHub), su almacenamiento en memoria implica 
-demasiado coste (cerca de 40GB). Es por ello que he decidido guardarlas en OneDrive, para que se encuentren accesibles sin ocupar 
-ese espacio en memoria. A continuación se incluye el enlace a la carpeta de OneDrive con las imágenes.
+demasiado coste (cerca de 40GB). Es por ello que he decidido guardar las imágenes originales en OneDrive, para que se encuentren accesibles sin ocupar 
+ese espacio en memoria. A continuación se incluye el enlace a la carpeta de OneDrive con las imágenes originales.
+
+Las imágenes preprocesadas no se proporcionan, en su lugar se entregan los programas que permiten llevar a cabo el preprocesamiento.
+
+Lo mismo sucede con las imágenes inpaintadas.
 
 Esta carpeta recrea la estructura del directorio local 'Classified Data', y todas las imágenes que se encuentran en ella están clasificadas
-según su fuente de origen y su grado.
+según su fuente de origen y su grado. Se ha optado por dejar un pequeño grupo de imágenes por carpeta, a modo de representación de cada clase de imágenes.
 
 
 Enlace a OneDrive:

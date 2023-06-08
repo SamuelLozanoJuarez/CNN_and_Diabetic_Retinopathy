@@ -1,0 +1,19 @@
+#######################################################################################################################
+INFORMACIÓN DEL FICHERO
+#########################################################################################################################
+
+Autor: Samuel Lozano Juárez
+Fecha: 07/06/2023
+Institución: UBU | Grado en Ingeniería de la Salud
+
+Este archivo forma parte del Trabajo de Fin de Grado "Detección del grado de retinopatía mediante redes convolucionales".
+El alumno a cargo de este proyecto es el declarado como autor en las líneas anteriores.
+Los tutores del proyecto fueron el Dr. Darío Fernández Zoppino y el Dr. Daniel Urda Muñoz.
+
+Debido al gran tamaño de los modelos generados (más de 140 GB), no es viable almacenarlos en el repositorio. Es por ello que se han comprimido en un archivo 'modelos.tgz' y se han subido a la plataforma de OneDrive. El enlace para acceder a este archivo se encuentra al final de este documento.
+
+Únicamente se entregan en el directorio los archivos .pth correspondientes a los modelos que mejor rendimiento ofrecieron en distintas métricas al ser evaluados con iPhone y Samsung. Y los modelos que menor distancia euclídea presentaron
+Todos los modelos pueden obtenerse del enlace de OneDrive.
+
+Enlace a OneDrive:
+
