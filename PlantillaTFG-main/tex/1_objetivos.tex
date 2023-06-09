@@ -2,12 +2,11 @@
 
 La \textbf{principal motivación} del proyecto es construir un modelo de red neuronal convolucional (CNN) capaz de predecir el grado de retinopatía diabética de un paciente a partir de una imagen de su fondo de ojo.
 
-Se buscará llevar a cabo la construcción íntegra de una red, partiendo desde cero y sin hacer uso de \textit{transfer learning}, que sea capaz de realizar las predicciones a partir de una imagen tomada con un dispositivo móvil.
+Se buscará llevar a cabo la construcción íntegra de una red, partiendo desde cero y sin hacer uso de \textit{transfer learning}, que sea capaz de realizar las predicciones a partir de una imagen tomada con un dispositivo móvil, algo que supone una variación con respecto al procedimiento habitual, que acostumbra a emplear imágenes tomadas con un tomógrafo de coherencia óptica.
 
 \section{Objetivos de software}
 \begin{itemize}[itemsep=0.25em]
-    \item Desarrollar una arquitectura de red neuronal convolucional capaz de predecir el grado de retinopatía diabética a partir de una imagen de fondo de ojo.
-    \item Construir la arquitectura sin emplear \textit{transfer learning}.
+    \item Desarrollar una arquitectura de red neuronal convolucional propia capaz de predecir el grado de retinopatía diabética a partir de una imagen de fondo de ojo.
     \item La red neuronal deberá ser capaz de realizar diagnósticos a partir de imágenes tomadas con retinógrafos así como con dispositivos móviles (tanto Android como iOS) sobre una cohorte local de pacientes del servicio de oftalmología del Hospital Universitario de Burgos (HUBU).
     \item Buscar y analizar nuevos \textit{datasets} con imágenes de fondo de ojo etiquetadas, que proporcionen un material más extenso para mejorar el entrenamiento y la capacidad de generalización de la red.
     \item Desarrollar el código necesario que permita preprocesar las imágenes de dispositivos móviles (Android e iOS) para optimizar el rendimiento del modelo.

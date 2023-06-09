@@ -53,7 +53,7 @@ Como consecuencia de este daño se pueden producir roturas de los capilares que 
 
 Uno de los grandes peligros que entraña la RD es que la mayoría de pacientes que desarrollan esta complicación no presentan síntomas hasta que el estado ya es avanzado \cite{diabetes:JDI}. Entre estas manifestaciones clínicas, las más habituales son la aparición de puntos oscuros en el campo visual, la visión borrosa, problemas para detectar los colores o directamente la ceguera \cite{retinopatia:sintomas}. Por supuesto, debemos tener en cuenta que estos síntomas deben cursar con una DM.
 
-Se ha de tener mayor atención (jugando un papel crucial el diagnóstico y las pruebas rutinarias) siempre que el paciente presente alguno de los factores de riesgo más habituales, como la hiperglicemia, hipertensión, hiperlipemia \cite{diabetes:JDI}. Además se ha demostrado que el riesgo de sufrir RD incrementa conforme aumenta el tiempo de duración de la diabetes, de manera que el 97,5\% de los pacientes con DM tipo I y el 77,8\% de pacientes con DM tipo II padecen algún tipo de RD después de 15 años \cite{retinopatia:chile}.
+Se ha de tener mayor atención (jugando un papel crucial el diagnóstico y las pruebas rutinarias) siempre que el paciente presente alguno de los factores de riesgo más habituales, como la hiperglicemia, hipertensión o hiperlipemia \cite{diabetes:JDI}. Además se ha demostrado que el riesgo de sufrir RD incrementa conforme aumenta el tiempo de duración de la diabetes, de manera que el 97,5\% de los pacientes con DM tipo I y el 77,8\% de pacientes con DM tipo II padecen algún tipo de RD después de 15 años \cite{retinopatia:chile}.
 
 \titlespacing{\subsubsection}{0pt}{0.25cm}{0.1cm}
 \subsubsection{Diagnóstico}
@@ -65,7 +65,7 @@ El principal procedimiento de diagnóstico es el examen de fondo de ojo \cite{re
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{img/partes_retina.png}
-    \caption{Fondo de ojo de un paciente sano. En color amarillo se puede observar el nervio óptico, en color verde la mácula, en rojo las venas y en azul las arterias. Dentro de la mácula se encuentra la fóvea, señalada en color blanco. Fuente propia.}
+    \caption{Fondo de ojo de un paciente sano. Señalado en color amarillo se puede observar el nervio óptico, en color verde la mácula, en rojo las venas y en azul las arterias. Dentro de la mácula se encuentra la fóvea, señalada en color blanco. Fuente propia.}
     \label{fig:partes_retina}
 \end{figure}
 
@@ -86,7 +86,7 @@ Es en este contexto donde cobra mayor sentido el proyecto que he desarrollado. C
     \label{fig:retincam_dispositivo}
 \end{figure}
 
-Estas imágenes de fondo de ojo adquiridas mediante este instrumento son las empleadas en el proyecto para poner a prueba las redes neuronales convolucionales desarrolladas. En la figura \ref{fig:retincam_oct} se puede observar un ejemplo de uso de este dispositivo en comparación con el instrumento empleado para la realización de un examen de fondo de ojo habitual.
+Las imágenes de fondo de ojo adquiridas mediante este instrumento son las empleadas en el proyecto para poner a prueba las redes neuronales convolucionales desarrolladas. En la figura \ref{fig:retincam_oct} se puede observar un ejemplo de uso de este dispositivo en comparación con el instrumento empleado para la realización de un examen de fondo de ojo habitual.
 
 \begin{figure}[h]
     \centering
@@ -105,7 +105,7 @@ La RD puede clasificarse, a grandes rasgos, en dos niveles en función de la deg
 La NPDR a su vez se puede dividir en 3 niveles: leve, moderada y severa. Por tanto, finalmente podemos distinguir 5 posibles niveles de RD: paciente sano, NPDR leve, NDPDR moderada, NPDR severa y PDR. A continuación se describen algunas de los signos que caracterizan a cada nivel \cite{retinopatia:cheung, retino:OMS}:
 
 \begin{itemize}[itemsep=0.25em]
-    \item \textbf{Sin retinopatía}. No se observan lesiones vasculares ni exudados (figura \ref{fig:G0}).
+    \item \textbf{Sano}. No se observan lesiones vasculares ni exudados (figura \ref{fig:G0}).
 
     \begin{figure}[h]
         \centering
@@ -154,9 +154,9 @@ La NPDR a su vez se puede dividir en 3 niveles: leve, moderada y severa. Por tan
 
 \subsection{Redes Neuronales Convolucionales}
 
-Las redes neuronales convolucionales (CNN por sus siglas en inglés) son un tipo específico de redes neuronales especializadas en el reconocimiento de patrones, tanto en imágenes como en señales, inspiradas por el mecanismo natural de percepción visual de los seres vivos \cite{cnn:gu, cnn:ieee}. Fueron descritas por primera vez en 1989 por Le-Cun et. al \cite{cnn:antecesor} y desde esa fecha han ido evolucionando y perfeccionándose hasta desarrollar algunos de los modelos más sofisticados que podemos encontrar a día de hoy (VGGNet o ResNet en sus distintas versiones) \cite{cnn:gu}. 
+Las redes neuronales convolucionales (CNN por sus siglas en inglés) son un tipo de redes neuronales especializadas en el reconocimiento de patrones, tanto en imágenes como en señales, inspiradas por el mecanismo natural de percepción visual de los seres vivos \cite{cnn:gu, cnn:ieee}. Fueron descritas por primera vez en 1989 por Le-Cun et. al \cite{cnn:antecesor} y desde esa fecha han ido evolucionando y perfeccionándose hasta desarrollar algunos de los modelos más sofisticados que podemos encontrar a día de hoy (VGGNet o ResNet en sus distintas versiones) \cite{cnn:gu}. 
 
-Una de las características de estos modelos, que los han hecho tan populares, es lograr la reducción de parámetros con respecto a otras arquitecturas de redes neuronales, permitiendo así desarrollar modelos más complejos y de mayor tamaño \cite{cnn:ieee}.
+Una de las características de estos modelos, que los han hecho tan populares, es la reducción de parámetros lograda con respecto a otras arquitecturas de redes neuronales, permitiendo así desarrollar modelos más complejos y de mayor tamaño \cite{cnn:ieee}.
 
 \subsubsection{Redes Neuronales}
 
@@ -171,7 +171,7 @@ Las redes neuronales artificiales (ANN por sus siglas en inglés) son modelos ma
 
 Una neurona por sí sola no resulta de gran utilidad. Sin embargo, el potencial de las ANN comienza a ser notable cuando interconectamos varias neuronas entre sí, de tal manera que la salida de unas sea la entrada de otras y así sucesivamente, formando una red compleja.
 
-La conexión entre las neuronas no se realiza de manera aleatoria, ya que los modelos generados serían inmanejables. Generalmente se siguen una serie de topologías que variarán en función del problema que se esté tratando \cite{ann:intro, cnn:ieee}. Las dos estructuras más básicas que podemos encontrar en una ANN son las descritas en la figura \ref{fig:red_neuronal}.
+La conexión entre las neuronas no se realiza de manera aleatoria, ya que sino los modelos generados serían inmanejables. Generalmente se siguen una serie de topologías que variarán en función del problema que se esté tratando \cite{ann:intro, cnn:ieee}. Las dos estructuras más básicas que podemos encontrar en una ANN son las descritas en la figura \ref{fig:red_neuronal}.
 
 \begin{figure}[h]
     \centering
@@ -196,7 +196,7 @@ Tras la creación del modelo se deben inicializar los pesos de cada neurona de m
 
 Posteriormente tiene lugar lo que se denomina una propagación hacia delante (\textit{forward propagation}), es decir, se introduce un elemento (o varios en forma de lote) en la entrada de la red (con tantos valores input como sean requeridos) y a partir de esos valores input, mediante el cómputo entre las neuronas, la red calcula la salida. Como estamos trabajando con datos etiquetados, disponemos del valor de salida real correspondiente a la entrada introducida, por lo que el siguiente paso consiste en evaluar la discrepancia entre la predicción del modelo y el valor real \cite{cnn:biblia_deeplearning,cnn:biblia_machinelearning}.
 
-Para poder calcular la diferencia entre ambos valores se emplea una \textbf{función de pérdida} (función \textit{loss}), que tiene como objetivo cuantificar qué tan bien realiza una predicción el modelo entrenado. Esta función \textit{loss} recibe como parámetros de entrada el valor real y la predicción, y devuelve un resultado que dependerá de la función empleada.  Algunas de las funciones \textit{loss} más comunes son la entropía cruzada (tanto binaria:\textit{Binary Cross-Entropy, como categórica: Categorical Cross-Entropy}), pérdida cuadrática media (\textit{Mean Squared Error}) o función de log-verosimilitud (\textit{Log-Likelihood})\cite{cnn:biblia_deeplearning}.
+Para poder calcular la diferencia entre ambos valores se emplea una \textbf{función de pérdida} (función \textit{loss}), que tiene como objetivo cuantificar qué tan bien realiza una predicción el modelo entrenado. Esta función \textit{loss} recibe como parámetros de entrada el valor real y la predicción, y devuelve un resultado que dependerá de la función empleada.  Algunas de las funciones \textit{loss} más comunes son la entropía cruzada (tanto binaria: \textit{Binary Cross-Entropy}, como categórica: \textit{Categorical Cross-Entropy}), pérdida cuadrática media (\textit{Mean Squared Error}) o función de log-verosimilitud (\textit{Log-Likelihood})\cite{cnn:biblia_deeplearning}.
 
 Una vez calculado el valor de la función de pérdida, se inicia una propagación del mismo hacia atrás (\textit{backpropagation}), es decir, desde las neuronas finales hacia las más cercanas a la entrada del modelo. En este proceso de \textit{backpropagation} los distintos pesos de las neuronas modifican su valor, con el objetivo de tratar de mejorar futuras predicciones. La forma en que se modifiquen estos pesos, así como la \textit{cantidad} en que varíen, va a estar determinada por el \textbf{algoritmo de optimización}. Existen diversos algoritmos que se pueden emplear, siendo el principal el descenso de gradiente estocástico (SGD por sus siglas en inglés) y sus variantes y mejoras (Momentum, Adam, Adagrad...) \cite{cnn:biblia_deeplearning,cnn:biblia_machinelearning}.
 
