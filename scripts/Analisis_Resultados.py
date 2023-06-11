@@ -19,7 +19,7 @@ Este archivo tiene como objetivo llevar a cabo el análisis de los resultados ob
 from pyspark.sql.functions import regexp_replace, col
 #cargamos el CSV, indicando que contiene  cabecera y que está codificado en ANSI (Latin-1)
 #después usamos la función withColumn para reescribir la columna 'validacion', eliminando los caracteres "\xAD" fruto de la decodificación 
-resultados = spark.read.format("csv").option("header", "true").option("encoding", "ISO-8859-1").load("dbfs:/FileStore/shared_uploads/slj1001@alu.ubu.es/Resultados-1.csv").withColumn("validacion", regexp_replace("validacion", "\xAD", ""))
+resultados = spark.read.format("csv").option("header", "true").option("encoding", "ISO-8859-1").load("Resultados.csv").withColumn("validacion", regexp_replace("validacion", "\xAD", ""))
 
 #vamos a cambiar las columnas de las métricas a tipo float para poder operar posteriormente con ellas
 #primero debemos definirlas
