@@ -157,7 +157,7 @@ Es por ello que se consultó al equipo de SCAYLE y nos ofrecieron la alternativa
 \begin{enumerate}
     \item Abrir el Símbolo del Sistema de Windows e instalar wsl (Windows Subsystem for Linux) mediante la siguiente instrucción: \texttt{wsl --install}. Esto instala un entorno Linux (concretamente Ubuntu) en nuestro equipo.
     \item Ejecutamos la PowerShell como administrador y escribimos la siguiente instrucción: \texttt{wsl} para activar este entorno virtual.
-    \item Una vez activado el entorno ya podemos realizar la transferencia de los datos. Para ello escribimos la instrucción \texttt{rsync -avzh -e ``ssh -p 2222'' <dirección de los datos a enviar> <nombre usuario>@calendula.scayle.es:/home/<nombre grupo>/<nombre usuario>}. Esta instrucción nos la proporciona SCAYLE \cite{rsync}.
+    \item Una vez activado el entorno ya podemos realizar la transferencia de los datos. Para ello escribimos la instrucción \texttt{rsync -avzh -e ``ssh -p 2222'' <dirección de los datos a enviar> <nombre usuario>\\@calendula.scayle.es:/home/<nombre grupo>/<nombre usuario>}. Esta instrucción nos la proporciona SCAYLE \cite{rsync}.
     \item Nos pedirá la contraseña de nuestro usuario de Caléndula, así que la introducimos y comienza la transferencia.
 \end{enumerate}
 
@@ -172,7 +172,7 @@ Existe la posibilidad de que se produzca un error al cargar los datos, porque se
     \label{fig:error_scayle}
 \end{figure}
 
-Para solventar este problema basta con debemos borrar la \textit{key} problemática (la fila problemática se indica en la línea \texttt{Offending RSA  key in /home/samuel/.ssh/known\_hosts: 2}, en este caso la segunda fila es la problemática y la que debe eliminarse. En el propio mensaje de error se nos indica cómo eliminar este valor problemático, mediante la instrucción \texttt{ssh -keygen -f ``/home/samuel/.ssh/known\_hosts'' -R ``[calendula.scayle.es]:2222''}.
+Para solventar este problema basta con debemos borrar la \textit{key} problemática (la fila problemática se indica en la línea \texttt{Offending RSA  key in /home/samuel/.ssh/known\_hosts: 2}, en este caso la segunda fila es la problemática y la que debe eliminarse. En el propio mensaje de error se nos indica cómo eliminar este valor problemático, mediante la instrucción \texttt{ssh -keygen -f ``/home/samuel/.ssh/known\_hosts'' -R ``[calendula.scayle.es]:\\2222''}.
 
 \subsubsection{Selección de modelos}
 
@@ -296,7 +296,7 @@ El inpainting está controlado por tres parámetros:
 
 Por último, vamos a especificar los distintos parámetros que pueden modificarse en las funciones diseñadas para la creación de arquitecturas, así como los valores que se les han asignado.
 
-Las 4 funciones a las que se hace referencia son \texttt{crea\_Alqudah, crea\_Ghosh, crea\_Mobeen} y \texttt{crea\_Rajagopalan}. Reciben 3 parámetros:
+Las 4 funciones a las que se hace referencia son \texttt{crea\_Alqudah, crea\_\\Ghosh, crea\_Mobeen} y \texttt{crea\_Rajagopalan}. Reciben 3 parámetros:
 \begin{itemize}
     \item \texttt{capas\_conv}: número de capas convolucionales que se desean incluir en el modelo creado. Dependiendo de este valor se crearán, así mismo, más o menos capas de maxpooling y de activación, ya que suelen ir asociadas a las capas convolucionales.
     \item \texttt{filtros}: número de filtros de cada capa convolucional, pudiendo ser la misma cantidad que en la arquitectura (1.0), la mitad (0.5) o el doble (2.0).
@@ -316,7 +316,7 @@ Los valores que han tomado estos parámetros en el desarrollo del proyecto se de
 \begin{itemize}
     \item \texttt{capas\_conv}: en el desarrollo del trabajo se emplearon los valores 6, 9 y 13 para este parámetro.
     \item \texttt{filtros}: en el desarrollo del trabajo se emplearon los valores 1.0, 0.5 y 2.0 para este parámetro.
-    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 256/1024/512, 128/512/256, 64/256/128, 128/256/512 y 512/256/128 para este parámetro.
+    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 256/1024/ 512, 128/512/256, 64/256/128, 128/256/512 y 512/256/128 para este parámetro.
 \end{itemize}
 
 \textbf{Mobeen}. Se generaron 54 posibles combinaciones entre los distintos valores de los parámetros.
