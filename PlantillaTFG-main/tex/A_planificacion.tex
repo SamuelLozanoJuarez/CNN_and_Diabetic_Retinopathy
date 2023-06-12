@@ -38,32 +38,398 @@ Como se ha mencionado anteriormente, \textit{CRISP-DM} es una metodología itera
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.65\textwidth]{img/CRISP-DM.png}
-    \caption{Flujo de trabajo de la metodología CRISP-DM. Nótese que existe la posibilidad de invertir la dirección del flujo entre algunas etapas. Fuente: \cite{crispdm:flujo}}.
+    \caption{Flujo de trabajo de la metodología CRISP-DM. Nótese que existe la posibilidad de invertir la dirección del flujo entre algunas etapas \cite{crispdm:flujo}.}
     \label{crispdm:flujo}
 \end{figure}
 
-Para llevar a cabo la planificación temporal del proyecto, se emplearon las herramientas de control proporcionadas por GitHub, concretamente la extensión ZenHub. 
+Para llevar a cabo la planificación temporal del proyecto, se emplearon las herramientas de control proporcionadas por GitHub, concretamente la extensión ZenHub. Toda la información referente a la planificación temporal descrita puede comprobarse en el \href{https://github.com/SamuelLozanoJuarez/CNN_and_Diabetic_Retinopathy}{repositorio de GitHub}.
 
 Los principios básicos de la planificación temporal fueron los siguientes:
 
 \begin{itemize}[itemsep=0.1em]
     \item Realización de \textit{sprints} con una duración de 2 semanas.
     \item Planificación de las tareas al inicio de cada \textit{sprint}.
-    \item Creación y uso de un tablero de trabajo en ZenHub en el que se clasificaban las tareas según su estatus: tareas abiertas sin comenzar (\textit{Backlog}), en progreso, finalizadas y cerradas.
+    \item Creación y uso de un tablero Kanban en ZenHub en el que se clasificaban las tareas según su estatus: tareas abiertas sin comenzar (\textit{Backlog}), en progreso y cerradas.
     \item Creación de 7 etiquetas, 6 de ellas correspondientes a las distintas etapas de la metodología de trabajo \textit{CRISP-DM} y una séptima correspondiente a la categoría \textit{update}, tal y como se puede apreciar en la figura \ref{labels:github}. Cada tarea programada fue marcada con una o más etiquetas.
 \end{itemize}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{img/labels_github.jpg}
-    \caption{Etiquetas creadas. En la columna de la izquierda se indica el nombre de la etiqueta, en la columna de la derecha una breve definición de la misma. Fuente: elaboración propia}.
+    \caption{Etiquetas creadas. En la columna de la izquierda se indica el nombre de la etiqueta, en la columna de la derecha una breve definición de la misma. Fuente propia.}
     \label{labels:github}
 \end{figure}
 
 A continuación se detallará para cada \textit{sprint} la fecha de inicio y de fin, las tareas inicialmente programadas y una evaluación del cumplimiento de las tareas.
 
-\subsection{Sprint 0}
+\subsection{Sprint 0: 17 Nov. - 26 Nov.}
+
+En este \textit{sprint} se llevaron a cabo las tareas de creación y maquetación del repositorio, descarga de la plantilla de LaTeX y las primeras labores de documentación acerca de las redes neuronales convolucionales. 
+
+Se programaron 5 tareas, todas ellas correspondientes a la etiqueta \textbf{\textit{bussines\_u}}: Configuración del repositorio, Cargar la plantilla LaTeX en Overleaf, Creación Markdown, Documentarme sobre CRISP-DM y Documentarme sobre CNN. El número total de puntos de historia de este \textit{sprint} fue 12, no excesivamente elevado ya que tuvo una duración más corta que los demás \textit{sprints}.
+
+Se realizaron todas las tareas antes de la finalización del \textit{sprint}. No se dispone del gráfico \textit{burndown} que muestra la evolución de las tareas ya que ZenHub, la herramienta empleada para la organización, no ofrece estos gráficos cuando el \textit{sprint} tuvo lugar tan atrás.
+
+\subsection{Sprint 1: 28 Nov. - 11 Dic.}
+
+En este \textit{sprint} se desarrollaron tareas variadas relacionadas con la escritura de ciertos apartados de la memoria y también con la recopilación de datos y entrenamiento de algunos modelos.
+
+Se emplearon las etiquetas \textbf{\textit{deployment, data\_u, modeling}} y \textbf{\textit{bussines\_u}} para categorizar las siguientes tareas: carga de la plantilla LaTeX en el repositorio, subida de las imágenes de la cohorte en el repositorio, creación de una primera CNN básica, escritura de los objetivos en la memoria, escritura del inicio del anexo de Planificación y modificación del anexo Datos. Entre todas las tareas sumaron 19 puntos.
+
+Se realizaron todas las tareas excepto la escritura de los objetivos, la escritura del anexo planificación y la escritura del anexo datos, ya que no se tenía aún la información necesaria para poder completar estos anexos. Además se acumularon estas tareas con otras actividades del curso lectivos, como la entrega de trabajos.
+
+\subsection{Sprint 2: 26 Dic. - 9 Ene.}
+
+Debido a las fechas (vacaciones de Navidad y exámenes de primera convocatoria) el número de tareas programadas fue menor, ya que además se acumularon las tareas no realizadas en el \textit{sprint} anterior.
+
+Además de las tres tareas no finalizadas, se programó la selección y organización de las imágenes de la cohorte, sumando un total de 16 puntos de historia. De las tareas programadas únicamente se realizaron 2 (equivalentes a 8 puntos), la selección y organización de imágenes y la escritura de objetivos LaTeX. Como he mencionado anteriormente, las fechas en que tuvo lugar este \textit{sprint} dificultaron la ejecución de más tareas.
+
+\subsection{Sprint 3: 9 Ene. - 23 Ene.}
+
+Debido a que aún seguía con exámenes de primera convocatoria no se programó ninguna tarea nueva. Por tanto en este \textit{sprint} únicamente se encuentran las dos tareas restantes del \textit{sprint} anterior: la escritura del anexo Planificación y la modificación del anexo Datos. Ninguna de las dos tareas se llevó a cabo, como he mencionado, debido a los exámenes de la carrera.
+
+\subsection{Sprint 4: 23 Ene. - 6 Feb.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{data\_u, modeling, bussiness\_u, deployment}} y \textbf{\textit{update}}, y consistieron en: la modificación de los objetivos de la memoria, la escritura del anexo Planificación (proveniente de \textit{sprints} anteriores), la construcción de la primera CNN utilizando imágenes de retinopatía y la modificación del anexo Datos (proveniente de \textit{sprints} anteriores). 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_23ene.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 4. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_4}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_4}.
+
+No se realizaron las tareas de la modificación del anexo Datos ni la creación de la primera CNN con imágenes de retinopatía.
+
+\subsection{Sprint 5: 6 Feb. - 20 Feb.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{data\_u, modeling, bussiness\_u, deployment, data\_preparation, evaluation}} y \textbf{\textit{update}}, y consistieron en: la modificación del anexo Datos (proveniente de \textit{sprints} anteriores), la creación de la primera CNN para imágenes de retinopatía (proveniente de \textit{sprints} anteriores), la búsqueda de nuevas arquitecturas, así como la búsqueda de nuevos datasets y la implementación de las nuevas arquitecturas. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_6feb.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 5. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_5}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_5}.
+
+No se realizó la tarea de implementación de las nuevas arquitecturas de CNN.
+
+\subsection{Sprint 6: 20 Feb. - 6 Mar.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{modeling, update, deployment}} y \textbf{\textit{evaluation}}, y consistieron en: la construcción de nuevas arquitecturas de CNN (proveniente del \textit{sprint} anterior), solicitar acceso a SCAYLE, escritura de la introducción de la memoria y creación de las variaciones de las nuevas arquitecturas. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_20feb.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 6. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_6}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_6}.
+
+No se realizaron las variaciones de las nuevas arquitecturas.
+
+\subsection{Sprint 7: 6 Mar. - 20 Mar.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{modeling, bussiness\_u, deployment, modeling}} y \textbf{\textit{update}}, y consistieron en: la creación de variaciones para las nuevas arquitecturas (proveniente de \textit{sprints} anteriores), la subida de los datos e imágenes a SCAYLE, la ampliación de la introducción de la memoria y la creación de una función para el entrenamiento de los modelos. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_6mar.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 7. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_7}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_7}.
+
+Se realizaron todas las tareas programadas.
+
+\subsection{Sprint 8: 20 Mar. - 28 Mar.}
+
+Se trata de un \textit{sprint} más corto, de tan solo 8 días. Esto se realizó así para tratar de cuadrar la finalización del mismo con el inicio de las vacaciones de Semana Santa. De hecho se puede observar que todas las tareas se finalizaron antes del fin del \textit{sprint}.
+
+Las tareas programadas se etiquetaron usando \textbf{\textit{evaluation}} y \textbf{\textit{modeling}}, y consistieron en la creación de las variaciones de las distintas arquitecturas (Ghosh, Alqudah, Rajagopalan y Mobeen). 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_20mar.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 8. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_8}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_8}.
+
+Se realizaron todas las tareas planificadas.
+
+\subsection{Sprint 9: 9 Abr. - 22 Abr.}
+
+Como puede observarse, hay un salto temporal desde el final del \textit{sprint} anterior y el inicio de este. Esto se corresponde con el periodo de vacaciones de Semana Santa.
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{modeling, deployment}} y \textbf{\textit{update}}, y consistieron en: incluir en los distintos scripts las funciones necesarias para calcular el tiempo de entrenamiento del modelo, desarrollar la función que permita llevar a cabo el entrenamiento con \textit{early stopping}, aplicar la función de entrenamiento con \textit{early stopping} y crear la función que permita almacenar las gráficas de entrenamiento de los modelos. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_9abr.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 9. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_9}
+\end{figure}
+
+Además, en este \textit{sprint} se produjo un problema adicional: se me terminó la licencia gratuita de estudiante de ZenHub. Es por ello que mientras tramitaba la compra y solicitaba una extensión del periodo de estudiante no pude actualizar las tareas en ZenHub. Como consecuencia se puede observar en la figura \ref{fig:bd_9} una acumulación de punto de historia que se descongestiona de golpe al final.
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_9}.
+
+Se realizaron todas las tareas planificadas para el \textit{sprint}.
+
+\subsection{Sprint 10: 23 Abr. - 6 May.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{data\_u, modeling, data\_preparation}} y \textbf{\textit{evaluation}}, y consistieron en: modificar los \textit{scripts} para poder llevar a cabo el entrenamiento usando las nuevas imágenes de los distintos repositorios, organizar los datos e imágenes en SCAYLE, buscar bibliografía referente a distintos preprocesamientos y desarrollar el código que permita el \textit{inpainting} de las imágenes. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_23abr.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 10. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_10}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_10}.
+
+No se realizó la tarea del desarrollo de código para llevar a cabo el \textit{inpainting}.
+
+\subsection{Sprint 11: 8 May. 21 May.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{business\_understanding, data\_preparation, modeling, evaluation, deployment}} y \textbf{\textit{update}}, y consistieron en: el desarrollo del código para llevar a cabo el \textit{inpaint} (proveniente del \textit{sprint} anterior), corrección de la función para guardar gráficas, desarrollar el código para el preprocesamiento de las imágenes, realizar los primeros entrenamientos con datos de repositorios, realizar entrenamientos con imágenes inpaintadas y finalizar la escritura de la introducción. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_8may.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 11. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_11}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_11}.
+
+No se realizó la finalización de la introducción de la memoria.
+
+\subsection{Sprint 12: 22 May. - 4 Jun.}
+
+Las tareas programadas para este \textit{sprint} se etiquetaron usando \textbf{\textit{business\_understanding, modeling, evaluation}} y \textbf{\textit{deployment}}, y consistieron en: la finalización de la escritura de la introducción (proveniente del \textit{sprint} anterior), el entrenamiento de modelos usando OCT preprocesado, entrenamiento usando OCT plus, entrenamiento usando OCT plus preprocesado y el entrenamiento usando el conjunto de Datasetss preprocesados. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_22may.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 12. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_12}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_12}.
+
+No se realizó la finalización de la introducción de la memoria (al igual que en el \textit{sprint} anterior) ni tampoco el entrenamiento de modelos usando el conjunto Datasets preprocesado.
+
+\subsection{Sprint 13: 5 Jun. - 12 Jun.}
+
+Se trata del último \textit{sprint}, que realmente finalizó antes del tiempo marcado.
+
+Las tareas programadas se etiquetaron usando \textbf{\textit{business\_understanding, modeling, evaluation}} y \textbf{\textit{deployment}}, y consistieron en: la finalización de la escritura de la introducción (proveniente del \textit{sprint} anterior), el entrenamiento usando el conjunto de Datasetss preprocesados (proveniente del \textit{sprint} anterior), la escritura de la metodología y la escritura de las conclusiones.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/bd_5jun.png}
+    \caption{Gráfico \textit{burndown} correspondiente al \textit{sprint} 13. Eje vertical: puntos de historia. Eje horizontal: tiempo (días). Fuente propia.}
+    \label{fig:bd_13}
+\end{figure}
+
+El número de puntos de historia, así como su evolución a lo largo del \textit{sprint} pueden observarse en la figura \ref{fig:bd_13}.
+
+Se finalizaron todas las tareas planificadas.
+
+\subsection{Conclusión}
+
+Considero que sí que se ha seguido la estrategia CRISP-DM en cuanto a la estratificación del proyecto en las distintas etapas y el flujo circular de las mismas, es decir, que aunque en en ocasiones me encontrase trabajando en la etapa de \textit{modeling} o \textit{evaluation} he retrocedido para realizar alguna tarea necesaria de \textit{data\_preparation} o \textit{business\_understanding}.
+
+Aunque es cierto que en muchos \textit{sprints} no he cumplido con todas las tareas, esto me permite conocer el funcionamiento de un proyecto real, en el que hay altibajos, inconvenientes y retrasos en el trabajo. A pesar de todo ello, yo creo que el desempeño ha sido constante y que la planificación ha sido efectiva.
+
+Además de comentar los distintos \textit{sprints}, creo que también puede ser interesante observar el flujo de \textit{commits} (contribuciones) en el proyecto a lo largo del tiempo. Si observamos la figura \ref{fig:flujo} podemos ver que este flujo ha ido incrementándose, en especial a partir del mes de febrero, coincidiendo con la finalización del primer cuatrimestre y el inicio del segundo, pero a pesar de esta variación se puede observar que se trabajó durante todo el curso, para lograr así el mejor resultado del proyecto.
+
+El descenso en el número de \textit{commits} que tiene lugar en abril se debe a las vacaciones de Semana Santa, donde no tuve acceso al repositorio. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/commits_flujo.png}
+    \caption{Gráfico del flujo de \textit{commits} a lo largo del tiempo. Fuente propia.}
+    \label{fig:flujo}
+\end{figure}
 
 \section{Planificación económica}
 
+Debido a que el proyecto realizado en este Trabajo de Fin de Grado ha sido enfocado desde el punto de vista de la investigación, y no del desarrollo de un producto, los gastos materiales asociados han sido escasos. Sin embargo, se va a realizar un ejercicio de cálculo de gastos asociados al proyecto y posteriormente una estimación del ahorro que podría suponer para la sanidad pública el contar con una CNN que realizase la tarea deseada.
+
+\subsection{Costes}
+
+El total de costes del proyecto puede dividirse entre costes personales (aquellos asociados a las personas), costes de \textit{hardware} (los dispositivos o infraestructuras requeridas) y costes de \textit{software} (programas, licencias o servicios informáticos que sean necesarios).
+
+\subsubsection{Costes personales}
+
+Para esta estimación se considerará el salario de un ingeniero de la salud trabajando media jornada \footnote{Considerando una media jornada de 4 horas diarias.} durante los casi 7 meses que ha durado el proyecto (desde el 17 de noviembre hasta el 9 de junio). 
+
+Para el cálculo del sueldo se considerará un ingeniero con estudios universitarios de primer ciclo con un contrato temporal de media jornada (50\% de la jornada habitual). En la tabla \ref{tab:cost_persona} puede observarse el salario bruto mensual de dicho profesional, así como el gasto que supondría su mantenimiento durante los 7 meses del proyecto. Para determinar este sueldo me he basado en el convenio nacional de Ingeniería y Oficinas de Estudios Técnicos y en el uso de la herramienta \cite{plan:nomina} para realizar los cálculos.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Concepto              & Coste     \\ \midrule
+Salario base          & 688.83 €  \\
+Plus Convenio         & 101.86 €  \\
+Salario bruto mensual & 790.69 €  \\ \midrule
+\textbf{Total (7 meses)}       &  \textbf{
+5534.83 €} \\ \bottomrule
+\end{tabular}
+\caption{Gastos asociados a la contratación de personal para el desarrollo del proyecto.}
+\label{tab:cost_persona}
+\end{table}
+
+\subsubsection{Costes de \textit{hardware}}
+
+Para el cálculo de los costes asociados a los dispositivos físicos se van a tener en cuenta los siguientes elementos, necesarios para la realización del proyecto: 
+\begin{itemize}
+    \item Un ordenador de gama media, que tenga las funcionalidades necesarias para poder manejar las imágenes y lanzar las ejecuciones en el servicio de computación en la nube que se desee,
+    \item Un teléfono móvil Samsung Galaxy S7.
+    \item Un teléfono móvil iPhone 11 Pro.
+    \item Dispositivo para la adquisición de imágenes empleando teléfono móvil.
+\end{itemize}
+
+El ordenador que se ha considerado para el cálculo de costes es el ASUS E410MA-EK1945, que proporciona las funcionalidades necesarias para poder ejecutar el proyecto (procesador Intel Celeron, 4 GB de RAM y 64 GB de almacenamiento). La página consultada para tomar la referencia del precio fue la página oficial de \href{https://estore.asus.com/es/90nb0q11-m00we0-portatil-asus-laptop-e410ma-ek1945.html?gclid=CjwKCAjwm4ukBhAuEiwA0zQxk3hTQWGHZ7mFLFAO8mEUZidZAvBljcASkk-kpJjftiZa_7Qp1pCVGRoCSJgQAvD_BwE}{ASUS} sin considerar posibles ofertas.
+
+Para conocer el precio de los dispositivos iPhone y Samsung empleados se tomó como referencia Amazon, ya que los modelos empleados ya no se encuentran disponibles en la página oficial de las respectivas marcas.
+
+Debido a que Ret-iN CaM no se encuentra comercializado, para el cálculo del coste se tomó como referencia el dispositivo D-Eye, que realiza la misma función. 
+
+La suma de los distintos costes asociados al \textit{hardware} puede observarse en la tabla \ref{tab:cost_hard}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Concepto                       & Coste     \\ \midrule
+Ordenador ASUS                 & 349 €     \\
+iPhone 11 Pro                  & 641.31 €  \\
+Samsung Galaxy S7              & 249 €     \\
+Dispositivo D-Eye              & 390 €     \\ \midrule
+\textbf{Total gastos \textit{hardware}} & \textbf{1629.31 €} \\ \bottomrule
+\end{tabular}
+\caption{Gastos asociados al \textit{hardware} del proyecto.}
+\label{tab:cost_hard}
+\end{table}
+
+\subsubsection{Costes de \textit{software}}
+
+En el cálculo de los costes de \textit{software} se tuvieron en cuenta los siguientes elementos:
+\begin{itemize}
+    \item Descarga de la aplicación Ret-iN CaM.
+    \item Contratación de un servicio de computación en la nube.
+    \item Licencia del Sistema Operativo del ordenador.
+    \item Conexión a Internet.
+\end{itemize}
+
+La aplicación diseñada para el dispositivo Ret-iN CaM se encuentra disponible en \href{https://play.google.com/store/apps/details?id=es.canelatech.retincam&hl=es&gl=US}{Google Play}, pero no aparece información relevante al precio. Es por ello que consideraremos esta descarga como gratuita.
+
+El servicio de computación en la nube seleccionado para la consulta del precio ha sido Microsoft Azure. Se ha estimado una contratación por un periodo igual a 5 meses, ya que es el tiempo que se ha hecho uso del supercomputador de SCAYLE. Se empleó la calculadora de precios del propio Azure para realizar la estimación, considerando 1000 transacciones mensuales y 30 horas de cómputo mensuales.
+
+El Sistema Operativo escogido ha sido Windows 11, y se ha utilizado la página oficial de Microsoft Store para la consulta del precio.
+
+Por último, aunque la conexión a Internet no es una herramienta \textit{software}, se ha incluido en este apartado para mayor sencillez del análisis, ya que a fin de cuentas es un servicio necesario y que no forma parte del \textit{hardware}. Se consideró para el cálculo la tarifa ofrecida por la compañía Movistar durante el total de los 7 meses del proyecto.
+
+La suma de los costes asociados al \textit{software} pueden observarse en la tabla \ref{tab:cost_soft}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Concepto                       & Coste                 \\ \midrule
+Aplicación Ret-iN CaM          & 0 €                   \\
+Azure                          & 56.51 € x5 = 282.55 € \\
+Windows 11 Home                & 145 €                 \\
+Conexión Internet              & 29.9 € x7 = 209.3 €   \\ \midrule
+\textbf{Total gastos \textit{software}} & \textbf{636.85 €}              \\ \bottomrule
+\end{tabular}
+\caption{Gastos asociados al \textit{software} del proyecto.}
+\label{tab:cost_soft}
+\end{table}
+
+\subsubsection{Coste total}
+
+Finalmente se van a sumar los distintos costes para calcular el coste total del proyecto. Esta suma puede encontrarse en la tabla \ref{tab:cost_total}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\rowcolor[HTML]{C0C0C0} 
+Concepto                      & Coste              \\ \midrule
+Costes personales             & 5534.83 €          \\
+Costes \textit{hardware}      & 1629.31 €          \\
+Costes \textit{software}      & 636.85 €           \\ \midrule
+\textbf{Total coste proyecto} & \textbf{7800.99 €} \\ \bottomrule
+\end{tabular}
+\caption{Gastos totales del proyecto.}
+\label{tab:cost_total}
+\end{table}
+
+\subsection{Ahorro}
+
+El primer ahorro que implicaría el desarrollo completo del proyecto sería la diferencia de precio entre el dispositivo actualmente empleado para la toma de imágenes (tomógrafo de coherencia óptica) y el sistema aquí desarrollado.
+
+El coste de un OCT como el empleado en el Hospital Universitario de Burgos, modelo Triton de la marca Topcon, es de $21300$ €, mientras que el coste íntegro del desarrollo de la CNN acoplada al uso de Ret-iN CaM es de $7800.99$ €, por lo que el beneficio reportado por el uso de nuestra alternativa sería de $ \approx 13500$ €.
+
+A este valor se debe sumar el factor no económico del tiempo de espera. Debido a que el sistema desarrollado en este trabajo podría ser empleado por un médico de familia, las listas de espera y el aglomeramiento de las consultas del especialistas se verían reducidas. Aunque esto no es cuantificable en términos de dinero, supondría también una reducción del estrés de los profesionales y de los pacientes.
+
+Tal y como se describe en el \textit{New England Journal of Medicine}, el uso de alternativas en el diagnóstico que permitan maximizar la efectividad en la detección de retinopatía diabética podría suponer un ahorro de mil millones de dólares en 20 años \cite{ahorro}.
+
 \section{Viabilidad legal}
+
+Se va a estudiar la viabilidad legal desde tres puntos de vista: la licencia que protege el código desarrollado y el repositorio, las licencias de las herramientas empleadas y los posibles conflictos con el Reglamento General de Protección de Datos al tratarse de imágenes de pacientes.
+
+\subsection{Licencia del código}
+
+El repositorio de GitHub se encuentra protegido bajo una licencia Creative Commons 1.0 Universal. Esto significa que el código desarrollado es de dominio público y no se encuentra protegido por el Copyright. Esto implica que el proyecto puede ser copiado, modificado, distribuido y ejecutado, incluso con fines comerciales, sin necesidad de permiso \cite{ccommons}.
+
+\subsection{Licencias de las herramientas empleadas}
+
+En esta sección se describen las licencias que protegen las distintas herramientas empleadas en el proyecto.
+
+\subsubsection{Python}
+
+La versión 3.9.12 de Python, según la Python Software Foundation (PSF), está distribuida bajo una licencia no-exclusiva, sin regalías (sin tener que pagar derechos de autor) y mundial, es decir, que permite crear cualquier tipo de trabajo usando Python así como su distribución de manera libre y gratuita \cite{licenc:python}.
+
+\subsubsection{PyTorch}
+
+La biblioteca PyTorch, desarrollada por Facebook, está distribuida bajo una licencia BSD-3 que permite a los usuarios utilizar, modificar y distribuir el código fuente de PyTorch. En el caso de que se redistribuya el código fuente, deberá incluirse en el proyecto una notificación de copyright incluida en el repositorio de GitHub de PyTorch. Sin embargo, en el caso de emplear la biblioteca (sin redistribución de código) la única condición que se incluye es no utilizar el nombre de los desarrolladores de PyTorch para promocionar el producto \cite{licenc:pytorch}.
+
+\subsubsection{\LaTeX}
+
+El lenguaje LaTeX está distribuido bajo su propia licencia: LPPL 1.3c (LaTeX Project Public License). Es una licencia pública y gratuita que permite el uso del lenguaje sin necesidad de pagar derechos de autor \cite{licenc:latex}.
+
+\subsubsection{Otras herramientas}
+
+Otras herramientas empleadas en el proyecto, como OpenCV, Pandas, NumPy, Markdown, Seaborn, Scikit-Learn y Scikit-Image, están sujetas a una licencia BSD-3 o BSD de código abierto, que permiten a los usuarios utilizar, modificar y distribuir el código fuente, pero no utilizar el nombre de los desarrolladores sin su permiso para promocionar el producto.
+
+La biblioteca Pillow está sujeta a la licencia HPND (Historical Permission Notice and Disclaimer) que permite así mismo el uso, modificación y distribución del código de la biblioteca, debiéndose incluir el texto completo de la licencia en el caso de la distribución del código fuente.
+
+\subsection{Reglamento General de Protección de Datos}
+
+El Reglamento General de Protección de Datos (RGPD), en vigor desde 2016, prohíbe el uso de datos que revelen datos relativos a la salud de una persona física (Artículo 9 \cite{RGPD:BOE}) exceptuando aquellos casos en los que (se incluyen únicamente los aplicables a nuestro proyecto):
+\begin{itemize}
+    \item El interesado (el paciente) proporcione su consentimiento explícito para el tratamiento de dichos datos
+    \item El tratamiento sea necesario con fines de medicina preventiva.
+    \item El tratamiento sea necesario con fines de salud pública.
+    \item El tratamiento se lleva a cabo con fines de investigación científica.
+\end{itemize}
+
+En el caso que nos ocupa, los datos serán tratados con los fines mencionados y además se cuenta con el consentimiento informado de los pacientes que se prestaron voluntarios para la cesión de sus imágenes de fondo de ojo (así nos lo comunicó el oftalmólogo a cargo de la recopilación de imágenes). Es por ello que no existirían conflictos con el RGPD.

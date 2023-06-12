@@ -1,19 +1,22 @@
 \apendice{Manual de especificación de diseño}
 
-Si es necesario.
-
-
-    Planos (Si procede)
-    Diseño arquitectonico (Si procede)
-        Diagrama de clases, diagrama de despliegue
-
-\section{Planos}
-
-Si procede
-
 \section{Diseño arquitectónico}
 
-Si procede.
+Aunque en la elaboración del proyecto se han empleado distintas clases, una para cada arquitectura distinta (Basica, Alqudah, Ghosh, Mobeen y Rajagopalan), estas clases no interactúan entre sí. Es por ello que en el diagrama de clases que se incluye únicamente se muestra la relación entre cada una de estas clases y la clase \texttt{nn.Module}, que es la clase padre.
 
-Diagramas de clases, diagramas de despliegue \ldots
+El diagrama de clases puede observarse en la figura \ref{fig:uml}. De la clase padre \texttt{nn.Module} únicamente se incluyen aquellos atributos y funciones principales, que acostumbran a ser empleados en el código.
 
+Se puede observar que todas las clases tienen una estructura muy similar, con exactamente las mismas funciones. Estas funciones son:
+\begin{itemize}
+    \item \texttt{forward(x)}: que permite la propagación hacia delante del input que recibe como parámetro, para la obtención de la salida. En esta función se detalla el orden en que deben ir ejecutándose las capas del modelo.
+    \item \texttt{num\_flat\_features(x)}: calcula el número de características del input tras una serie de transformaciones. Se emplea para aplanar las matrices antes de introducirlas en las capas densas del modelo.
+\end{itemize}
+
+Destacar, de la clase\texttt{nn.Modules} las funciones \texttt{state\_dict} y \texttt{load\_state\_dict} que permiten almacenar el estado del modelo y posteriormente cargarlo en un nuevo \textit{script}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/UML_proyecto.png}
+    \caption{Diagrama UML de clases del proyecto. Fuente propia.}
+    \label{fig:uml}
+\end{figure}

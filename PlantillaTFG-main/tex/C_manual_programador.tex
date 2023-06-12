@@ -1,13 +1,341 @@
-\apendice{Manual del investigador.} % usar el término que mejor se corresponda.
+\apendice{Manual del investigador}
 
 \section{Estructura de directorios}
 
-Descripción de los directorios y ficheros entregados.
+\subsection{General}
+
+Se entrega la carpeta CNN\_and\_Diabetic\_Retinopathy como directorio principal, que contiene todos los archivos del proyecto. A continuación se describen los ficheros y directorios entregados.
+
+Dentro de la carpeta principal, CNN\_and\_Diabetic\_Retinopathy, se encuentran los siguientes archivos y directorios:
+
+\begin{itemize}
+    \item \texttt{LICENSE}: se trata de un archivo de texto que contiene la informació acerca de la licencia que protege el proyecto. Se trata de una licencia Creative Commons 1.0 Universal.
+    \item \texttt{README.md}: archivo de \texttt{Markdown} que contiene el código que da aspecto al repositorio de GitHub. 
+    \item \texttt{Resultados.csv}: fichero CSV con los resultados de los experimentos realizados. Contiene 16 columnas que almacenan las características de los modelos empleados en cada entrenamiento y sus métricas de evaluación. Está formado por 5799 registros, cada uno de ellos correspondientes a un entrenamiento y evaluación con un conjunto de test (iPhone o Samsung). Algunos entrenamientos están duplicados.
+    \item \texttt{run\_conda\_env.sh}: archivo Bash que contiene las instrucciones para la configuración del entorno y la ejecución del \textit{script} de Python que se desee en el supercomputador de SCAYLE. En el anexo \textit{Estudio experimental} se describen los distintos parámetros de este fichero.
+    \item \texttt{Datos}: directorio en el que se almacenan parte de las imágenes empleadas en el entrenamiento de los modelos, así como los ficheros .csv y Excel que contienen las características de dichas imágenes. Debido a la gran cantidad de imágenes empleadas, no era viable incluirlas todas en el repositorio (estamos hablando de más de 80 GB), por lo que se han entregado todas las imágenes correspondientes a la cohorte local y un pequeño subgrupo de las imágenes de repositorios públicos. Además se proporcionan archivos .txt con la dirección de OneDrive en la que se pueden encontrar la totalidad de las imágenes. Para una mayor legibilidad de la estructura, la distribución interna del directorio \texttt{Datos} se realizará más adelante de manera individual.
+    \item \texttt{graficas}: directorio que almacena las gráficas generadas por cada modelo en el entrenamiento y validación. Al igual que en el caso de la carpeta \texttt{Datos}, no se entregan todas las gráficas debido al elevado número de imágenes (8295). En su lugar se entrega una pequeña representación y el enlace a la carpeta de OneDrive con todas las gráficas, ordenadas por arquitecturas.
+    \begin{itemize}
+        \item \texttt{graficas/Alqudah}: contiene una muestra de 10 gráficas (6 de entrenamiento y 4 de validación) en representación de las gráficas obtenidas durante el entrenamiento y validación de los modelos entrenados con la arquitectura Alqudah. El número total de gráficas correspondientes a esta arquitectura, que se pueden encontrar en OneDrive, es de 1877.
+        \item \texttt{graficas/Basica}: contiene todas las gráficas obtenidas durante el entrenamiento y validación de los modelos entrenados con la arquitectura Basica. Se trata de un total de 49 imágenes.
+        \item \texttt{graficas/Ghosh}: contiene una muestra de 10 gráficas (6 de entrenamiento y 4 de validación) en representación de las gráficas obtenidas durante el entrenamiento y validación de los modelos entrenados con la arquitectura Ghosh. El número total de gráficas correspondientes a esta arquitectura, que se pueden encontrar en OneDrive, es de 1877.
+        \item \texttt{graficas/Mobeen}: contiene una muestra de 10 gráficas (6 de entrenamiento y 4 de validación) en representación de las gráficas obtenidas durante el entrenamiento y validación de los modelos entrenados con la arquitectura Mobeen. El número total de gráficas correspondientes a esta arquitectura, que se pueden encontrar en OneDrive, es de 2246.
+        \item \texttt{graficas/Rajagopalan}: contiene una muestra de 10 gráficas (6 de entrenamiento y 4 de validación) en representación de las gráficas obtenidas durante el entrenamiento y validación de los modelos entrenados con la arquitectura Rajagopalan. El número total de gráficas correspondientes a esta arquitectura, que se pueden encontrar en OneDrive, es de 2246.
+        \item \texttt{graficas/Almacenamiento \_OneDrive.txt}: fichero de texto que contiene el enlace a la carpeta de OneDrive donde se encuentran todas las gráficas.
+    \end{itemize}
+    Todas las gráficas generadas y almacenadas se encuentran en formato .png. El código para la asignación de nombres de las gráficas es el siguiente: \textit{<campo 1>\_<campo 2>\_<campo 3>\_<campo 4>\_<campo 5>\_RGB\_<campo 6>\_<campo 7>\_<campo 8>.png}. Donde cada campo se corresponde con:
+    \begin{itemize}
+        \item Campo 1: representa el tipo de la gráfica y puede tomar el valor \textit{Entrenamiento} si la gráfica recoge las métricas de entrenamiento del modelo o \textit{Validacion} si recoge las de validación.
+        \item Campo 2: es el conjunto de datos empleados en el entrenamiento del modelo (Datasets, OCT, OCT\_S, OCT\_i, OCT\_Sinp, OCT\_iinp).
+        \item Campo 3: indica si la gráfica se corresponde a un entrenamiento con conjunto de validación y \textit{early stopping} (Sival) o sin él (Noval).
+        \item Campo 4: indica si el entrenamiento (o validación) se realizó empleando imágenes preprocesadas (Siprep) o no preprocesadas (Noprep)
+        \item Campo 5: indica si las imágenes que se usaron en la evaluación del modelo fueron impaintadas (Siinp) o no (Noinp). 
+        \item Campo 6: número de capas convolucionales del modelo al que se corresponde la gráfica.
+        \item Campo 7: número de filtros de las capas convolucionales del modelo correspondiente. Debido a que el nombre de un fichero no puede contener el caracter ``.'', este se sustituyó por la palabra ``punto''. 
+        \item Campo 8: número de neuronas de las capas densas del modelo entrenado. Debido a que el nombre de un fichero no puede contener el caracter ``/'', este se sustituyó por la palabra ``slash''.
+    \end{itemize}
+    \item \texttt{modelos}: contiene algunos de los modelos entrenados en formato .pth. Al igual que en los directorios anteriores, no se incluyen la totalidad de modelos. Esto se debe a que el peso del total de modelos superaba los 140 GB, por lo que era inviable incluirlos todos en los materiales entregados. En su lugar se entregan aquellos modelos mencionados en el capítulo \textit{Conclusiones}, en la sección \textit{Resumen de resultados} y un fichero .txt que contiene el enlace a un archivo comprimido .tgz en el que se pueden encontrar los 4247 modelos.
+    
+    Todos los modelos se encuentran en formato .pth y nombrados según el siguiente código: \textit{<campo 1>\_<campo 2>\_<campo 3>\_<campo 4>\_RGB\_<campo 5>\_<campo 6>\_<campo 7>.png}. Los campos se corresponden con:
+    \begin{itemize}
+        \item Campo 1: es el conjunto de datos empleados en el entrenamiento del modelo (Datasets, OCT, OCT\_S, OCT\_i, OCT\_Sinp, OCT\_iinp).
+        \item Campo 2: indica si la gráfica se corresponde a un entrenamiento con conjunto de validación y \textit{early stopping} (Sival) o sin él (Noval).
+        \item Campo 3: indica si el entrenamiento (o validación) se realizó empleando imágenes preprocesadas (Siprep) o no preprocesadas (Noprep)
+        \item Campo 4: indica si las imágenes que se usaron en la evaluación del modelo fueron impaintadas (Siinp) o no (Noinp). 
+        \item Campo 5: número de capas convolucionales del modelo al que se corresponde la gráfica.
+        \item Campo 6: número de filtros de las capas convolucionales del modelo correspondiente. Debido a que el nombre de un fichero no puede contener el caracter ``.'', este se sustituyó por la palabra ``punto''. 
+        \item Campo 7: número de neuronas de las capas densas del modelo entrenado. Debido a que el nombre de un fichero no puede contener el caracter ``/'', este se sustituyó por la palabra ``slash''.
+    \end{itemize}
+    La estructura de directorios dentro de la carpeta \texttt{modelos} se describe a continuación.
+    \begin{itemize}
+        \item \texttt{modelos/Alqudah}: contiene 3 modelos construidos según la arquitectura Alqudah y entrenados. Estos 3 modelos se han seleccionado por los siguientes motivos: \texttt{OCT iinp Sival Noprep Noinp RGB 4 0punto5 128slash64.pth} por ser el que obtuvo mejor valor de balanced accuracy con imáganes de iPhone, \texttt{OCT S Sival Siprep Noinp RGB 4 1punto0 128slash64.pth} por obtener el valor F y coeficiente Kappa de Cohen más alto con imágenes de iPhone y la distancia euclídea más pequeña con iPhone, y \texttt{OCT S Sival Noprep Siinp RGB 2 1punto0 0slash0.pth} por obtener el AUC más alto con imágenes de iPhone. En total se obtuvieron 961 modelos de Alqudah que pueden encontrarse en el archivo comprimido.
+        \item \texttt{modelos/Basica}: se encuentra vacía ya que ninguno de los modelos construidos con la arquitectura Basica obtuvieron los mejores resultados en alguna métrica. En total se obtuvieron 25 modelos de Basica que pueden encontrarse en el archivo comprimido.
+        \item \texttt{modelos/Ghosh}: contiene 2 modelos, construidos según la arquitectura Ghosh y seleccionados porque \texttt{OCT iinp Sival Siprep Siinp RGB 6 1punto0 512slash256slash128.pth} obtuvo el mejor AUC con Samsung y \texttt{Datasets Sival Siprep Siinp RGB 6 1punto0 128slash256slash512.pth} el mejor coeficiente Kappa de Cohen. En total se obtuvieron 961 modelos de Ghosh que pueden encontrarse en el archivo comprimido.
+        \item \texttt{modelos/Mobeen}: contiene 1 único modelo construido según la arquitectura Mobeen. Fue seleccionado por obtener el mejor balanced accuracy con imágenes de iPhone. En total se obtuvieron 1150 modelos de Mobeen que pueden encontrarse en el archivo comprimido.
+        \item \texttt{modelos/Rajagopalan}: contiene 2 modelos construidos según la arquitectura Rajagopalan. El modelo \texttt{OCT Noval Noprep Noinp RGB 3 0punto5 128slash256.pth} se seleccionó por obtener el valor más alto de F score con Samsung y el modelo \texttt{Datasets Sival Siprep Siinp RGB 5 1punto0 512slash256.pth} se seleccionó por obtener la mínima distancia euclídea con Samsung.En total se obtuvieron 1150 modelos de Rajagopalan que pueden encontrarse en el archivo comprimido.
+        \item \texttt{modelos/Direccion\_OneDrive.txt}: fichero de texto que contiene el enlace a la carpeta de OneDrive donde se encuentra el fichero modelos.tgz con todos los modelos comprimidos.
+    \end{itemize}
+    \item \texttt{modules}: carpeta que contiene el \textit{script} de Python \texttt{CNN\_utilities.py}. Este archivo contiene algunas funciones necesarias para la ejecución de los entrenamientos, tales como la obtención de gráficas de entrenamiento, el almacenamiento de estas gráficas o las funciones que permiten llevar a cabo el entrenamiento de un modelo (con o sin validación y estrategia \textit{early stopping}).
+    \item \texttt{PlantillaTFG-main}: este directorio contiene todos los archivos y carpetas necesarios para la creación de la memoria y anexos en LaTeX. Para una mayor legibilidad, la estructura interna de esta carpeta se explicará individualmente más adelante.
+    \item \texttt{results}: contiene los archivos de salida de cada entrenamiento. El formato de estos archivos es .out, son proporcionados por el supercomputador de SCAYLE y pueden ser abiertos con un editor de texto plano. En estos archivos se encuentra la información que se ha mandado imprimir por pantalla a lo largo del entrenamiento del modelo, por lo que contienen información muy importante como las características del modelo entrenado (número de capas convolucionales, filtros y neuronas), del conjunto de datos y las métricas obtenidas, así como las matrices de confusión de los modelos y el valor del accuracy, loss, val\_accuracy y val\_loss de cada época. A su vez se desglosa en distintos subdirectorios.
+    \begin{itemize}
+        \item \texttt{results/Alqudah}: contiene 29 archivos .out correspondientes a los distintos entrenamientos de modelos siguiendo la estructura Alqudah.
+        \item \texttt{results/Basica}: contiene 16 archivos .out correspondientes a los distintos entrenamientos de modelos siguiendo la estructura Basica.
+        \item \texttt{results/Ghosh}: contiene 29 archivos .out correspondientes a los distintos entrenamientos de modelos siguiendo la estructura Ghosh.
+        \item \texttt{results/Mobeen}: contiene 29 archivos .out correspondientes a los distintos entrenamientos de modelos siguiendo la estructura Mobeen.
+        \item \texttt{results/Rajagopalan}: contiene 29 archivos .out correspondientes a los distintos entrenamientos de modelos siguiendo la estructura Mobeen.
+    \end{itemize}
+    Para la construcción de los nombres de los archivos de salida no se ha empleado ningún código específico. Sin embargo, en todos los nombres se han incluido las etiquetas necesarias para poder identificar el entrenamiento al que corresponden. Estas etiquetas son: el nombre de la arquitectura empleada por los modelos, el conjunto de datos empleado, la etiqueta ``Val'' si se usó \textit{early stopping}, la etiqueta ``Proc'' si se emplearon datos preprocesados y la etiqueta ``Inp'' si se emplearon datos inpaintados para el test del modelo. 
+
+    En el caso de los archivos correspondientes a entrenamientos con el conjunto de datos OCT \textit{plus}, se incluirán dos etiquetas adicionales: la primera para indicar si los datos de entrenamiento están inpaintados (``I'') o no (``NI''), y la segunda para hacer referencia a los datos de test, inpaintados (``I'') o no (``NI'').
+    \item \texttt{scripts}: es el directorio que contiene todos los \textit{scripts} de Python empleados en el entrenamiento de los modelos. En total se encuentran 91 archivos. Para mayor sencillez de la memoria, la estructura de este directorio se explica más adelante de forma individual.
+\end{itemize}
+
+\subsection{\texttt{Datos}}
+
+Se trata del directorio que almacena las imágenes empleadas para el entrenamiento de los modelos. En su interior se pueden encontrar los siguientes directorios y archivos.
+
+\begin{itemize}
+    \item \texttt{Datos/Calidad\_Diagnóstico\_Fotos.xlsx}: archivo Excel que contiene las características de las imágenes de la cohorte local.
+    \item \texttt{Datos/Clasificación\_GitHub.py}: contiene el código de Python que permite clasificar las imágenes del repositorio DeepDRiD en las 5 carpetas correspondientes (G1-G5) según la etiqueta de cada imagen.
+    \item \texttt{Datos/Clasificación\_Kaggle.py}: contiene el código de Python que permite clasificar las imágenes del repositorio Kaggle en las 5 carpetas correspondientes (G1-G5) según la etiqueta de cada imagen.
+    \item \texttt{Datos/Clasificación\_Zenodo.py}: contiene el código de Python que permite mapear las imágenes del repositorio Zenodo de sus 7 carpetas originales a las 5 empleadas en el proyecto (G1-G5).
+    \item \texttt{Datos/Clasificación\_Rawdata.py}: contiene el código para llevar a cabo la depuración de las imágenes de la cohorte local, la selección de aquellas adecuadas y finalmente su organización en las distintas carpetas según su fuente (OCT, Samsung, iPhone) y su grado (G1-G5).
+    \item \texttt{Datos/Inpainting.py}: contiene el código para llevar a cabo el proceso de Inpainting de las imágenes de Samsung e iPhone y su distribución en la carpeta correspondiente.
+    \item \texttt{Datos/Preprocesamiento\_imagenes.py}: contiene el código que permite realizar el preprocesamiento de todas las imágenes y su distibución en las carpetas correspondientes.
+    \item \texttt{Datos/Raw Data}: es el directorio en el que se encuentran todas las imágenes de la cohorte local originales, sin depurar, y las carpetas que se descargaron de los distintos repositorios (sin las imágenes, pues estas se encuentran desplazadas a la carpeta de imágenes clasificadas). En su interior alberga los siguientes documentos.
+    \begin{itemize}
+        \item \texttt{Datos/Raw Data/FOTOS iPhone}: contiene en su interior las 171 imágenes originales de la cohorte local tomadas con el dispositivo iPhone.
+        \item \texttt{Datos/Raw Data/FOTOS OCT}: alberga las 176 imágenes originales de la cohorte local tomadas con el OCT.
+        \item \texttt{Datos/Raw Data/FOTOS Samsung}: contiene las 163 fotografías de fondo de ojo originales de la cohorte local tomadas con el dispositivo Samsung.
+        \item \texttt{Datos/Raw Data/GitHub}: contiene las carpetas originalmente descargadas del repositorio DeepDRiD, aunque sin las imágenes. Está formado a su vez por:
+        \begin{itemize}
+            \item \texttt{Datos/Raw Data/GitHub/evaluation}: carpeta en la que se encontraban las 400 imágenes de evaluación del repositorio (que fueron usadas para entrenamiento en nuestro proyecto) dentro de la carpeta \texttt{Images}. Además se encuentra el archivo \texttt{Challenge1\_labels.xlsx} que contiene las etiquetas de las imágenes.
+            \item \texttt{Datos/Raw Data/GitHub/training}: carpeta en la que se encontraban las 1200 imágenes de entrenamiento del repositorio dentro de la carpeta \texttt{Images}. Además se encuentra el archivo \texttt{regular-fundus-training.csv} que contiene las etiquetas de las imágenes.
+            \item \texttt{Datos/Raw Data/GitHub/validation}: carpeta en la que se encontraban las 400 imágenes de validación del repositorio (que fueron usadas para entrenamiento en nuestro proyecto) dentro de la carpeta \texttt{Images}. Además se encuentra el archivo \texttt{regular-fundus-validation.csv} que contiene las etiquetas de las imágenes.
+        \end{itemize}
+        \item \texttt{Datos/Raw Data/Kaggle}: contiene las 5 carpetas en las que se descargaron las imágenes de Kaggle (\texttt{train\_1, train\_2, train\_3, train\_4, train\_5}) aunque vacías, y el archivo \texttt{trainLabels.csv} con las etiquetas de las imágenes.
+        \item \texttt{Datos/Raw Data/Zenodo}: contiene las 7 carpetas en las que se encontraban inicialmente las imágenes del repositorio Zenodo, y que posteriormente fueron mapeadas a los 5 grados del proyecto, pero vacías.
+    \end{itemize}
+    \item \texttt{Datos/Classified Data}: alberga la estructura de directorios en que han sido clasificadas las imágenes (útil para comprender el acceso de los \textit{scripts} a los distintos datos), todas las imágenes correspondientes a la cohorte local (en sus versiones original, preprocesadas e inpaintadas) pero únicamente contiene una pequeña muestar de las imágenes de los repositorios. La estructura de directorios en su interior es la siguiente.
+    \begin{itemize}
+        \item \texttt{Datos/Classified Data/Images}: contiene las imágenes de entrenamiento sin preprocesar distribuidas en carpetas según su origen.
+        \begin{itemize}
+            \item \texttt{Datos/Classified Data/Images/Datasets}: almacena una muestra de las imágenes de entrenamiento obtenidas de los repositorios. Las imágenes se encuentran distribuidas en carpetas según el grado de la misma (G1-G5). Para cada grado se proporcionan 6 imágenes, 2 de cada repositorio (Kaggle, DeepDRiD y Zenodo).
+            \item \texttt{Datos/Classified Data/Images/iPhone}: contiene las imágenes de la cohorte local obtenidas con iPhone y sin preprocesar. A su vez se divide en 2 directorios:
+            \begin{itemize}
+                \item \texttt{Datos/Classified Data/Images/iPhone/Inpaint}: alberga las imágenes de iPhone no preprocesadas pero sí inpaintadas distribuidas en 5 carpetas (G1-G5) según su grado.
+                \item \texttt{Datos/Classified Data/Images/iPhone/No\_Inpaint}: alberga las imágenes de iPhone no preprocesadas ni inpaintadas distribuidas en 5 carpetas (G1-G5) según su grado.
+            \end{itemize}
+            \item \texttt{Datos/Classified Data/Images/OCT}: contiene las imágenes de OCT no preprocesadas distribuidas en 5 carpetas (G1-G5) según su grado.
+             \item \texttt{Datos/Classified Data/Images/Samsung}: contiene las imágenes de la cohorte local obtenidas con Samsung y sin preprocesar. A su vez se divide en 2 directorios:
+            \begin{itemize}
+                \item \texttt{Datos/Classified Data/Images/Samsung/Inpaint}: alberga las imágenes de Samsung no preprocesadas pero sí inpaintadas distribuidas en 5 carpetas (G1-G5) según su grado.
+                \item \texttt{Datos/Classified Data/Images/Samsung/No\_Inpaint}: alberga las imágenes de Samsung no preprocesadas ni inpaintadas distribuidas en 5 carpetas (G1-G5) según su grado.
+        \end{itemize}
+        \item \texttt{Datos/Classified Data/Images\_Proc}: contiene exactamente la misma distribución de carpetas y archivos que \texttt{Datos/Classified Data/Images} pero en esta carpeta se almacenan las imágenes preprocesadas.
+        \item \texttt{Datos/Classified Data/Almacenamiento\_OneDrive.txt}: archivo de texto en el que se encuentra en enlace a la carpeta de OneDrive que almacena todas las imágenes de los repositorios originales, sin preprocesar.
+    \end{itemize}
+\end{itemize}
+
+\subsection{\texttt{PlantillaTFG-main}}
+
+Esta carpeta almacena los archivos y directorios para la creación y forma de la memoria de LaTeX entregada en el proyecto. 
+
+\begin{itemize}
+    \item \texttt{PlantillaTFG-main/anexos.pdf}: archivo PDF que muestra la estructura de la plantilla de los anexos vacíos.
+    \item \texttt{PlantillaTFG-main/anexos.tex}: archivo que contiene el código de LaTeX para la creación de la memoria de documentación técnica y que aúna los distintos anexos almacenados en el directorio \texttt{tex}.
+    \item \texttt{PlantillaTFG-main/bibliografia.bib}: archivo que contiene todas las referencias usadas en la memoria del trabajo en formato BibTex.
+    \item \texttt{PlantillaTFG-main/bibliografiaAnexos.bib}: archivo que contiene todas las referencias usadas en los anexos del trabajo en formato BibTex.
+    \item \texttt{PlantillaTFG-main/memoria.pdf}: archivo PDF que muestra la estructura de la plantilla de la memoria vacía.
+    \item \texttt{PlantillaTFG-main/memoria.tex}: que contiene el código LaTeX para la creación y forma de la memoria del trabajo. Aúna todos los .tex correspondientes a los distintos capítulos de la memoria y que se encuentran en la carpeta \texttt{tex}.
+    \item \texttt{PlantillaTFG-main/README.md}: documento con el código Markdown que da forma al repositorio de \href{https://github.com/IngenieriaSaludBurgos/PlantillaTFG}{GitHub} en el que se encuentra colgada la plantilla del trabajo.
+    \item \texttt{PlantillaTFG-main/img}: carpeta con las imágenes empleadas en la memoria del proyecto y los anexos.
+    \item \texttt{PlantillaTFG-main/tex}: carpeta con los archivos .tex correspondientes a los distintos capítulos de la memoria y los apéndices de la documentación técnica.
+    \begin{itemize}
+        \item \texttt{PlantillaTFG-main/tex/1\_objetivos.tex}: documento con el código fuente para el capítulo Objetivos.
+        \item \texttt{PlantillaTFG-main/tex/2\_introduccion.tex}: documento con el código fuente para el capítulo Introducción.
+        \item \texttt{PlantillaTFG-main/tex/3\_metodologia.tex}: documento con el código fuente para el capítulo Metodología.
+        \item \texttt{PlantillaTFG-main/tex/4\_conclusiones.tex}: documento con el código fuente para el capítulo Conclusiones.
+        \item \texttt{PlantillaTFG-main/tex/5\_lineas\_futuras.tex}: documento con el código fuente para el capítulo Líneas Futuras.
+        \item \texttt{PlantillaTFG-main/tex/A\_planificacion.tex}: documento con el código fuente para el anexo Plan de Proyecto Software.
+        \item \texttt{PlantillaTFG-main/tex/B\_manual\_usuario.tex}: documento con el código fuente para el anexo Documentación de Usuario.
+        \item \texttt{PlantillaTFG-main/tex/C\_manual\_programador.tex}: documento con el código fuente para el anexo Manual del investigador.
+        \item \texttt{PlantillaTFG-main/tex/D\_datos.tex}: documento con el código fuente para el anexo Descripción de Adquisición y documentación de datos.
+        \item \texttt{PlantillaTFG-main/tex/E\_diseno.tex}: documento con el código fuente para el anexo Manual de especificación de diseño.
+        \item \texttt{PlantillaTFG-main/tex/F\_requisitos.tex}: documento con el código fuente para el anexo Especificación de requisitos.
+        \item \texttt{PlantillaTFG-main/tex/G\_experimental.tex}: documento con el código fuente para el anexo Estudio experimental.
+    \end{itemize}
+\end{itemize}
+
+\subsection{\texttt{scripts}}
+
+Carpeta con todos los archivos para el entrenamiento de los modelos.
+
+\begin{itemize}
+    \item \texttt{scripts/Analisis\_Resultados.py}: código de Python para el análisis de los resultados. Emplea código de PySpark para realizar el análisis.
+    \item \texttt{scripts/Analisis\_variaciones.py}: código de Python para la selección de los modelos que ofrecieron un mejor rendimiento con la cohorte local, con el objetivo de emplearlos en el entrenamiento con imágenes de los repositorios.
+    \item \texttt{scripts/Cálculo\_Baseline.py}: código de Python para calcular las métricas del \textit{baseline} de los retinólogos.
+    \item \texttt{scripts/Ejemplo\_CIFAR10.py}: contiene el código para llevar a cabo el entrenamiento de un modelo usando el conjunto de imágenes CIFAR-10 y su evaluación.
+    \item \texttt{scripts/Ejemplo\_MNIST.py}: contiene el código para llevar a cabo el entrenamiento de un modelo usando el conjunto de imágenes MNIST y su evaluación.
+    \item \texttt{scripts/no\_earlystopping}: contiene los archivos de código para entrenar los modelos sin estrategia \textit{early stopping}.
+    \begin{itemize}
+        \item \texttt{scripts/no\_earlystopping/Nuevas\_Arquitecturas\_Basicas.py}: contiene el código para el entrenamiento de las arquitecturas originales de Alqudah, Ghosh, Mobeen y Rajagopalan usando imágenes de OCT sin preprocesar.
+        \item \texttt{scripts/no\_earlystopping/Primera\_Red\_Basica.py}: contiene el código para el entrenamiento de la arquitectura Basica usando imágenes de OCT sin preprocesar.
+        \item \texttt{scripts/no\_earlystopping/Variaciones\_Alqudah.py}: código para el entrenamiento de las 45 variaciones propuestas sobre la arquitectura Alqudah usando imágenes de OCT sin preprocesar.
+        \item \texttt{scripts/no\_earlystopping/Variaciones\_Ghosh.py}: código para el entrenamiento de las 45 variaciones propuestas sobre la arquitectura Ghosh usando imágenes de OCT sin preprocesar.
+        \item \texttt{scripts/no\_earlystopping/Variaciones\_Mobeen.py}: código para el entrenamiento de las 54 variaciones propuestas sobre la arquitectura Mobeen usando imágenes de OCT sin preprocesar.
+        \item \texttt{scripts/no\_earlystopping/Variaciones\_Rajagopalan.py}: código para el entrenamiento de las 54 variaciones propuestas sobre la arquitectura Rajagopalan usando imágenes de OCT sin preprocesar.
+    \end{itemize}
+    \item \texttt{scripts/earlystopping}: contiene los archivos de código para entrenar los modelos con \textit{early stopping}. Estos archivos están agrupados según el conjunto de datos empleados para el entrenamiento.
+    \begin{itemize}
+        \item \texttt{scripts/earlystopping/Datasets}: contiene \textit{scripts} para el entrenamiento de distintos modelos usando el conjunto de datos Datasets preprocesado y sin preprocesar.
+        \item \texttt{scripts/earlystopping/OCT}: contiene \textit{scripts} para el entrenamiento de distintos modelos usando el conjunto de datos OCT preprocesado y sin preprocesar.
+        \item \texttt{scripts/earlystopping/OCTplus}: contiene \textit{scripts} para el entrenamiento de distintos modelos usando el conjunto de datos OCT \textit{plus} preprocesado y sin preprocesar, con y sin inpainting.
+    \end{itemize}
+    Para la construcción de los nombres de los archivos de salida no se ha empleado ningún código específico. Sin embargo, en todos los nombres se han incluido las etiquetas necesarias para poder identificar el entrenamiento al que corresponden. Estas etiquetas son: el nombre de la arquitectura empleada por los modelos, el conjunto de datos empleado, la etiqueta ``Val'' si se usó \textit{early stopping}, la etiqueta ``Proc'' si se emplearon datos preprocesados y la etiqueta ``Inp'' si se emplearon datos inpaintados para el test del modelo. 
+
+    En el caso de los archivos correspondientes a entrenamientos con el conjunto de datos OCT \textit{plus}, se incluirán dos etiquetas adicionales: la primera para indicar si los datos de entrenamiento están inpaintados (``I'') o no (``NI''), y la segunda para hacer referencia a los datos de test, inpaintados (``I'') o no (``NI'').
+\end{itemize}
 
 \section{Compilación, instalación y ejecución del proyecto}
 
-Como usar un modelo .pth preentrenado en PyTorch
+\subsection{Compilación}
 
-\section{Instrucciones para la modificación o mejora del proyecto.}
+Al tratarse de un proyecto desarrollado utilizando íntegramente el lenguaje de Python no se requiere proceso de compilación. Esto se debe a que Python es un lenguaje interpretado, es decir, el intérprete realiza la compilación en tiempo de ejecución de manera que el usuario no debe realizar este proceso de manera separada.
 
-Instrucciones y consejos para que el trabajo pueda ser mejorado en futuras ediciones.
+\subsection{Instalación}
+
+Debido a que en el proyecto no se ha llevado a cabo el desarrollo de ningún fichero ejecutable, realmente no hay una aplicación que instalar. Es por ello que en esta sección se va a describir cómo se puede llevar a cabo la instalación de las herramientas necesarias para la ejecución de un \textit{script} de los desarrollados en nuestro equipo.
+
+\subsubsection{Instalación de Python}
+
+La primera opción para ejecutar un \textit{script} en nuestro ordenador es tener instalado Python. Para ello se deberán seguir los siguientes pasos:
+
+\begin{enumerate}
+    \item Acceder a la web oficial de \href{https://www.python.org/}{Python} y seleccionar la opción ``Descargas'' del menú superior.
+    \item Seleccionar la versión que se desee instalar en el equipo (recomendable una versión posterior a la 3.9) pinchando en el enlace ``Downloads'' correspondiente.
+    \item Una vez en la página de la versión deseada, desplazarse hasta la parte inferior donde se encuentran los enlaces de descargas para cada sistema operativo. Seleccionar el que corresponda. 
+    \item Tras finalizar la descarga se mostrará un asistente de instalación. Se deberán seguir sus pasos, marcando todas las casillas en la ventana ``Optional Features''. El resto de ventanas se dejarán como vienen por defecto.
+    \item Cuando seleccionemos la opción ``Install'' se llevará a cabo la instalación de Python en nuestro equipo.
+\end{enumerate}
+
+Para poder instalar las bibliotecas necesarias para la ejecución del código usando la consola de comandos se puede emplear la siguiente instrucción \texttt{py -m pip install \textit{<nombre del paquete a instalar>}}. De esta manera podemos instalar los módulos que deseemos.
+
+\subsubsection{Instalación de Anaconda Prompt}
+
+Otra posible opción para la ejecución del código es emplear la herramienta Anaconda, mas concretamente Anaconda Prompt. Para llevar a cabo su instalación podemos seguir los siguientes pasos:
+
+\begin{enumerate}
+    \item Acceder al página web de \href{https://www.anaconda.com/}{Anaconda} y seleccionar la opción ``Download'' que se muestra en la pantalla principal.
+    \item Una vez realizada la descarga, ejecutar el archivo descargado.
+    \item Pinchar en ``Next''.
+    \item Aceptar los términos y condiciones.
+    \item Seleccionar la opción ``Just Me'' al realizar la instalación y pinchar en ``Next''.
+    \item Seleccionar el directorio de destino donde instalar Anaconda.
+    \item Seleccionar Anaconda como el intérprete de Python por defecto.
+    \item Seleccionar ``Install'' y seguir los pasos del asistente de ejecución hasta finalizar la descarga.
+\end{enumerate}
+
+Para instalar los paquetes necesarios para la ejecución del código puede abrirse el terminal de Anaconda (Anaconda Prompt) y escribir la siguiente instrucción \texttt{conda install package-\textit{<nombre del módulo a utilizar>}}. De esta manera se pueden cargar en el equipo las bibliotecas necesarias para el proyecto.
+
+\subsubsection{Carga de un modelo}
+
+Se va a explicar brevemente cómo se puede cargar un modelo ya entrenado y almacenado con la extensión .pth en un programa de Python para su utilización.
+
+Para ello debemos disponer de la dirección en que se encuentra almacenado el modelo, que de ahora en adelante llamaremos \texttt{direccion}.
+
+Para cargar el modelo es necesario tener instalado el paquete \texttt{torch} y definir un modelo que siga la arquitectura deseada, para lo cual se pueden usar las funciones \texttt{crea\_<arquitectura>} definidas en cada \textit{script}. Posteriormente, haciendo uso de la función \texttt{load()} y de la dirección del modelo, podemos cargar el estado de la CNN que se desee en el modelo recién creado y utilizarla para la predicción del grado de retinopatía diabética. La función \texttt{load()} internamente emplea el módulo \texttt{pickle} para la deserialización del archivo .pth.
+
+El código por tanto para la importación del modelo, y así poder emplearlo para la predicción, sería el siguiente:
+
+\begin{minted}{python}
+import torch
+
+#definición de la función crea_<arquitectura> para 
+#poder crear el modelo
+
+def crea_<nombre>(capas_conv, filtros, neuronas):
+    ...
+
+#creamos el modelo (que será una instancia de la
+#arquitectura correspondiente)
+modelo = crea_<nombre>(X, Y, Z)
+
+#asignamos los pesos previamente guardados
+modelo.load_state_dict(torch.load(direccion))
+\end{minted}
+
+\subsection{Ejecución}
+
+Para poder ejecutar cualquiera de los \textit{scripts} que se encuentran en la carpeta \texttt{scripts}, este debe ser movido a la carpeta principal para que se encuentre en el mismo nivel que el documento \texttt{Resultados.csv} y la carpeta \texttt{Datos}. Esto se debe al diseño del código, ya que inicialmente todos los \textit{scripts} se encontraban en la carpeta principal, pero posteriormente se creó la estructura de subdirectorios para un mayor orden de los materiales entregados.
+
+Una vez se encuentra el archivo deseado en la carpeta mencionada, puede ser ejecutado de dos maneras:
+
+\begin{itemize}
+    \item Empleando el Símbolo del Sistema, para lo cual se requiere tener instalado Python en el equipo, así como los paquetes necesarios para el proyecto. Para ello podemos o bien escribir la instrucción \texttt{python3 <nombre del archivo>.py} o bien, en versiones más actuales de Windows, se permite directamente el nombre del archivo \texttt{<nombre del archivo>.py}. Si se desean pasar parámetros al programa, como por ejemplo la dirección de la imagen que se desea emplear como input del modelo, estos pueden incluirse en la misma línea de instrucción, tras la extensión .py.
+    \item Utilizando Anaconda Prompt, previamente instalada, así como los paquetes necesarios. Para la ejecución del \textit{script} debemos escribir la instrucción \texttt{python <nombre del archivo>.py}. Si se desean pasar parámetros al programa, como por ejemplo la dirección de la imagen que se desea emplear como input del modelo, estos pueden incluirse en la misma línea de instrucción, tras la extensión .py.
+\end{itemize}
+
+En el interior del \textit{script} deberán encontrarse las instrucciones para la carga del modelo (ya descrito en la subsección anterior), así como el preprocesamiento e inpainting de la imagen y posteriormente el uso de la imagen preprocesada y con inpaint para generar la predicción.
+
+El primer paso sería llevar a cabo el inpaint de la imagen, para ello se puede hacer uso de la función \texttt{inpainting} definida en el archivo \texttt{Inpainting.py}. Se podría modificar la función para almacenar la imagen en el directorio que se desee, ya que al tratarse de una imagen sin diagnóstico no puede guardarse en la carpeta del grado correspondiente.
+
+Tras realizar el inpaint, se emplearía la función \texttt{procesa} definida en el documento \texttt{Preprocesamiento\_imagenes.py} para preprocesar la imagen. Al igual que en el caso del inpaint, podría modificarse esta función para almacenar la imagen preprocesada en el directorio que corresponda. 
+
+Por último, tras haber aplicado el inpaint y el preprocesamiento, se suministra al modelo previamente cargado la imagen reescalada, normalizada y convertida a tensor para que el modelo proporcione la salida. A continuación se plantea un posible \textit{pipeline} de cómo podría ser el script que permitiese al médico el diagnóstico a partir de una imagen.
+
+\begin{minted}{python}
+#primero cargamos las bibliotecas necesarias
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+from torchvision import transforms
+from PIL import Image
+import sys
+
+#definimos la función de inpaint y de preprocesamiento
+def inpainting(direccion):
+    modificación de la función inpaint
+    proporcionada en Inpainting.py
+    ...
+
+def procesa(direccion):
+    modificación de la función procesa
+    proporcionada en Preprocesamiento_imagenes.py
+    ...
+
+#obtenemos la direccion de la imagen pasada 
+#como parámetro en la ejecución del script
+direccion = sys.argv[1]
+
+#llevamos a cabo el inpaint y preprocesamiento
+inpainting(direccion)
+procesa(direccion)
+
+#creamos el modelo según la mejor arquitectura
+def crea_<nombre>(capas_conv, filtros, neuronas):
+    ...
+
+#creamos el modelo (que será una instancia de la
+#arquitectura correspondiente)
+modelo = crea_<nombre>(X, Y, Z)
+
+#asignamos los pesos previamente guardados
+modelo.load_state_dict(torch.load(direccion))
+
+#definimos la escala requerida por la arquitectura
+escala = kkk
+
+#y el transformador para procesar la imagen
+transform = transforms.Compose(
+    [transforms.ToTensor(), 
+     transforms.Normalize((0.5, 0.5, 0.5),
+     (0.5, 0.5, 0.5)),
+     transforms.Resize((escala, escala))])
+
+#cargamos la imagen y la transformamos
+imagen = Image.open(direccion).convert('RGB')
+imagen = transform(imagen)
+imagen = imagen.unsqueeze(0)
+
+#obtenemos la salida y el grado correspondiente
+salida = modelo(imagen)
+_, prediccion = torch.max(salida, 1)
+clases = ['G1','G2','G3','G4','G5']
+etiqueta_predicha = clases[prediccion]
+#mostramos el resultado por pantalla
+print('La etiqueta predicha es: ', etiqueta_predicha)
+\end{minted}
+
+De esta manera, mediante la implementación de este pseudocódigo podría llevarse a cabo el diagnóstico del paciente de manera rápida, pues el tiempo de ejecución es inferior al medio minuto por imagen.
+
+\section{Instrucciones para la modificación o mejora del proyecto}
+
+Como opción para futuras ampliaciones sería interesante desarrollar una aplicación para teléfono móvil que permitiese ejecutar este \textit{pipeline} directamente en el teléfono, sin necesidad de cargar la imagen en el ordenador. Además, una buena opción sería también crear una interfaz para hacer más sencilla la ejecución de la predicción.
+
+Sería interesante también, en caso de no desarrollar la aplicación de móvil, crear un ejecutable o una interfaz para el ordenador que permitiese al médico ejecutar el flujo de trabajo de manera más sencilla, sin necesidad de tener que usar el \textit{script} desde la terminal.
+
+Desde un punto de vista más técnico, la primera mejora sería la modificación de las funciones \texttt{inpainting} y \texttt{procesa}, de forma que permitieran llevar a cabo la transformación correspondiente de la imagen y el almacenamiento en una dirección deseada, que no tenga que seguir necesariamente la estructura de directorios de este proyecto. 
+
+También creo que sería de interés probar las líneas mencionadas en el capítulo \textit{Líneas de trabajo futuras}, tales como el uso de \textit{class weights}, el balanceo del \textit{batch}, uso de \textit{transfer learning} o \textit{data augmentation.}

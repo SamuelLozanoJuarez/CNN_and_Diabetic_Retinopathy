@@ -1,43 +1,36 @@
 \apendice{Especificación de Requisitos}
 
-Si procede.
-
-
 \section{Diagrama de casos de uso}
 
-\section{Explicación casos de uso.}
+En esta sección se incluye el diagrama de casos de uso, figura \ref{fig:casosuso}, suponiendo el desarrollo de una aplicación que permita almacenar modelos entrenados y emplearlos para obtener el diagnóstico a partir de una imagen.
 
-Se puede describir mediante el uso de tablas o mediante lenguaje natural.    
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{img/casos_uso.png}
+    \caption{Diagrama de casos de uso. Fuente propia.}
+    \label{fig:casosuso}
+\end{figure}
 
-Una muestra de cómo podría ser una tabla de casos de uso:
+En el sistema encontramos dos actores:
+\begin{itemize}
+    \item Médico: se corresponde con el médico de familia que desea realizar el diagnóstico de retinopatía diabética a partir de la imagen tomada al paciente.
+    \item Investigador: que es el profesional encargado del entrenamiento de los modelos para que estos puedan ser utilizados por el médico.
+\end{itemize}
 
-% Caso de Uso 1 -> Consultar Experimentos.
-\begin{table}[p]
-	\centering
-	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
-		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
-		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
-		\textbf{Acciones}             &
-		\begin{enumerate}
-			\def\labelenumi{\arabic{enumi}.}
-			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
-		\bottomrule
-	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
-\end{table}
+\section{Explicación casos de uso}
 
-\section{Prototipos de interfaz o interacción con el proyecto.}
+Podemos distinguir 3 casos de uso:
+\begin{itemize}
+    \item \textbf{Realización del diagnóstico} por parte del médico. El médico carga una imagen y obtiene por pantalla el grado correspondiente. Para ello son necesarias como precondiciones que el profesional sanitario haya cargado previamente una imagen de fondo de ojo y que seleccione el modelo que desea utilizar para la predicción.
+    
+    El programa preprocesa la imagen, aplica inpaint e introduce la imagen en el modelo y genera la predicción. Esta predicción se le muestra al médico por pantalla. Se produce una excepción si el médico no proporciona una imagen o no selecciona un modelo para la predicción. Tiene una importancia alta.
+    \item \textbf{Subida de imágenes de entrenamiento} por parte del investigador. El investigador sube a la base de datos del programa las imágenes que desee para el entrenamiento. No hay precondiciones.
+    
+    Debe cargar las imágenes en la carpeta de entrenamiento correspondiente, dependiendo del dispositivo con que se hayan adquirido. Como requisito estas imágenes deben estar organizadas en las carpetas según su grado. Se produce una excepción si los archivos subidos no son imágenes. Importancia baja.
+    \item \textbf{Entrenamiento de modelo} por parte del investigador. Se ejecuta el \textit{pipeline} que permite el manejo de las imágenes, entrenamiento y validación del modelo. Como precondición debe haber imágenes en la base de datos para el entrenamiento.
+    
+    Primero se realiza el inpainting de las imágenes, posteriormente su preprocesamiento y finalmente su utilización para el entrenamiento y validación del modelo. Una vez finalizado el proceso, el estado del modelo se almacena para poder ser usado por el médico. Se producen excepciones si no existen imágenes cargadas o si no se puede guardar el modelo. Importancia media.
+\end{itemize}
+
 
 

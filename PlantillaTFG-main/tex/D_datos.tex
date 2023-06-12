@@ -1,13 +1,164 @@
 \apendice{Descripción de adquisición y tratamiento de datos}
 
-Para el desarrollo del proyecto se emplearon datos clínicos provenientes de distintas fuentes. Una pequeña parte de las imágenes empleadas en el entrenamiento del modelo, así como información acerca de sus características, fueron proporcionadas por el Servicio de Oftalmología del Hospital Universitario de Burgos.
-
-El resto de imágenes, junto con sus características y etiquetas, fueron recavadas de distintos repositorios de uso público. Todas las imágenes empleadas fueron previamente anonimizadas, para preservar la privacidad de los pacientes.
-
 \section{Descripción formal de los datos}
 
-Tablas, imágenes, señales, secuencias de ADN…
-    
-\section{Descripción clínica de los datos.}
+Para el desarrollo del proyecto se emplearon dos conjuntos principales de datos. El primero de ellos correspondiente a una cohorte local y el segundo conjunto obtenido de distintos repositorios públicos.
 
-Descripción y explicaciones clínicas del significado o interpretación de los datos.
+\subsection{Cohorte local}
+
+En el capítulo \textit{Metodología} se proporciona una breve descripción de esta cohorte que a continuación se va a ampliar. Este conjunto de datos fue proporcionado por el Departamento de Ciencias de la Salud de la Universidad de Burgos, y las imágenes que lo conforman se corresponden a pacientes de las consultas de oftalmología de la sección de diabetes del Servicio de oftalmología del Hospital Universitario de Burgos.
+
+El conjunto está compuesto por un total de 510 imágenes y un archivo Excel: \textit{Calidad\_Diagnóstico\_Fotos.xlsx}.
+
+\subsubsection{Criterios de inclusión/exclusión}
+
+Se incluyeron en el estudio aquellos pacientes que quisieron participar voluntariamente tras firmar un consentimiento informado. Como criterios de inclusión se tuvo en cuenta que los pacientes fueran mayores de 18 años, diabéticos, sin contraindicación para la midriasis farmacológica con tropicamida o fenilefrina. 
+
+Se excluyeron aquellos pacientes que no cumplieran algún criterio de inclusión, aquellos que presentaran alteraciones corneales que impedían la obtención de imágenes del fondo de ojo y aquellos que no colaboraran en la exploración, así como los que presentaran una dilatación pupilar inferior a 5 mm tras aplicación de fármacos midriáticos, y aquellos con amaurosis del ojo a estudio.
+
+\subsubsection{Características de las imágenes}
+
+Se trata de 510 imágenes, agrupadas en 3 carpetas según el dispositivo con el que se adquirieron.
+
+Las imágenes contenidas en la carpeta \textbf{FOTOS OCT} fueron tomadas con el retinógrafo incorporado en el tomógrafo de coherencia óptica Triton de Topcon bajo midriasis farmacológica con fenilefrina y tropicamida. Se trata de 176 imágenes de 1960x1934 píxeles, con extensión .jpg y un peso de entre 120 y 208 KB. 
+
+Cada una de estas imágenes está nombrada según el siguiente código, lo que permite su identificación con las características contenidas en el archivo Excel: \textit{<núm. historia clínica del paciente>}T\textit{<caracter que identifica la lateralidad del ojo>}.jpg. El caracter que identifica la lateralidad puede ser \textit{D} si se trata del ojo derecho o \textit{I} si se trata del ojo izquierdo.
+
+Para la obtención de las imágenes contenidas en la carpeta \textbf{FOTOS iPhone} se realizó un vídeo de un minuto al paciente empleando un iPhone 11 Pro y el dispositivo Ret-iN CaM, para posteriormente tomar una captura del mejor fotograma de cada vídeo. Los pacientes también se encontraban bajo midriasis farmacológica con fenilefrina y tropicamida. Se trata de 171 imágenes cuadradas (con el mismo número de píxeles de alto que de ancho) de dimensiones variables entre 319 y 1600 píxeles, con extensión .PNG y con un peso entre 130 KB y 3,5 MB.
+
+Para la asignación del nombre se ha seguido el siguiente código: \textit{<núm. historia clínica del paciente>}E\textit{<caracter que identifica la lateralidad del ojo>}.PNG. El caracter que identifica la lateralidad puede ser \textit{D} si se trata del ojo derecho o \textit{I} si se trata del ojo izquierdo.
+
+Por último, las imágenes de la carpeta \textbf{FOTOS Samsung} fueron obtenidas siguiendo el mismo proceso que las de iPhone. Se tomó un vídeo de un minuto de duración a pacientes bajo midriasis farmacológica con fenilefrina y tropicamida y posteriormente se tomó una captura de pantalla del mejor fotograma. En esta carpeta se pueden encontrar 163 imágenes de 2176x2176 píxeles, con extensión .png y un tamaño entre 1,8 y 3,3 MB.
+
+Para la asignación del nombre se siguió un código similar a los casos anteriores: \textit{<núm. historia clínica del paciente>}G\textit{<caracter que identifica la lateralidad del ojo>}.png. El caracter que identifica la lateralidad puede ser \textit{D} si se trata del ojo derecho o \textit{I} si se trata del ojo izquierdo.
+
+A pesar de que existe un código para el nombramiento de las imágenes, al tratarse de conjuntos de datos reales, podemos encontrar nombres en las imágenes que no se corresponden con la forma esperada o que están incompletos.
+
+\subsubsection{Características del archivo Excel}
+
+El archivo \textit{Calidad\_Diagnóstico\_Fotos.xlsx} entregado contiene las características de las imágenes entregadas. Está formado por 968 filas, cada una de ellas correspondiente al diagnóstico de un retinólogo sobre una imagen, por lo que idealmente hay 2 filas para cada imagen y 12 para cada paciente (2 ojos x 3 dispositivos x 2 diagnósticos), y 25 columnas que se detallan en la siguiente sección.
+
+\subsection{Repositorios públicos}
+
+Como se ha mencionado en el capítulo \textit{Metodología}, debido a la escasez de imágenes de entrenamiento obtenidas, surgió la necesidad de buscar nuevas imágenes en repositorios públicos.
+
+\subsubsection{Kaggle}
+
+Se trata de una colección de 32926 fotografías de fondo de ojo\footnote{Disponibles en: \url{https://www.kaggle.com/competitions/diabetic-retinopathy-detection/overview}.} en color de alta resolución utilizadas para detectar RD. Incluye las imágenes de ambos ojos para cada paciente. El tamaño de las imágenes oscila entre los 10 KB y 2 MB y el formato en que se encuentran es .jpg y .jpeg.
+
+Las imágenes del conjunto de datos proceden de distintos modelos y tipos de cámaras, lo que puede afectar al aspecto visual de la izquierda frente a la derecha. Algunas imágenes se muestran como se vería la retina anatómicamente (mácula a la izquierda, nervio óptico a la derecha para el ojo derecho). Otras se muestran como se vería a través de la lente condensadora de un microscopio (es decir, invertidas, como se ve en un examen ocular típico en vivo). En general, hay dos formas de saber si una imagen está invertida \cite{datos:kaggle}:
+
+\begin{itemize}
+    \item Está invertida si la mácula (la pequeña zona central oscura) está ligeramente por encima de la línea media a través del nervio óptico. Si la mácula está más baja que la línea media del nervio óptico, no está invertida.
+    \item Si hay una muesca en el lateral de la imagen (cuadrado, triángulo o círculo), no está invertida. Si no hay muesca, está invertida.
+\end{itemize}
+
+Están clasificadas en los 5 grados de retinopatía diabética posibles, siendo la distribución entre grados la siguiente: 23610 de grado 1, 2443 de grado 2, 5292 de grado 3, 873 de grado 4 y 708 de grado 5.
+
+La descarga de estas imágenes se realiza en 5 carpetas ya que el tamaño de todas las imágenes juntas ronda los 35 GB. Además de las imágenes también se proporciona un fichero \textit{trainLabels.csv} que consta de 2 columnas y 35127 filas y contiene la etiqueta para cada clase.
+
+\subsubsection{DeepDRiD}
+
+Se trata de una colección de 2000 imágenes de retina\footnote{Disponibles en: \url{https://github.com/deepdrdoc/DeepDRiD}.} seleccionadas específicamente para la tarea de detección de RD obtenidas de pacientes diabéticos mediante diferentes modalidades y dispositivos de imagen \cite{datos:deepid}. El tamaño de las imágenes oscila entre 285 KB y 2,5 MB y tienen un formato .jpg.
+
+Las imágenes se encuentran clasificadas en los 5 posibles grados y se distribuyen de la siguiente manera: 914 de grado 1, 222 de grado 2, 398 de grado 3, 354 de grado 4 y 112 de grado 5.
+
+Las imágenes se descargan en 3 carpetas: una de evaluación, una de entrenamiento y otra validación, aunque en nuestro caso se van a emplear todas ellas para el entrenamiento de los modelos.
+
+Además se encuentran los ficheros \textit{regular-fundus-training.csv} y \textit{regular-fundus-validation.csv} que contienen las etiquetas de las imágenes de entrenamiento y validación y que están formados por 10 columnas y 1200 y 400 filas respectivamente. Y el archivo \textit{Challenge1\_labels.xlsx} que contiene las etiquetas de las imágenes de evaluación y está formado por 2 columnas y 400 filas.
+
+\subsubsection{Zenodo}
+
+Se trata de una colección de 1437 imágenes de fondo de ojo en color\footnote{Disponibles en: \url{https://zenodo.org/record/4891308##.ZEaOEHZByUn}.} recogidas por el Departamento de Oftalmología del Hospital de Clínicas de Paraguay. Las imágenes fueron adquiridas a través de la cámara Visucam 500 de la marca Zeiss y etiquetadas por oftalmólogos expertos en siete categorías diferentes \cite{datos:zenodo}. Estas etiquetas fueron mapeadas a las utilizadas en nuestra cohorte local española de la siguiente manera: la categoría 1 (sin signos de RD) se asigna al grado 1; la categoría 2 (NPDR leve) se asigna al grado 2; la categoría 3 (NPDR moderado) se asigna al grado 3; las categorías 4 y 5 (NPDR severa y muy severa) se asignan al grado 4; y las categorías 6 y 7 (PDR y PDR avanzado) se asignan al grado 5.
+
+Tras llevar a cabo el mapeo, la distribución de las imágenes entre los 5 grados es la siguiente: 711 de grado 1, 6 de grado 2, 110 de grado 3, 349 de grado 4 y 261 de grado 5.
+
+El tamaño del conjunto total de imágenes es de 1,5 GB. Las imágenes tienen un tamaño individual que oscila entre 223 KB y 2,6 MB, y se encuentran en formato .jpg.
+
+En este caso no se entrega ningún archivo .csv ni Excel con los datos, sino que la etiqueta se obtiene directamente de la carpeta en que se encuentra almacenada la imagen.
+
+\section{Descripción clínica de los datos}
+
+\subsection{Descripción de las imágenes}
+
+Todas las imágenes empleadas en el proyecto, tanto de la cohorte local como de los distintos repositorios. se corresponden con imágenes de fondo de ojo. En estas se puede observar la retina y sus distintas partes, señaladas en la figura \ref{fig:partes_retina}. Las imágenes pueden pertenecer al ojo derecho o izquierdo del paciente.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/partes_retina.png}
+    \caption{Fondo de ojo de un paciente sano. Señalado en color amarillo se puede observar el nervio óptico, en color verde la mácula, en rojo las venas y en azul las arterias. Dentro de la mácula se encuentra la fóvea, señalada en color blanco. Fuente propia.}
+    \label{fig:partes_retina}
+\end{figure}
+
+\subsection{Descripción de las tablas}
+
+A continuación se van a explicar los campos que componen los distintos ficheros que acompañan las imágenes.
+
+\subsubsection{Excel cohorte local}
+
+El archivo \textit{Calidad\_Diagnóstico\_Fotos.xlsx} contiene, como ya se ha mencionado, un registro para cada diagnóstico dado por un retinólogo para cada imagen. Los 25 campos que contiene se describen a continuación: 
+
+\begin{enumerate}[itemsep=0.25em]
+    \item \textit{NHC}: número entero que se corresponde con el número de historia clínica en el HUBU del paciente del que se obtuvo la imagen.
+    \item \textit{1 OCT 2 IPHONE 3 SAMSUNG}: etiqueta que representa el dispositivo con el que se obtuvo la imagen. Puede tomar tres posibles valores: 1 si la imagen fue obtenida utilizando un tomógrafo de coherencia óptica (OCT por sus siglas en inglés), 2 si la imagen fue obtenida utilizando el dispositivo Ret-iN CaM acoplado a un teléfono iPhone y 3 si la imagen fue obtenida utilizando el mismo dispositivo acoplado a un teléfono Samsung.
+    \item \textit{lateralidad 1 Dch 2 izq}: etiqueta que representa la lateralidad del ojo. Puede tomar dos posibles valores: 1 si la imagen se corresponde con el ojo derecho del paciente y 2 si la imagen se corresponde con el ojo izquierdo. 
+    \item \textit{Retinologo 1 y 2}: etiqueta acerca el oftalmólogo que ha proporcionado el diagnóstico sobre esa imagen. Si toma valor 1 el diagnóstico que aparece en ese registro fue emitido por el primer oftalmólogo, si toma valor 2 fue emitido por el segundo oftalmólogo.
+    \item \textit{CALIDAD GRAL IMAGEN}: evaluación de la calidad de la imagen. Puede tomar cinco valores: 1 si la calidad es no valorable, 2 si es deficiente, 3 si es media, 4 buena y 5 excelente.
+    \item \textit{CALIDAD REGIONAL PAPILA}: evaluación de la calidad de la imagen en la región de la papila. Esta región es la correspondiente a la zona del nervio óptico. Esta zona se corresponde con los vasos sanguíneos ubicados en la parte superior del fondo de ojo. La calidad se valora en 3 niveles del 1 al 3, siendo 1 la mejor calidad y 3 la peor.
+    \item \textit{CALIDAD REGIONAL MÁCULA}: evaluación de la calidad de la imagen en la región de la mácula. La calidad se valora en 3 niveles del 1 al 3, siendo 1 la mejor calidad y 3 la peor.
+    \item \textit{CALIDAD REGIONAL ARCADA TEMPORAL SUP}: evaluación de la calidad de la imagen en la región de arcada temporal superior. Esta zona se corresponde con los vasos sanguíneos ubicados en la parte superior del fondo de ojo. La calidad se valora en 3 niveles del 1 al 3, siendo 1 la mejor calidad y 3 la peor.
+    \item \textit{CALIDAD REGIONAL ARCADA TEMPORAL INF}: evaluación de la calidad de la imagen en la región de arcada temporal superior. Esta zona se corresponde con los vasos sanguíneos ubicados en la parte inferior del fondo de ojo. La calidad se valora en 3 niveles del 1 al 3, siendo 1 la mejor calidad y 3 la peor.
+    \item \textit{GRADO RETINOPATÍA DIABÉTICA}: diagnóstico proporcionado por el oftalmólogo. Si toma valor 1 la imagen es etiquetada como sana, 2 se corresponde con NPDR leve, 3 con NPDR moderada, 4 con NPDR severa y 5 se corresponde con PDR.
+    \item \textit{Si Grado 2 - Nº de microaneurismas}: número entero que representa el número de microaneurismas observados por el retinólogo en la imagen en caso de que el grado de retinopatía sea de nivel 2.
+    \item \textit{Si Grado 3 - Nº de microaneurismas}: número entero que representa el número de microaneurismas observados por el retinólogo en la imagen en caso de que el grado de retinopatía sea de nivel 3.
+    \item \textit{Si Grado 3 - Nº de hemorragias}: número entero que representa el número de hemorragias observadas por el retinólogo en la imagen en caso de que el grado de retinopatía sea de nivel 3.
+    \item \textit{Si Grado 3 - Nº de exudados}: número entero que representa el número de exudados observados por el retinólogo en la imagen en caso de que el grado de retinopatía sea de nivel 3.
+    \item \textit{Si Grado 3 - Nº de manchas algodonosas}: número entero que representa el número de manchas algodonosas observadas por el retinólogo en la imagen en caso de que el grado de retinopatía sea de nivel 3.
+    \item \textit{Si Grado 4 - >20 hemorragias intrarretinianas por cuadrante}: campo binario (valor 1 o no valor) que indica si hay más de 20 hemorragias intrarretinianas por cuadrante en caso de que el grado de retinopatía de la imagen sea 4.
+    \item \textit{Si Grado 4 - Rosarios venosos en 2 cuadrantes}: campo binario (valor 1 o no valor) que indica si hay presencia de rosarios venosos en 2 cuadrantes en caso de que el grado de retinopatía de la imagen sea 4.
+    \item \textit{Si Grado 4 - IRMA en 1 cuadrante}: campo binario (valor 1 o no valor) que indica si se observa IRMA (IntraRetinal Microvascular Abnormality) en algún cuadrante en caso de que el grado de retinopatía de la imagen sea 4.
+     \item \textit{Si Grado 5 - >20 hemorragias intrarretinianas por cuadrante}: campo binario (valor 1 o no valor) que indica si hay más de 20 hemorragias intrarretinianas por cuadrante en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Si Grado 5 - Rosarios venosos en 2 cuadrantes}: campo binario (valor 1 o no valor) que indica si hay presencia de rosarios venosos en 2 cuadrantes en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Si Grado 5 - IRMA en 1 cuadrante}: campo binario (valor 1 o no valor) que indica si se observa IRMA (IntraRetinal Microvascular Abnormality) en algún cuadrante en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Si Grado 5 - Neovasos}: campo binario (valor 1 o no valor) que indica si se observa la aparición de neovasos (nuevos capilares) en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Si Grado 5 - Hemorragia vítrea}: campo binario (valor 1 o no valor) que indica si se observa alguna hemorragia vítrea en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Si Grado 5 - Hemorragia pre-retiniana}: campo binario (valor 1 o no valor) que indica si se observa alguna hemorragia pre-retiniana en caso de que el grado de retinopatía de la imagen sea 5.
+    \item \textit{Clasificación EMD}: variable categórica que representa el nivel de edema macular diabético del paciente. El edema macular diabético es un engrosamiento de la retina como consecuencia de la acumulación de líquido. Puede estar presente con cualquier nivel de retinopatía diabética \cite{datos:EMD}. Puede tomas 3 posibles valores: 1 correspondiente a la ausencia de edema, 2 edema no central y 3 edema central.
+\end{enumerate}
+
+\subsubsection{Archivo .csv Kaggle}
+
+En este documento se almacenan las etiquetas correspondientes a cada imagen. Está formado por 2 columnas:
+
+\begin{enumerate}
+    \item \textit{image}: columna de tipo texto que contiene el nombre de la imagen.
+    \item \textit{level}: valor entero que representa el grado de retinopatía diabética de la imagen a la que corresponde. Los grados están clasificados de 0 a 4, por lo que hay que mapearlos a la clasificación de grados 1 a 5 que estamos empleando en el proyecto.
+\end{enumerate}
+
+\subsubsection{Archivos DeepDRiD}
+
+Se entregan 2 archivos formato CSV y un archivo Excel.
+
+El primer archivo .csv, \textit{regular-fundus-training.csv}, contiene información acerca de las imágenes proporcionadas en la carpeta \textit{training}. El archivo \textit{regular-fundus-validation.csv} contiene las características de las imágenes proporcionadas en la carpeta \textit{validation}. La estructura de ambos documentos es la misma y está compuesta por 10 columnas:
+
+\begin{enumerate}
+    \item \textit{patient\_id}: número entero que actúa como identificador del paciente.
+    \item \textit{image\_id}: cadena de texto que identifica inequívocamente a cada imagen. Está compuesta por el ID del paciente, la lateralidad del ojo (\textit{l} para \textit{left} y \textit{r} para \textit{right}) y el valor 1 o 2.
+    \item \textit{image\_path}: cadena de texto que contiene la ruta hasta la imagen.
+    \item \textit{Overall quality}: variable binaria que indica si la calidad de la imagen es adecuada para el diagnóstico (1) o si no es apropiada (0).
+    \item \textit{left\_eye\_DR\_Level}: variable categórica que representa el grado de retinopatía diabética del ojo izquierdo. Puede tomar 6 valores: del 0 al 4 se corresponden con los grados 1-5 de nuestro proyecto, y el valor 5 está reservado para aquellas imágenes con calidad insuficiente. Si la imagen es del ojo derecho este campo permanece vacío.
+    \item \textit{right\_eye\_DR\_Level}:  variable categórica que representa el grado de retinopatía diabética del ojo derecho. Puede tomar 6 valores: del 0 al 4 se corresponden con los grados 1-5 de nuestro proyecto, y el valor 5 está reservado para aquellas imágenes con calidad insuficiente. Si la imagen es del ojo izquierdo este campo permanece vacío.
+    \item \textit{patient\_DR\_Level}: variable categórica que contiene el grado de retinopatía diabética del paciente, considerando el grado de cada ojo. Puede tomar 6 valores: del 0 al 4 se corresponden con los grados 1-5 empleados en el proyecto. El valor 5 está reservado para aquellos pacientes en los que la calidad de ambos ojos sea insuficiente para poder realizar el diagnóstico. En ninguno de los conjuntos (\textit{training, validation}) se encontró ninguna imagen con un valor 5 en este campo.
+    \item \textit{Clarity}: variable categórica que representa la claridad de la imagen que pueden ser identificadas en la imagen. Puede tomar 5 valores: 1 si únicamente se puede identificar el arco vascular (los vasos sanguíneos), 4 si se pueden identificar además un número pequeño de lesiones, 6 si se pueden identificar algunas lesiones, 8 para la mayoría de lesiones y 10 si se pueden identificar todas las lesiones.
+    \item \textit{Field definition}: se trata de una variable categórica que representa las estructuras que se pueden observar en la imagen. Toma valor 1 si no incluye el disco óptico y la mácula, 4 si únicamente se observa uno de los dos, 6 si se pueden observar los dos, 8 si la mácula y el disco óptico se encuentran a menos de 2 PD (\textit{Pupillary Distance}) del centro y 10 si se encuentran a menos de 1 PD.
+    \item \textit{Artifact}: variable categórica que puntúa la presencia de artefactos extraños en la imagen, de ruido. Puede tomar valor 0 si no hay ruido, 1 si aparecen manchas fuera del arco vascular y tienen un diámetro inferior a 1/4 de la imagen, 4 si no afectan a la zona de la mácula y tienen un diámetro inferior a 1/4 de la imagen, 6 si cubre más de 1/4 pero menos de la mitad de la imagen, 8 si cubre más de la mitad de la imagen pero no ella completa y 10 si cubre la totalidad de la imagen.
+\end{enumerate}
+
+Además de estos estos dos documentos, también se encuentra el archivo \textit{Challenge1\_labels.xlsx} que contiene las etiquetas de las imágenes almacenadas en la carpeta \textit{evaluation}.
+
+Este Excel contiene únicamente dos campos:
+
+\begin{enumerate}
+    \item \textit{image\_id}: es una cadena de texto con el identificador inequívoco de la imagen.
+    \item \textit{DR\_Levels}: variable categórica que representa el grado de retinopatía diabética. Toma los valores del 0 al 4 y se corresponden con los grados 1-5 de nuestro proyecto.
+\end{enumerate}

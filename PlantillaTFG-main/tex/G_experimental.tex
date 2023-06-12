@@ -1,33 +1,530 @@
 \apendice{Estudio experimental}
 
+\section{Cuaderno de trabajo}
+
+En esta sección se va a describir el desarrollo del proyecto en orden cronológico, prestando especial atención a los problemas que pudieron surgir en este desarrollo y cómo fueron abordados.
+
+\subsection{Iniciación en el proyecto}
+
+La primera etapa realizada consistió en la comprensión de los materiales que se iban a emplear en el desarrollo del trabajo: las redes neuronales convolucionales (CNN) desarrolladas con PyTorch y las imágenes de retinopatía diabética.
+
+Así pues las primeras tareas consistieron en la creación de CNNs sencillas, siguiendo las instrucciones que se incluyen en la propia documentación de PyTorch y algunos foros. En concreto las primeras dos redes desarrolladas se crearon siguiendo los pasos descritos en \url{https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html} (documentación propia de PyTorch usando el conjunto de datos CIFAR-10) y en el foro \href{https://medium.com/@nutanbhogendrasharma/pytorch-convolutional-neural-network-with-mnist-dataset-4e8a4265e118}{Medium} usando el conjunto de datos MNIST.
+
+Paralelamente a la creación de estos modelos se recibieron las primeras imágenes correspondientes a fondos de ojo. Se realizó la depuración de estas imágenes y su clasificación, como ya ha sido explicada en la memoria del proyecto.
+
+Se decidió organizar las imágenes en distintas carpetas según su grado ya que esta distribución permitía al mismo tiempo etiquetar dichas imágenes mediante el uso de la estructura \texttt{DataLoader} del módulo \texttt{torch.utils.data}. Esto se debe a que esta función toma como etiqueta de la imagen el nombre de la carpeta en que se encuentra almacenada.
+
+Una vez clasificadas y depuradas las imágenes se llevó a cabo la construcción de un primer modelo de CNN orientado al análisis de imágenes de retinopatía diabética. La construcción del modelo estuvo basada en la documentación disponible en \url{https://pytorch.org/tutorials/beginner/introyt/introyt1_tutorial.html##pytorch-models}. Así se generó un primer modelo para la resolución del problema planteado.
+
+Sin embargo, las métricas ofrecidas por este modelo durante su evaluación no cumplían los objetivos deseados. En la evaluación con iPhone el valor de balanced accuracy obtenido fue de $0.191$, el valor F fue de $0.233$, el AUC de $0.499$ y el coeficiente Kappa de Cohen de $0.012$. En la evaluación con Samsung los resultados no fueron mucho mejores: balanced accuracy de $0.258$, valor F de $0.276$, un AUC de $0.587$ y un coeficiente Kappa de Cohen de $0.0286$.
+
+\subsection{Nuevas arquitecturas}
+
+Debido a los resultados obtenidos con la primera arquitectura básica se decidió buscar nuevas arquitecturas que hubiesen demostrado un buen rendimiento en problemas de análisis de fondo de ojo. Así es como se obtuvieron las arquitecturas de Alqudah, Ghosh, Mobeen y Rajagopalan. A continuación se describen las características de las capas que componen de cada una de estas arquitecturas.
+
+\textbf{Alqudah}. Recibe una imagen de entrada de dimensiones $256$x$256$ \cite{CNNarch:Alqudah}.
+\begin{itemize}
+    \item Capa convolucional de 32 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de batch normalization.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 16 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de batch normalization.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2. 
+    \item Capa convolucional de 8 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de batch normalization.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2. 
+    \item Capa convolucional de 16 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de batch normalization.
+    \item Capa de activación de tipo ReLU.
+     \item Capa densa conformada por 5 neuronas. Es la capa de salida de la arquitectura.
+\end{itemize}
+
+\textbf{Ghosh}. Recibe imágenes de $512$x$512$ \cite{CNNarch:Ghosh}.
+\begin{itemize}
+    \item Capa convolucional de 32 filtros, con un \textit{kernel} de dimensiones 7x7, un \textit{stride} de 2 y un \textit{padding} de 2.
+    \item Capa de activación PReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2. 
+    \item Capa convolucional de 32 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 32 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 64 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 64 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 128 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 128 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 128 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 128 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 1.
+    \item Capa de activación PReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa de regularización de tipo Dropout.
+    \item Capa de activación Maxout.
+    \item Capa de regularización de tipo Dropout.
+    \item Capa de activación Maxout.
+    \item Capa de regularización de tipo Dropout.
+    \item Capa densa formada por 10 neuronas.
+    \item Capa densa formada por 5 neuronas. Es la capa de salida.
+\end{itemize}
+
+\textbf{Mobeen}. Recibe imágenes de dimensiones $512$x$512$ \cite{CNNarch:Mobeen}.
+\begin{itemize}
+    \item Capa convolucional de 4 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 2.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 16 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y un \textit{padding} de 2.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa densa de 100 neuronas.
+    \item Capa de activación de tipo ReLU.
+    \item Capa densa de 50 neuronas.
+    \item Capa de activación de tipo ReLU.
+    \item Capa densa de 5 neuronas. Es la capa de salida.
+\end{itemize}
+
+\textbf{Rajagopalan}. Recibe como entrada imágenes de dimensiones $224$x$224$ \cite{CNNarch:Rajagopalan}.
+\begin{itemize}
+    \item Capa convolucional de 64 filtros, con un \textit{kernel} de dimensiones 9x9, un \textit{stride} de 4 y sin \textit{padding}.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 128 filtros, con un \textit{kernel} de dimensiones 7x7, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de activación de tipo ReLU.
+    \item Capa de Maxpooling con un \textit{kernel} de dimensiones 2x2 y un \textit{stride} de 2.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 5x5, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de activación de tipo ReLU.
+    \item Capa convolucional de 384 filtros, con un \textit{kernel} de dimensiones 3x3, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de activación de tipo ReLU.
+    \item Capa convolucional de 256 filtros, con un \textit{kernel} de dimensiones 5x5, un \textit{stride} de 1 y sin \textit{padding}.
+    \item Capa de activación de tipo ReLU.
+    \item Capa densa de 512 neuronas.
+    \item Capa de activación de tipo ReLU.
+    \item Capa densa de 256 neuronas.
+    \item Capa de activación de tipo ReLU.
+    \item Capa densa de 5 neuronas. Es la capa de salida.
+\end{itemize}
+
+Las capas de salida de las arquitecturas empleadas son de tipo \textit{Linear} y no de tipo \textit{Softmax}. La diferencia entre ambas es la función de transferencia de las neuronas que las conforman. En las capas lineales, la función de activación es lineal, mientras que en las capas de tipo Softmax la función es de tipo logarítmica. La función de \textit{loss} empleada en el entrenamiento (\textit{CrossEntropy}) puede recibir tanto la salida de una capa lineal como Softmax. Se decidió emplear capas de salida lineales por similitud con los ejemplos de la documentación de PyTorch.
+
+Sin embargo, para llevar a cabo la evaluación de las arquitecturas se incluye la capa Softmax ya que ayuda a interpretar los resultados de salida al convertirla en probabilidad de pertenencia.
+
+Estas arquitecturas definidas se entrenaron empleando el conjunto de datos OCT sin preprocesar y se evaluaron con Samsung e iPhone sin inpaint. Los resultados obtenidos tampoco fueron los deseados, pues para iPhone ninguna arquitectura obtuvo un balanced accuracy superior a $0.224$, un valor F superior a $0.316$, un AUC superior a $0.494$ ni un coeficiente Kappa de más de $0.0137$. Con respecto a Samsung, los modelos no consiguieron superar un balanced accuracy de $0.247$, un valor F de $0.339$, un AUC de $0.527$ ni un coeficiente Kappa de $0.024$.
+
+\subsection{Variaciones de las arquitecturas}
+
+Debido a que los resultados obtenidos no fueron satisfactorios, se decidió experimentar con nuevas arquitecturas, realizando variaciones sobre las descritas anteriormente. Para llevar a cabo estas variaciones se crearon 4 funciones que permiten crear un modelo siguiendo una determinada arquitectura (Alqudah, Ghosh, Mobeen o Rajagopalan) indicando el número de capas convolucionales, filtros y neuronas.
+
+Estas funciones fueron nombradas de la siguiente manera: \texttt{crea\_Alqudah, crea\_Ghosh, crea\_Mobeen} y \texttt{crea\_Rajagopalan}. Y en su funcionamiento incluyen el código necesario para la creación de dichos modelos, calculando algunos aspectos como el número de características que deberá recibir la primera capa densa. Para este cálculo se tuvieron en cuenta el número de características tras una capa convolucional \cite{cnn:biblia_deeplearning}, 
+
+$$features = num\_filtros*ancho*alto$$
+
+y el alto y ancho de una imagen tras ser procesada por una capa convolucional o una capa de maxpooling \cite{deepl:compvision}
+
+$$output\_size = (input\_size - 2*padding-kernel\_size)/stride + 1$$
+
+Las distintas combinaciones de tamaños empleados en la construcción de las variaciones se especifica en la siguiente sección.
+
+Para implementar estas variaciones se incluyó la estrategia \textit{early stopping}, que se empleó a partir de este momento en todos los entrenamientos.
+
+Debido al coste computacional que suponía ejecutar todas estas variaciones, se empleó a partir de este momento el Centro de Supercomputación de Castilla y León (SCAYLE).
+
+\subsection{Nuevos conjuntos de datos}
+
+Tras el entrenamiento empleando estas nuevas variaciones, y no obtener resultados positivos, se optó por buscar nuevos conjuntos de datos de repositorios públicos. Se encontraron y emplearon los ya descritos repositorios de Kaggle, DeepDRiD y Zenodo. Asociado al manejo de estos datos y al entrenamiento de los modelos con ellos surgieron dos problemas: la carga de dichas imágenes en SCAYLE y la selección de los mejores modelos para su entrenamiento.
+
+\subsubsection{Carga de las imágenes en SCAYLE}
+
+Hasta el momento se había estado empleando la aplicación WinSCP para la transferencia de datos desde el equipo local hasta el servidor de SCAYLE. Sin embargo, esta herramienta no es la más adecuada para la transferencia de grandes cantidades de datos. Es aquí donde surge el problema al tratar de cargar las más de 35000 imágenes a SCAYLE. Empleando WinSCP, el tiempo aproximado de espera era de 100 horas, unos 4 días.
+
+Es por ello que se consultó al equipo de SCAYLE y nos ofrecieron la alternativa de \texttt{rsync}. Se trata de una instrucción propia de Linux para transferencias más avanzadas. Es por ello que para poder ejecutarla, y lograr la carga de las imágenes en Caléndula (el supercomputador de SCAYLE) se deben seguir los siguientes pasos:
+
+\begin{enumerate}
+    \item Abrir el Símbolo del Sistema de Windows e instalar wsl (Windows Subsystem for Linux) mediante la siguiente instrucción: \texttt{wsl --install}. Esto instala un entorno Linux (concretamente Ubuntu) en nuestro equipo.
+    \item Ejecutamos la PowerShell como administrador y escribimos la siguiente instrucción: \texttt{wsl} para activar este entorno virtual.
+    \item Una vez activado el entorno ya podemos realizar la transferencia de los datos. Para ello escribimos la instrucción \texttt{rsync -avzh -e ``ssh -p 2222'' <dirección de los datos a enviar> <nombre usuario>@calendula.scayle.es:/home/<nombre grupo>/<nombre usuario>}. Esta instrucción nos la proporciona SCAYLE \cite{rsync}.
+    \item Nos pedirá la contraseña de nuestro usuario de Caléndula, así que la introducimos y comienza la transferencia.
+\end{enumerate}
+
+Una vez realizado este proceso, y en un tiempo de aproximadamente 7 horas, ya se habían cargado todos los datos.
+
+Existe la posibilidad de que se produzca un error al cargar los datos, porque se introduzca mal algún campo o porque se escriba mal la sintaxis. En ese caso, al reintentar la ejecución de la instrucción nos dará error ya que se almacenará una segunda \textit{key} en el fichero .ssh del directorio remoto \textit{home} y observaremos un error como el mostrado en la figura \ref{fig:error_scayle}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/error_scayle.png}
+    \caption{Error producido por la duplicación de la \textit{key} en la transmisión de datos usando \texttt{rsync}. Fuente propia.}
+    \label{fig:error_scayle}
+\end{figure}
+
+Para solventar este problema basta con debemos borrar la \textit{key} problemática (la fila problemática se indica en la línea \texttt{Offending RSA  key in /home/samuel/.ssh/known\_hosts: 2}, en este caso la segunda fila es la problemática y la que debe eliminarse. En el propio mensaje de error se nos indica cómo eliminar este valor problemático, mediante la instrucción \texttt{ssh -keygen -f ``/home/samuel/.ssh/known\_hosts'' -R ``[calendula.scayle.es]:2222''}.
+
+\subsubsection{Selección de modelos}
+
+Debido al tamaño del conjunto de datos obtenidos de los repositorios, no se puede llevar a cabo el entrenamiento de todas las variaciones para cada arquitectura. Es por eso que se decidió escoger 4 modelos de cada arquitectura para ser entrenados con este conjunto de datos. Tal y como se ha descrito en la sección \textit{Aspectos relevantes} del capítulo \textit{Conclusiones}, para llevar a cabo esta selección se calculó la distancia euclídea entre las métricas de cada modelo entrenado usando OCT y el \textit{baseline}.
+
+La distancia euclídea es una métrica que permite medir la distancia entre dos puntos en un espacio multidimensional. Se calcula según la siguiente ecuación:
+
+$$\text{distancia euclídea} = \sqrt{{\sum_{i=1}^{n} (x_{2i} - x_{1i})^2}}$$
+
+Que en nuestro caso consiste básicamente en calcular la diferencia entre el valor de la métrica del \textit{baseline} y del modelo a estudiar, posteriormente sumar todas las diferencias elevadas al cuadrado y calcular la raíz cuadrada \cite{datasets:euclidea}.
+
+De esta manera se seleccionaron las 3 variaciones de cada arquitectura que menor valor de distancia euclídea obtuvieron. La cuarta variación fue escogida manualmente, seleccionando de entre todas aquella que representase la red más compleja, más profunda y con mayor número de capas. Se tomó esta decisión ya que el rendimiento de un modelo depende del conjunto de datos con que se entrene, así una red más simple puede ofrecer buen desempeño con un conjunto pequeño pero ser insuficiente para un mayor número de imágenes. Es por ello que, tal y como se sugiere en \cite{datasets:very_deep, datasets:large_deep}, se seleccionó de cada arquitectura aquella variación más profunda.
+
+Las 4 variaciones escogidas para cada arquitectura finalmente fueron (las 3 primeras se corresponden con las que menor distancia euclídea obtuvieron y la cuarta con la que posee una combinación más profunda):
+
+\textbf{Alqudah}.
+\begin{enumerate}
+    \item Número de capas convolucionales: 2. Número de filtros por capa convolucional: 2.0. Número de neuronas en las capas densas: 0/0.
+    \item Número de capas convolucionales: 2. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 0/0.
+    \item Número de capas convolucionales: 2. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 512/256.
+    \item Número de capas convolucionales: 6. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 128/64.
+\end{enumerate}
+
+\textbf{Ghosh}.
+\begin{enumerate}
+    \item Número de capas convolucionales: 9. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 64/256/128.
+    \item Número de capas convolucionales: 6. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 128/256/512.
+    \item Número de capas convolucionales: 6. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 256/1024/512.
+    \item Número de capas convolucionales: 13. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 256/1024/512.
+\end{enumerate}
+
+\textbf{Mobeen}.
+\begin{enumerate}
+    \item Número de capas convolucionales: 3. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 100/50.
+    \item Número de capas convolucionales: 3. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 64/128.
+    \item Número de capas convolucionales: 2. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 100/50.
+    \item Número de capas convolucionales: 4. Número de filtros por capa convolucional: 1.0. Número de neuronas en las capas densas: 100/50.
+\end{enumerate}
+
+\textbf{Rajagopalan}.
+\begin{enumerate}
+    \item Número de capas convolucionales: 7. Número de filtros por capa convolucional: 2.0. Número de neuronas en las capas densas: 512/256.
+    \item Número de capas convolucionales: 7. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 128/256.
+    \item Número de capas convolucionales: 7. Número de filtros por capa convolucional: 0.5. Número de neuronas en las capas densas: 512/256.
+    \item Número de capas convolucionales: 5. Número de filtros por capa convolucional: 1.0.. Número de neuronas en las capas densas: 512/256.
+\end{enumerate}
+
+Así pues, una vez seleccionados estos modelos se emplearon en el entrenamiento con el conjunto de las imágenes de Datasets, sin preprocesar.
+
+\subsection{Preprocesamiento e inpainting}
+
+Tras realizar los entrenamientos de los modelos usando el conjunto Datasets, y no obtener ninguna métrica capaz de superar el \textit{baseline}, se aplicaron dos nuevas técnicas: el inpainting de las imágenes de los conjuntos de test y el preprocesado de todas las imágenes, tanto de entrenamiento como de test.
+
+Una vez aplicadas estas dos técnicas se volvieron a entrenar los distintos modelos, usando OCT y Datasets preprocesados y evaluando con test con y sin inpaint. De esta manera se probaron todas las posibles combinaciones disponibles hasta el momento.
+
+Los parámetros de las funciones de preprocesamiento e inpaint se describen en la sección \textit{Configuración y parametrización de las técnicas} de este mismo apéndice.
+
+Los resultados obtenidos tampoco superaron el \textit{baseline}.
+
+\subsection{Conjunto OCT \textit{plus}}
+
+Como último paso realizado en la experimentación del proyecto, se generó un nuevo conjunto de datos de entrenamiento. Este estaba compuesto por las imágenes de OCT de la cohorte local combinadas con las imágenes de la cohorte local tomadas con el dispositivo móvil que no fuera empleado para el test. Es decir, si un modelo se entrenó empleando imágenes de OCT y Samsung, fue evaluado con iPhone; y si fue entrenado con OCT e iPhone, fue evaluado con Samsung.
+
+Las imágenes de OCT y Samsung/iPhone se emplearon tanto en su versión original como preprocesadas. En el caso de emplear imágenes de entrenamiento preprocesadas también las de test serían transformadas usando el preprocesamiento. Sin embargo, con respecto al inpainting no se siguió un mismo criterio entre las imágenes de entrenamiento y de test, es decir, se entrenaron modelos con imágenes con inpaint que después se evaluaron con imágenes sin inpaint y viceversa.
+
+Para lograr la combinación de conjuntos de imágenes se usó un concatenador de datasets, una estructura que puede encontrarse en el módulo \texttt{torch.utils.data}. Este \texttt{ConcatDataset} recibe una lista con varios objetos tipo \texttt{ImageFolder} y los concatena como si se tratase de un único directorio. De esta manera en el entrenamiento de los modelos se emplearían imágenes de OCT y Samsung/iPhone mezcladas.
+
+\section{Configuración y parametrización de las técnicas}
+
+En esta sección se van a explicar los parámetros empleados en la configuración del \textit{script} Bash para la ejecución del código en SCAYLE, los parámetros disponibles en el preprocesamiento e inpainting y los parámetros empleados en la creación de arquitecturas.
+
+\subsection{SCAYLE}
+
+Para la ejecución y entrenamiento de los modelos, desde SCAYLE nos concedieron acceso a la partición ``Cascade Lake''. Esta sección de SCAYLE cuenta con 37 servidores con 2 procesadores Intel Xeon Gold 6240, con una frecuencia de 2.6 GHz, 192 GB de memoria y 18 cores cada uno. Además 7 de esos servidores, entre ellos el nuestro, contaban con una GPU NVidia Tesla V100 \cite{scayle:cascadelake}.
+
+El aspecto del \textit{script} de Bash empleado en la ejecución de los programas puede observarse en la figura \ref{fig:bash}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/bash.png}
+    \caption{Script Bash empleado en el servidor de Caléndula. Fuente propia.}
+    \label{fig:bash}
+\end{figure}
+
+Algunos de los parámetros modificables de este \textit{script} son:
+\begin{itemize}
+    \item \texttt{\#SBATCH --job-name=}. Contiene el nombre que se desea asignar a la ejecución. Es el nombre con el que SCAYLE referenciará a dicha ejecución a la hora de informarnos de su inicio y finalización.
+    \item \texttt{\#SBATCH -o}: archivo \texttt{.out} en el que se desea que se almacene toda la información que se mande imprimir por pantalla en la ejecución. La expresión \texttt{\%j} se corresponde con el identificador del trabajo (que no es lo mismo que el nombre).
+    \item \texttt{\#SBATCH -e}: archivo \texttt{.err} en el que se desea que se almacenen los códigos de los errores que puedan producirse en la ejecución. La expresión \texttt{\%j} se corresponde con el identificador del trabajo (que no es lo mismo que el nombre).
+    \item \texttt{\#SBATCH --partition=}: partición en la que se desea ejeuctar el código. En nuestro caso \texttt{cascadelakegpu}.
+    \item \texttt{\#SBATCH --qos}: se corresponde con la clase de ``Quality of Services'' de la que se disponga. Dependiendo de este nivel de QOS se tendrán unos privilegios u otros. En nuestro caso el QOS asignado era ``normal''.
+    \item \texttt{\#SBATCH -m}: es el número de cores reservados para la ejecución de la tarea. Con el QOS normal, el número máximo de cores que se podían reservar era 512. Este número va a ser el que determine también la posibilidad de paralelizar procesos. Por ejemplo, la estructura \texttt{DataLoader} permite establecer el número de trabajadores destinados a la carga de imágenes en el modelo. Este número de trabajadores está limitado por el número de cores reservados. Por defecto se estableció el número de cores a 16 y el número de trabajadores de los \texttt{DataLoader} a 8.
+    \item \texttt{\#SBATCH --mem=}: cantidad máxima de memoria que puede usar la tarea. Si es igual a 0 significa que no hay limitación de memoria (como en nuestro caso).
+    \item \texttt{\#SBATCH --gres=}: unidad de procesamiento que se desea. En nuestro caso se empleaba 1 única GPU.
+    \item \texttt{\#SBATCH --time=}: tiempo máximo de ejecución de la tarea, si se alcanza ese tiempo, la tarea se detiene y finaliza. Con un QOS normal el tiempo máximo que se podía establecer era de 5 días. En nuestro caso se estableció en 3 días.
+    \item \texttt{\#SBATCH --mail-user=}: dirección de correo electrónico empleado para recibir las notificaciones referentes a la ejecución (inicio, fin y motivo de fin).
+    \item \texttt{\#SBATCH --mail-type}: tipos de correos que se desean recibir (solo inicio, solo fin o todos).
+    \item \texttt{\#SBATCH -D}: directorio de trabajo. Por defecto se trabajó en el mismo directorio en el que se encontraba el archivo .sh.
+\end{itemize}
+
+En el resto de líneas del archivo tiene lugar la importación de la herramienta CUDA para la ejecución del código de PyTorch en la GPU, la activación del entorno de Anaconda correspondiente, la ejecución del \textit{script} de Python y el cierre del entorno.
+
+\subsection{Preprocesamiento e inpainting}
+
+El preprocesamiento de las imágenes está regulado por dos parámetros:
+\begin{itemize}
+    \item Tolerancia: se trata del valor de píxel usaod como umbral para la detección del fondo negro y generar la máscara en el recorte circular de la imagen. Cuanto más bajo sea este valor, menos píxeles serán considerados como fondo.
+    \item sigmaX: desviación estándar del filtro gaussiano en el eje X. Una desviación mayor (mayor sigmaX) implica un mayor suavizado de la imagen como consecuencia del filtro.
+\end{itemize}
+
+El inpainting está controlado por tres parámetros:
+\begin{itemize}
+    \item maxRadius: es el diámetro máximo que puede tener un círculo para ser detectado por la función \texttt{cv2.HoughCircles}, paso fundamental en la creación de la máscara. Actualmente este valor es 1/53 parte del ancho total de la imagen.
+    \item Zona central: no es un parámetro en sí mismo, sino las zonas de la imagen que son consideradas como centro de la misma. Actualmente se considera como centro los píxeles ubicados entre los 11/30 y 18/30 de la vertical, y los 13/30 y 17/30 de la horizontal de la imagen.
+    \item Aumento círculo máscara: una vez detectados los círculos, para generar la máscara se multiplicó el radio de cada círculo por un valor, para así aumentar el tamaño y que al realizar el inpaint se tuviesen en cuenta un mayor número de píxeles alrededor del flash que se desea eliminar. Este es el valor al que se refiere este parámetro. Por defecto el aumento es por 3, es decir, el radio de los círculos creados en la máscara es tres veces mayor al radio de los círculos detectados en la imagen.
+\end{itemize}
 
 
-\section{Cuaderno de trabajo.}
 
-Enumeración de todos los métodos probados con resultados positivos o no.
+\subsection{Creación de arquitecturas}
 
-Contar aquí sí paso a paso todos los procesos realizados.
+Por último, vamos a especificar los distintos parámetros que pueden modificarse en las funciones diseñadas para la creación de arquitecturas, así como los valores que se les han asignado.
 
-Contar el problema al tratar de cargar/descargar todos los datos en SCAYLE, que usando WinSCP no se puede.
+Las 4 funciones a las que se hace referencia son \texttt{crea\_Alqudah, crea\_Ghosh, crea\_Mobeen} y \texttt{crea\_Rajagopalan}. Reciben 3 parámetros:
+\begin{itemize}
+    \item \texttt{capas\_conv}: número de capas convolucionales que se desean incluir en el modelo creado. Dependiendo de este valor se crearán, así mismo, más o menos capas de maxpooling y de activación, ya que suelen ir asociadas a las capas convolucionales.
+    \item \texttt{filtros}: número de filtros de cada capa convolucional, pudiendo ser la misma cantidad que en la arquitectura (1.0), la mitad (0.5) o el doble (2.0).
+    \item \texttt{neuronas}: número de neuronas en las capas densas del modelo. El número de neuronas de las distintas capas se encuentra separado usando la barra lateral “/”. Han de introducirse tantas valores separados por ``/'' como capas densas tenga la arquitectura. Si se desea que no tenga ninguna capa densa se puede incluir el valor ``0/0''.
+\end{itemize}
 
-Explicar la partición de SCAYLE en la que he estado.
+Los valores que han tomado estos parámetros en el desarrollo del proyecto se describen a continuación.
 
-Explicar el problema de los modelos que tardan mucho y cómo hubo que escoger los mejores.
+\textbf{Alqudah}. Se generaron 45 posibles combinaciones entre los distintos valores de los parámetros.
+\begin{itemize}
+    \item \texttt{capas\_conv}: en el desarrollo del trabajo se emplearon los valores 2, 4 y 6 para este parámetro.
+    \item \texttt{filtros}: en el desarrollo del trabajo se emplearon los valores 1.0, 0.5 y 2.0 para este parámetro.
+    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 0/0, 512/256, 128/64, 64/128 y 128/256 para este parámetro.
+\end{itemize}
 
+\textbf{Ghosh}. Se generaron 45 posibles combinaciones entre los distintos valores de los parámetros.
+\begin{itemize}
+    \item \texttt{capas\_conv}: en el desarrollo del trabajo se emplearon los valores 6, 9 y 13 para este parámetro.
+    \item \texttt{filtros}: en el desarrollo del trabajo se emplearon los valores 1.0, 0.5 y 2.0 para este parámetro.
+    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 256/1024/512, 128/512/256, 64/256/128, 128/256/512 y 512/256/128 para este parámetro.
+\end{itemize}
 
-\section{Configuración y parametrización de las técnicas.}
+\textbf{Mobeen}. Se generaron 54 posibles combinaciones entre los distintos valores de los parámetros.
+\begin{itemize}
+    \item \texttt{capas\_conv}: en el desarrollo del trabajo se emplearon los valores 2, 3 y 4 para este parámetro.
+    \item \texttt{filtros}: en el desarrollo del trabajo se emplearon los valores 1.0, 0.5 y 2.0 para este parámetro.
+    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 100/50, 256/128, 128/64, 64/32, 32/64 y 64/128 para este parámetro.
+\end{itemize}
 
-Aquí meter las combinaciones de estructuras probadas
+\textbf{Rajagopalan}. Se generaron 54 posibles combinaciones entre los distintos valores de los parámetros.
+\begin{itemize}
+    \item \texttt{capas\_conv}: en el desarrollo del trabajo se emplearon los valores 3, 5 y 7 para este parámetro.
+    \item \texttt{filtros}: en el desarrollo del trabajo se emplearon los valores 1.0, 0.5 y 2.0 para este parámetro.
+    \item \texttt{neuronas}: en el desarrollo del trabajo se emplearon los valores 512/256, 1024/512, 256/128, 128/64, 64/128 y 128/256 para este parámetro.
+\end{itemize}
 
-Explicar el aspecto el script .sh y el num workers y así. 
+\section{Detalle de resultados}
 
-\section{Detalle de resultados.}
+Para finalizar este apéndice se van a explicar las métricas empleadas para la evaluación de los modelos, cómo han sido calculadas, tanto en el \textit{baseline} como en cada modelo; y la arquitectura de los modelos mencionados en la sección \textit{Resumen de resultados} del capítulo \textit{Conclusiones}.
 
-Cómo se han obtenido las métricas (y explicar las métricas) y los baselines. Contar todos los resultados.
+\subsection{\textit{Balanced Accuracy}}
 
-Distancia euclídea.
+Esta métrica se define como el promedio de la tasa de verdaderos positivos de cada clase, por lo que es apropiada para conjuntos de datos desbalanceados como en nuestro caso. Es importante tener en cuenta que esta métrica únicamente evalúa el número de verdaderos positivos, y no el número de verdaderos negativos \cite{sklearn:balacc}. Un valor de \textit{balanced accuracy} de 0.2 indica que el modelo se comporta igual que un modelo aleatorio.
 
-\setminted[python]{breaklines, framesep=2mm, fontsize=\footnotesize, numbersep=5pt}
-\begin{minted}{python}
-    def hola_mundo(ejemplo)
-\end{minted}
+Para realizar el cálculo del \textit{baseline} de esta métrica se usó la función \texttt{sklearn.balanced\_accuracy\_score}, pasándole como etiquetas reales los diagnósticos realizados sobre las imágenes de OCT y como etiquetas ``predichas'' los diagnósticos realizados sobre las imágenes de Samsunge e iPhone.
+
+Para el cálculo del \textbf{balanced accuracy} de los modelos se empleó la misma función, \texttt{sklearn.balanced\_accuracy\_score}, introduciendo como etiquetas reales el grado de las distintas imágenes (obtenido del nombre de la carpeta en que se encuentran almacenadas las distintas imágenes) y como etiquetas predichas la salida del modelo.
+
+Los modelos que mejor rendimiento obtuvieron considerando únicamente esta métrica fueron:
+
+\begin{itemize}
+    \item Arquitectura: Mobeen
+    \item Número de capas convolucionales: 4
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 128/64
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} Samsung
+    \item Imágenes preprocesadas: no
+    \item Conjunto de datos de test: iPhone
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 5.67 minutos
+    \item Valor de \textit{balanced accuracy}: 0.305
+\end{itemize}
+
+\begin{itemize}
+    \item Arquitectura: Alqudah
+    \item Número de capas convolucionales: 4
+    \item Número de filtros por capa: 0.5
+    \item Número de neuronas: 128/256
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} iPhone con inpaint
+    \item Imágenes preprocesadas: no
+    \item Conjunto de datos de test: Samsung
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 1.12 minutos
+    \item Valor de \textit{balanced accuracy}: 0.371
+\end{itemize}
+
+\subsection{Valor F o \textit{F-score}}
+
+También denominado como valor F1, combina la precisión y la tasa de verdaderos positivos (\textit{recall}) en una única métrica. Se calcula como $2*(precision*recall)/(precision+recall)$ \cite{sklearn:fscore}. Al considerar ambas métricas ofrece una medida bastante acertada del rendimiento del modelo \cite{metrics:inbal}. Un valor de F-score correspondiente a un modelo aleatorio sería de 0.2.
+
+Para realizar el cálculo del \textit{baseline} de esta métrica se usó la función \texttt{sklearn.f1\_score}, pasándole como etiquetas reales los diagnósticos realizados sobre las imágenes de OCT y como etiquetas ``predichas'' los diagnósticos realizados sobre las imágenes de Samsunge e iPhone. Le indicamos también el parámetro \texttt{average = 'weighted'}, para que tenga en cuenta la distribución de las clases.
+
+Para el cálculo del valor F de los modelos se empleó la misma función, \texttt{sklearn.f1\_score}, introduciendo como etiquetas reales el grado de las distintas imágenes (obtenido del nombre de la carpeta en que se encuentran almacenadas las distintas imágenes) y como etiquetas predichas la salida del modelo. También le indicamos el parámetro \texttt{average = 'weighted'}, para que tenga en cuenta la distribución de las clases.
+
+Los modelos que mejor rendimiento obtuvieron considerando únicamente esta métrica fueron:
+
+\begin{itemize}
+    \item Arquitectura: Alqudah
+    \item Número de capas convolucionales: 4
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 128/64
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} Samsung
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: iPhone
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 2.09 minutos
+    \item Valor de \textit{F-score}: 0.436
+\end{itemize}
+
+\begin{itemize}
+    \item Arquitectura: Rajagopalan
+    \item Número de capas convolucionales: 3
+    \item Número de filtros por capa: 0.5
+    \item Número de neuronas: 128/256
+    \item \textit{Early stopping}: no
+    \item Conjunto de datos de entrenamiento: OCT
+    \item Imágenes preprocesadas: no
+    \item Conjunto de datos de test: Samsung
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 4.02 minutos
+    \item Valor de \textit{F-score}: 0.467
+\end{itemize}
+
+\subsection{Área bajo la curva ROC}
+
+La curva ROC (Receiver Operating Characteristic) se emplea para medir la capacidad del modelo para distinguir entre clases positivas y negativas. La curva ROC muestra la relación entre la tasa de verdaderos positivos y la tasa de falsos positivos \cite{sklearn:auc}. El área bajo esta curva determina la relación entre ambas tasas, de manera que si el área es 1, la tasa de verdaderos positivos será máxima y la de falsos positivos mínima (modelo perfecto). Si el valor de AUC sea 0.5, el modelo está realizando una clasificación prácticamente aleatoria \cite{sklearn:auc, metrics:inbal}.
+
+Para realizar el cálculo del \textit{baseline} de esta métrica se usó la función \texttt{sklearn.roc\_auc\_score}. En esta ocasión debemos proporcionar al método no solo un array de predicciones y otro de etiquetas reales, sino que debemos proporcionar una matriz de probabilidades de predicción, para que pueda dibujar la curva y obtener el correspondiente área bajo ella. En este caso no poseemos una matriz de probabilidades, por lo que la construiremos considerando un 100\% de probabilidad de pertenencia a la clase predicha por el retinólogo sobre OCT y un 0\% para el resto de clases.
+
+Para el cálculo del área bajo la curva ROC de los modelos se empleó la misma función, \texttt{sklearn.roc\_auc\_score}. Introducimos como etiquetas reales las correspondientes a cada imagen, y como etiquetas predichas la matriz de probabilidades obtenida tras aplicar la función Softmax a la salida del modelo.
+
+Los modelos que mejor rendimiento obtuvieron considerando únicamente esta métrica fueron:
+
+\begin{itemize}
+    \item Arquitectura: Alqudah
+    \item Número de capas convolucionales: 2
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 0/0
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} Samsung
+    \item Imágenes preprocesadas: no
+    \item Conjunto de datos de test: iPhone
+    \item Imágenes de test con inpaint: sí
+    \item Tiempo de entrenamiento: 6.95 minutos
+    \item Valor de \textit{AUC}: 0.637
+\end{itemize}
+
+\begin{itemize}
+    \item Arquitectura: Ghosh
+    \item Número de capas convolucionales: 6
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 512/256/128
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} iPhone inpaint
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: Samsung
+    \item Imágenes de test con inpaint: sí
+    \item Tiempo de entrenamiento: 1.29 minutos
+    \item Valor de \textit{AUC}: 0.655
+\end{itemize}
+
+\subsection{Coeficiente Kappa de Cohen}
+
+El coeficiente Kappa de Cohen mide el nivel de concordancia entre dos observadores pero ajustado al considerar también el efecto del azar. La ecuación que lo define es $kappa = (Po - Pe) / (1 - Pe)$ siendo Po el porcentaje de coincidencia entre los dos observadores y Pe el porcentaje esperado por azar. Este valor puede oscilar entre -1 y 1, donde un valor de 1 representa la máxima concordancia (el modelo perfecto), el 0 es el azar y valores inferiores a 0 indican que el modelo rinde peor que un modelo aleatorio. Un valor superior a 0.8 se considera concordancia fuerte \cite{sklearn:kappa}.
+
+Para realizar el cálculo del \textit{baseline} de esta métrica se usó la función \texttt{sklearn.cohen\_kappa\_score}, pasándole como etiquetas reales los diagnósticos realizados sobre las imágenes de OCT y como etiquetas ``predichas'' los diagnósticos realizados sobre las imágenes de Samsunge e iPhone.
+
+Para el cálculo del coeficiente Kappa de Cohen de los modelos se empleó la misma función, \texttt{sklearn.cohen\_kappa\_score}, introduciendo como etiquetas reales el grado de las distintas imágenes (obtenido del nombre de la carpeta en que se encuentran almacenadas las distintas imágenes) y como etiquetas predichas la salida del modelo.
+
+Los modelos que mejor rendimiento obtuvieron considerando únicamente esta métrica fueron:
+
+\begin{itemize}
+    \item Arquitectura: Alqudah
+    \item Número de capas convolucionales: 4
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 128/64
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} Samsung
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: iPhone
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 2.09 minutos
+    \item Valor de coeficiente Kappa de Cohen: 0.186
+\end{itemize}
+
+\begin{itemize}
+    \item Arquitectura: Ghosh
+    \item Número de capas convolucionales: 6
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 128/256/512
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: Datasets
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: Samsung
+    \item Imágenes de test con inpaint: sí
+    \item Tiempo de entrenamiento: 526.98 minutos
+    \item Valor de coeficiente kappa de Cohen: 0.176
+\end{itemize}
+
+\subsection{Distancia euclídea}
+
+Aunque no se trata de una métrica como tal, como se ha mencionado en el apartado \textit{Selección de modelos} de la sección \textit{Cuaderno de trabajo} de este mismo apéndice, se empleó en el proyecto para evaluar la distancia entre dos conjuntos de métricas.
+
+A continuación se describen los modelos que obtuvieron menor distancia euclídea con respecto a las métricas del \textit{baseline}.
+
+\begin{itemize}
+    \item Arquitectura: Alqudah
+    \item Número de capas convolucionales: 4
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 128/64
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: OCT \textit{plus} Samsung
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: iPhone
+    \item Imágenes de test con inpaint: no
+    \item Tiempo de entrenamiento: 2.09 minutos
+    \item Valor de \textit{balanced accuracy}: 0.276
+    \item Valor de \textit{F-score}: 0.436
+    \item Valor de \textit{AUC}: 0.528
+    \item Valor de coeficiente kappa de Cohen: 0.186
+\end{itemize}
+
+\begin{itemize}
+    \item Arquitectura: Rajagopalan
+    \item Número de capas convolucionales: 5
+    \item Número de filtros por capa: 1.0
+    \item Número de neuronas: 512/256
+    \item \textit{Early stopping}: sí
+    \item Conjunto de datos de entrenamiento: Datasets
+    \item Imágenes preprocesadas: sí
+    \item Conjunto de datos de test: Samsung
+    \item Imágenes de test con inpaint: sí
+    \item Tiempo de entrenamiento: 217.35 minutos
+    \item Valor de \textit{balanced accuracy}: 0.351
+    \item Valor de \textit{F-score}: 0.414
+    \item Valor de \textit{AUC}: 0.655
+    \item Valor de coeficiente kappa de Cohen: 0.143
+\end{itemize}

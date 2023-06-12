@@ -1,8 +1,51 @@
 \apendice{Documentación de usuario}
 
-\section{Requisitos software y hardware para ejecutar el proyecto.}
+\section{Requisitos software y hardware para ejecutar el proyecto}
 
-\section{Instalación / Puesta en marcha}
+El proyecto realizado no tiene como objetivo el desarrollo de un programa que pueda ser ejecutado por un usuario, ni tampoco un producto que pueda ser manipulado o usado. Es por ello que en esta sección se van a detallar los componentes que serían necesarios para poder realizar el diagnóstico del grado de retinopatía diabética a un paciente.
 
-\section{Manuales y/o Demostraciones prácticas}
+\subsection{Requisitos \textit{hardware}}
 
+Son imprescindibles los siguientes elementos:
+
+\begin{itemize}
+    \item Teléfono móvil inteligente (\textit{smartphone}) con cámara que permita la realización de vídeo y fotografías de alta resolución. Así mismo el dispositivo preferentemente ha de ser compatible con la aplicación de Ret-iN CaM, o en su defecto con otra aplicación para la adquisición de imágenes de fondo de ojo con un teléfono móvil.
+    \item El dispositivo Ret-iN CaM, para la toma de las fotografías. En caso de no disponerse de este equipo puede utilizarse alguno de los siguientes:
+    \begin{itemize}
+        \item D-Eye
+        \item Paxos Scope
+        \item Peek Retina
+        \item 20D lens
+    \end{itemize}
+    \item Ordenador portátil o de sobremesa con memoria RAM suficiente para la carga y ejecución de la CNN (mínimo 8 GB).
+    \item Un periférico que permita la transmisión de datos desde el teléfono móvil al ordenador, por ejemplo un cable de conexión tipo USB-C.
+\end{itemize}
+
+\subsection{Requisitos \textit{software}}
+
+Para poder emplear el modelo desarrollado y así realizar el diagnóstico a partir de la imagen obtenida es necesario:
+
+\begin{itemize}
+    \item La aplicación Ret-iN CaM instalada en el teléfono móvil. En su defecto se podrá usar cualquier otra aplicación que permita la manipulación de vídeo o fotografía de fondo de ojo.
+    \item Un sistema operativo instalado en el ordenador que se emplee. El sistema operativo ha de ser compatible con el lenguaje de programación Python.
+    \item Tener instalada en el ordenador una versión de Python igual o posterior a la 3.9.12.
+    \item Tener instaladas en el entorno de Python que se vaya a utilizar las bibliotecas \texttt{torch, torchvision, OpenCV, shutil, Pillow, os} y \texttt{Scikit-image}.
+\end{itemize}
+
+\section{Puesta en marcha}
+
+Como he mencionado, en este proyecto no se ha llevado a cabo el desarrollo de ningún programa que pueda ser ejecutado. Es por ello que en esta sección voy a detallar cómo debería ser el \textit{pipeline} del hipotético programa para llevar a cabo el diagnóstico de un paciente utilizando la CNN desarrollada.
+
+\subsection{Obtención de la imagen}
+
+El primer paso para la puesta en marcha es la obtención de la imagen de fondo de ojo del paciente. Para ello se hará uso del dispositivo Ret-iN CaM y su aplicación, tal y como se muestra en el siguiente enlace: \url{https://youtu.be/YeWXluiKq-c}. 
+
+Para ello se deberá tomar un vídeo del paciente y posteriormente escoger el mejor fotograma y ajustar el tamaño para únicamente seleccionar la zona de interés.
+
+Una vez obtenida la imagen esta será traspasada al ordenador para su preprocesamiento y diagnóstico automático.
+
+\subsection{Ejecución del \textit{script}}
+
+Idealmente se habrá desarrollado un \textit{script} empleando Python que permita cargar el modelo preentrenado, cargar la imagen que se desea usar para el diagnóstico, llevar a cabo el preprocesado  e inpainting de la misma y posteriormente proporcionársela al modelo para que realice la predicción, tal y como se describe en el anexo \textit{Manual del investigador}.
+
+Este \textit{script} únicamente recibirá como parámetro de entrada la ruta hasta la imagen cargada por el médico en el ordenador. De manera que el médico podrá abrir la consola del equipo, iniciar Python y ejecutar el archivo mencionado, pasándole como parámetro la dirección de la imagen. El archivo devolverá por pantalla el grado de retinopatía predicho para la fotografía.
